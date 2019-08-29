@@ -1,0 +1,163 @@
+﻿@model AA.HRMS.Interfaces.IBenefitModelView
+@{
+    ViewBag.Title = "Add Benefits";
+    string compulsoryFields = "";
+}
+
+@Html.ValidationSummary()
+@Model.ProcessingMessage
+
+
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+
+@using (Html.BeginForm("CreateBenefit", "CompanySetup", FormMethod.Post, new { enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+
+
+<div class="modal-body">
+
+    @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+    {
+
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+        </div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+        </div>
+    }
+
+    <input name="companyId" value="@Model.CompanyId" hidden />
+    <div id="request">
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Benefit Name</label>
+                <div class="">
+                    <input id="BenefitName" name="BenefitName" type="text" class="form-control" , value="@Model.BenefitName" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Benefit Description</label>
+                <div class="">
+                    <input id="BenefitDescription" name="BenefitDescription" type="text" class="form-control" , value="@Model.BenefitDescription" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Payment Period</label>
+                <div class="">
+                    @Html.DropDownList("period", Model.PeriodCollection, new { @class = "form-control input-sm", id = "period" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Is Monitized</label>
+                <div class="nk-int-st">
+                    @Html.DropDownList("IsMonetized", new List<SelectListItem>
+                                                     {
+                                                        new SelectListItem() {Text = "Yes", Value="True"},
+                                                        new SelectListItem() {Text = "No", Value="False"}
+                                                     }, "[Select If Percentage Salary]", new { @class = "form-control input-sm", id = "IsMonetized" })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Taxable? :</label>
+                <div class="nk-int-st">
+                    @Html.DropDownList("IsTaxable", new List<SelectListItem>
+                                                     {
+                                                        new SelectListItem() {Text = "Yes", Value="True"},
+                                                        new SelectListItem() {Text = "No", Value="False"}
+                                                     }, "[Taxable]", new { @class = "form-control input-sm", id = "IsTaxable" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <div class="">
+                <input type="checkbox" id="myCheck" onclick="myFunction()" name="rad" />
+                <label>Upload an Excel Sheet Instead</label>
+            </div>
+        </div>
+    </div>
+
+    <div id="text" class="modal-body" style="display:none">
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <div class="">
+                    <label>Upload File</label>
+                    <input data-toggle="tooltip" data-placement="left" title="Upload Level Excel Sheet" type="file" class="btn" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="benefitExcelFile" value="" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <div class="">
+                    <label>Excel Format</label>
+                    <img src="~/Images/Benefit_Excel_File.PNG" alt="Level Sample" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+            <div class="modal-footer">
+                <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Create Benefits</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+      
+   
+}
+
+<script type="text/javascript">
+
+    function myFunction() {
+        // Get the checkbox
+        var checkBox = document.getElementById("myCheck");
+        // Get the output textbox
+        var text = document.getElementById("text");
+        var request = document.getElementById("request");
+
+        // If the checkbox is checked, display the output textbox
+        if (checkBox.checked == true) {
+            text.style.display = "block";
+            request.style.display = "none"
+            @(compulsoryFields = "")
+
+        } else {
+            text.style.display = "none";
+            request.style.display = "block"
+            @(compulsoryFields = "required")
+        }
+    }
+</script>

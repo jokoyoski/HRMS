@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+
+"Employee"
+"Administration"
+"CompanyAdmin"
+"AppConfig"
+
+-->
+
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+  
+  <mvcSiteMapNode title="Home" controller="Home" action="Index" roles=""
+            visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain">
+  
+  
+  <!---HR Nav Bar-->
+  <mvcSiteMapNode title="DashBoard" controller="Home" action="AdminDashBoard" roles="Administration, CompanyAdmin"
+            visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain">
+     </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Employee" controller="Employee" action="EmployeeList" roles="CompanyAdmin, Administration"
+             visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain">
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Performance" controller="PerformanceManagement" action="AppraisalList" roles="CompanyAdmin"
+             visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain">
+
+      <mvcSiteMapNode title="Appraisal" controller="PerformanceManagement" action="AppraisalList" />
+
+      <mvcSiteMapNode title="Task" controller="PerformanceManagement" action="TaskList" />
+
+      <mvcSiteMapNode title="Annual Assessment" controller="PerformanceManagement" action="AnnualAssessmentList" />
+
+      <mvcSiteMapNode title="Feed Back" controller="PerformanceManagement" action="Feedbacklist" />
+      
+      <mvcSiteMapNode title="Promotion History" controller="Employee" action="Promotions" />
+      
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Development/Training" controller="Training" action="TrainingList" roles="CompanyAdmin"
+             visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain">
+
+      <mvcSiteMapNode title="Trainings" controller="Training" action="TrainingList" />
+
+      <mvcSiteMapNode title="Training Calendar" controller="Training" action="TrainingCalendarList" />
+
+      <mvcSiteMapNode title="Manage Request" controller="EmployeeTraining" action="EmployeeRequestTraining" />
+
+      <mvcSiteMapNode title="Training Need Analysis" controller="Training" action="TrainingNeedAnalysisList" />
+
+      <mvcSiteMapNode title="Training Report" controller="Training" action="TrainingReportList" />
+
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Payroll" controller="Payroll" action="Index" roles="CompanyAdmin"
+             visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain">
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Loans/Deductions" controller="CompanySetup" action="EmployeeLoanList" roles="CompanyAdmin"
+             visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain">
+
+      <mvcSiteMapNode title="Manage Loan" controller="CompanySetup" action="EmployeeLoanList" />
+
+      <mvcSiteMapNode title="Manage Deduction" controller="EmployeeDeduction" action="EmployeeDeductionList" />
+
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Exit" controller="ExitManagement" action="EmployeeExitList" roles="CompanyAdmin"
+             visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain">
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Report" controller="Employee" action="GenerateReport" roles="CompanyAdmin"
+             visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain">
+    </mvcSiteMapNode>
+
+ 
+
+  <!--Employee Nav Bar-->
+  <mvcSiteMapNode title="DashBoard" controller="Home" action="EmployeeDashBoard" roles="Employee"
+          visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain">
+
+  </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Performance" controller="PerformanceManagement" action="EmployeeAppraisalList" roles="Employee"
+             visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain">
+
+      <mvcSiteMapNode title="My Appraisal" controller="PerformanceManagement" action="EmployeeAppraisalList" roles="Employee"
+             visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain" />
+
+      <mvcSiteMapNode title="My Reviews" controller="PerformanceManagement" action="EmployeeAnnualAssessmentListReviewer" roles="Supervisor"
+             visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain" />
+
+      <mvcSiteMapNode title="My Annual Assessment" controller="PerformanceManagement" action="EmployeeAnnualAssessmentListEmployee" roles="Employee"
+             visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain" />
+
+
+      <mvcSiteMapNode title="My Feedback" controller="PerformanceManagement" action="MyFeedbackList" roles="Employee"
+             visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain" />
+
+      
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Development/Training" controller="EmployeeTraining" action="EmployeeTrainingList" roles="Employee"
+             visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain">
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Payroll" controller="Payroll" action="IndexEmployee" roles="Employee"
+             visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain">
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Leaves" controller="Leave" action="ListOfLeaveRequestsEmployee" roles="Employee"
+             visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain">
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Loans" controller="CompanySetup" action="EmployeeLoanEmployeeList" roles="Employee"
+             visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain">
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Deductions" controller="CompanySetup" action="EmployeeDeductionList" roles="Employee"
+             visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain">
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Discipline" controller="HR" action="MyDisciplineList" roles="Employee"
+                   visibilityProvider="AA.HRMS.Domain.Providers.SiteMapNodeVisibilityProvider, AA.HRMS.Domain">
+    </mvcSiteMapNode>
+
+    
+    </mvcSiteMapNode>
+  
+
+</mvcSiteMap>
+  
+

@@ -1,0 +1,290 @@
+﻿@model MvcSiteMapProvider.Web.Html.Models.MenuHelperModel
+@using System.Web.Mvc.Html
+@{
+    var nodes = Model.Nodes;
+    var model = nodes.Where(n => n.IsInCurrentPath && !n.IsRootNode).FirstOrDefault();
+    var mainMenuNodesCount = Model.Nodes.Count();
+
+    var noOfNodeChildren = model == null ? 0 : model.Children.Count;
+    var tabClass = string.Empty;
+    var nodeCount = 0;
+
+    var homeTabClass = ((model != null) && (model.Controller == "Home")) ? "active" : string.Empty;
+    homeTabClass = model == null ? "active" : homeTabClass;
+
+}
+<div class="main-menu-area mg-tb-40">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <ul class="nav nav-tabs notika-menu-wrap">
+                    @foreach (var node in Model.Nodes)
+                    {
+                        nodeCount++;
+
+                        tabClass = node.IsInCurrentPath ? "active" : string.Empty;
+                        if (node.IsRootNode && (model != null && !model.IsRootNode))
+                        {
+                            tabClass = string.Empty;
+                        }
+
+                        <li class="@tabClass">
+                            @Html.DisplayFor(m => node)
+                        </li>
+
+                        if (nodeCount != mainMenuNodesCount)
+                        {
+                            <li>
+                                <span class="navSeparator">
+                                    <!-- -->
+                                </span>
+                            </li>
+                        }
+                    }
+                </ul>
+
+                @if (noOfNodeChildren > 0)
+                {
+
+                    var selectedChild = model.Children.Where(n => n.IsInCurrentPath).FirstOrDefault();
+                    var grandchildrenCount = selectedChild == null ? 0 : selectedChild.Children.Count;
+
+                    <div class="tab-content custom-menu-content">
+                        <div id="Home" class="tab-pane in active notika-tab-menu-bg animated flipInX">
+                            <ul class="notika-main-menu-dropdown">
+                                @{
+                                    int x = 0;
+                                    var children = model.Children;
+                                    int count = children.Count();
+                                    foreach (var node in children)
+                                    {
+                                        <li>
+                                            @if (node.IsInCurrentPath)
+                                            {
+                                                if (node.IsCurrentNode)
+                                                {
+                                                    <span style="color: #1c8ad3"><b>@node.Title</b></span>
+                                                }
+                                                else
+                                                {
+                                                    <a href="@(node.Url)" class="">
+                                                        @node.Title
+                                                    </a>
+                                                }
+                                            }
+                                            else if (node.IsClickable)
+                                            {
+                                                var boldClass = string.Empty;
+                                                if (node.IsInCurrentPath)
+                                                {
+                                                    boldClass = "class=''";
+                                                }
+                                                <a href="@(node.Url)" @boldClass>
+                                                    @node.Title
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                @node.Title
+                                            }
+                                            @if (x < (count - 1))
+                                            {
+                                                <span></span>
+                                            }
+                                        </li>
+                                        x++;
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    if (grandchildrenCount > 0)
+                    {
+                        <div class="tab-content custom-menu-content">
+                            <div id="subMenu" class="tab-pane show active notika-tab-menu-bg animated flipInX">
+                                <ul class="notika-main-menu-dropdown">
+                                    @{
+                                        int y = 0;
+                                        var grandChildren = selectedChild.Children;
+                                        int theCount = grandChildren.Count();
+                                        foreach (var node in grandChildren)
+                                        {
+                                            <li class="">
+                                                @if (node.IsInCurrentPath)
+                                                {
+                                                    <span style="color: #1c8ad3"><b>@node.Title</b></span>
+                                                }
+                                                else if (node.IsClickable)
+                                                {
+                                                    var boldClass = string.Empty;
+                                                    if (node.IsInCurrentPath)
+                                                    {
+                                                        boldClass = "class=''";
+                                                    }
+                                                    <a href="@(node.Url)" @boldClass>
+                                                        @node.Title
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    @node.Title
+                                                }
+                                                @if (y < (theCount - 1))
+                                                {
+                                                    <span></span>
+                                                }
+                                            </li>
+                                            y++;
+                                        }
+                                    }
+                                </ul>
+                            </div>
+
+
+                        </div>
+
+                    }
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mobile-menu-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="mobile-menu">
+                    <nav id="dropdown">
+                        <ul class="mobile-menu-nav">
+                            @foreach (var node in Model.Nodes)
+                            {
+
+                                nodeCount++;
+
+                                tabClass = node.IsInCurrentPath ? "active" : string.Empty;
+                                if (node.IsRootNode && (model != null && !model.IsRootNode))
+                                {
+                                    tabClass = string.Empty;
+                                }
+
+                                <li class="@tabClass">
+                                    @Html.DisplayFor(m => node)
+                                </li>
+
+                                if (nodeCount != mainMenuNodesCount)
+                                {
+                                    <li>
+                                        <span class="navSeparator">
+                                            <!-- -->
+                                        </span>
+                                    </li>
+                                }
+
+                            }
+
+
+
+
+                            @if (noOfNodeChildren > 0)
+                            {
+
+                                var selectedChild = model.Children.Where(n => n.IsInCurrentPath).FirstOrDefault();
+                                var grandchildrenCount = selectedChild == null ? 0 : selectedChild.Children.Count;
+
+                                <ul id="Charts" class="collapse dropdown-header-top">
+                                    @{
+                                        int x = 0;
+                                        var children = model.Children;
+                                        int count = children.Count();
+                                        foreach (var node in children)
+                                        {
+                                            <li>
+                                                @if (node.IsInCurrentPath)
+                                                {
+                                                    if (node.IsCurrentNode)
+                                                    {
+                                                        <span style="color: #1c8ad3"><b>@node.Title</b></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="@(node.Url)" class="">
+                                                            @node.Title
+                                                        </a>
+                                                    }
+                                                }
+                                                else if (node.IsClickable)
+                                                {
+                                                    var boldClass = string.Empty;
+                                                    if (node.IsInCurrentPath)
+                                                    {
+                                                        boldClass = "class=''";
+                                                    }
+                                                    <a href="@(node.Url)" @boldClass>
+                                                        @node.Title
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    @node.Title
+                                                }
+                                                @if (x < (count - 1))
+                                                {
+                                                    <span></span>
+                                                }
+                                            </li>
+                                            x++;
+                                        }
+                                    }
+                                </ul>
+                                if (grandchildrenCount > 0)
+                                {
+                                    <ul class="collapse dropdown-header-top">
+                                        @{
+                                            int y = 0;
+                                            var grandChildren = selectedChild.Children;
+                                            int theCount = grandChildren.Count();
+                                            foreach (var node in grandChildren)
+                                            {
+                                                <li class="">
+                                                    @if (node.IsInCurrentPath)
+                                                    {
+                                                        <span style="color: #1c8ad3"><b>@node.Title</b></span>
+                                                    }
+                                                    else if (node.IsClickable)
+                                                    {
+                                                        var boldClass = string.Empty;
+                                                        if (node.IsInCurrentPath)
+                                                        {
+                                                            boldClass = "class=''";
+                                                        }
+                                                        <a href="@(node.Url)" @boldClass>
+                                                            @node.Title
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        @node.Title
+                                                    }
+                                                    @if (y < (theCount - 1))
+                                                    {
+                                                        <span></span>
+                                                    }
+                                                </li>
+                                                y++;
+                                            }
+                                        }
+                                    </ul>
+
+                                }
+
+                            }
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

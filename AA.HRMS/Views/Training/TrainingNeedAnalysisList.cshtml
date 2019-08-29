@@ -1,0 +1,256 @@
+﻿@model AA.HRMS.Interfaces.ITrainingNeedAnalysisListView
+
+@{
+    ViewBag.Title = "Training Need Analysis";
+
+    var hasInfo = ((Model != null) && (Model.TrainingNeedAnalysisCollection != null) && Model.TrainingNeedAnalysisCollection.Any());
+}
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                            <div class="breadcomb-report">
+                                <button class="btn" onclick="createModal('/training/createtraininganalysis')" data-placement="left" title="Add Training Calender"><i class="notika-icon notika-plus-symbol"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+        {
+
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+            </div>
+        }
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+            </div>
+        }
+
+    </div>
+</div>
+
+
+
+@if (hasInfo)
+{
+    <div class="data-table-area">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="table-responsive">
+
+
+                            <table id="data-table-basic" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Company Name</th>
+                                        <th>Training Name</th>
+                                        <th>Job Title</th>
+                                        <th>Is ProviderApproved?</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var d in Model.TrainingNeedAnalysisCollection)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                @d.CompanyName
+                                            </td>
+                                            <td>
+                                                @d.TrainingName
+                                            </td>
+                                            <td>
+                                                @d.JobTitle
+                                            </td>
+                                            <td>
+                                                @DisplayHelper.YesOrNo(d.IsProviderApproved)
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary" onclick="viewModal('/training/ViewTrainingAnalysis?trainingAnalysis=@d.TrainingNeedAnaylsisId')" data-placement="left" title="View Training Need Analysis">View</button>
+                                            </td>
+
+                                            <td>
+                                                <button class="btn btn-sm btn-primary" onclick="editModal('/training/EditTrainingAnalysis?trainingNeedAnalysisId=@d.TrainingNeedAnaylsisId')" data-placement="left" title="Edit Training Need Analysis">Modify</button>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-danger" onclick="deleteModal('/training/deletetraininganalysis?traininganalysisId=@d.TrainingNeedAnaylsisId')" data-placement="left" title="Delete Training Need Analysis">Delete</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Company Name</th>
+                                        <th>Training Name</th>
+                                        <th>Job Title</th>
+                                        <th>Is ProviderApproved?</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+        </div>
+
+
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-info alert-mg-b-0" role="alert">
+                    <p>No Training Need Analysis.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+
+
+<div class="modal fade" id="viewModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayView">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayCreate">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayEdit">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayDelete">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var URL = "";
+
+
+    function viewModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayView").html(data);
+            }
+        });
+
+        $("#viewModal").modal();
+    }
+
+    function createModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayCreate").html(data);
+            }
+        });
+
+        $("#createModal").modal();
+    }
+
+    function editModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayEdit").html(data);
+            }
+        });
+
+        $("#editModal").modal();
+
+    }
+
+    function deleteModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayDelete").html(data);
+            }
+        });
+
+        $("#deleteModal").modal();
+
+    }
+
+</script>

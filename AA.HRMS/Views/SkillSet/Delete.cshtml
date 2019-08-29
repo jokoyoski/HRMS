@@ -1,0 +1,59 @@
+﻿@model AA.HRMS.Interfaces.ISkillSetModelView
+
+@{
+    ViewBag.Title = "Delete Skill Set";
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+
+@Html.ValidationSummary()
+@Model.ProcessingMessage
+
+@using (Html.BeginForm("Delete", "SkillSet", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    
+
+<div class="modal-body">
+
+    <input type="hidden" id="skillId" name="skillId" value="@Model.SkillId" />
+
+    <input name="url" id="url" value="@Model.URL" hidden />
+
+    <input name="employeeId" id="employeeId" value="@Model.EmployeeId" hidden />
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Skill Name: </label>
+            <div class="nk-int-st">
+                <label><strong>@Model.SkillName</strong></label>
+</div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Skill Description: </label>
+            <div class="nk-int-st">
+                <label><strong>@Model.SkillDescription</strong></label>
+</div>
+        </div>
+    </div>
+</div>
+        <div class="modal-footer">
+            <button type="submit" name="submitButton" class="btn btn-default">Delete</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        </div>
+
+
+ }
+
+
+

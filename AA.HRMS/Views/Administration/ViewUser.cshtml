@@ -1,0 +1,82 @@
+﻿@model AA.HRMS.Interfaces.IUsersView
+@{
+    ViewBag.Title = "View User";
+}
+
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+<div>
+    <div>
+        @Html.ValidationSummary()
+        @Model.ProcessingMessage
+    </div>
+</div>
+
+@using (Html.BeginForm("Register", "Users", FormMethod.Post
+        ))
+{
+
+    @Html.AntiForgeryToken()
+
+
+<div class="modal-body">
+
+    <input id="userId" name="userId" type="hidden" value="@Model.UserId" />
+
+    <input id="userName" name="userName" type="hidden" value="@Model.Username" />
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Company Name</label>
+            <div class="nk-int-st">
+                <input id="firstName" disabled name="firstName" class="form-control input-sm" value="@Model.FirstName" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Company Name</label>
+            <div class="nk-int-st">
+                <input id="lastname" disabled name="lastname" class="form-control input-sm" value="@Model.LastName" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Company Name</label>
+            <div class="nk-int-st">
+                <input id="email" disabled name="email" class="form-control input-sm" value="@Model.Email" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Company Name</label>
+            <div class="nk-int-st">
+                <input id="companyname" disabled name="companyname" class="form-control input-sm" value="@Model.CompanyName" />
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+
+
+
+    
+    }
+

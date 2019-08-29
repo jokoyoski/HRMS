@@ -1,0 +1,102 @@
+﻿@model AA.HRMS.Interfaces.IEmployeeFeedbackViewModel
+
+@{
+    ViewBag.Title = "View Employee FeedBack";
+}
+
+
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+    <div class="modal-body">
+
+        @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+        {
+            <div>
+                <div class="container">
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+                    </div>
+
+                </div>
+            </div>
+        }
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div>
+                <div class="container">
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+                    </div>
+                </div>
+            </div>
+        }
+
+        <input name="CompanyId" type="hidden" id="CompanyId" value="@Model.CompanyId" />
+        <input name="EmployeeId" type="hidden" id="EmployeeId" value="@Model.EmployeeId" />
+        <input type="hidden" id="FeedbackId" name="feedbackId" value="@Model.FeedbackId" />
+        <input type="hidden" id="EmployeeFeedbackId" name="EmployeeFeedbackId" value="@Model.EmployeeFeedbackId" />
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Feedback on Employee</label>
+                <div class="">
+                    @Html.DropDownList("FeedbackOnEmployeeId", Model.EmployeeList, new { @class = "form-control", id = "FeedbackOnEmployeeId", disabled = "disable" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>In What Context?</label>
+                <div class="">
+                    <textarea disabled id="InWhatContext" class="form-control" name="InWhatContext" value="@Model.InWhatContext">@Model.InWhatContext</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Provide Overview?</label>
+                <div class="">
+                    <textarea required disabled id="ProvideOverview" class="form-control" name="ProvideOverview" value="@Model.ProvideOverview">@Model.ProvideOverview</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>What Areas?</label>
+                <div class="">
+                    <textarea id="WhatAreas"disabled required class="form-control" name="WhatAreas" value="@Model.WhatAreas">@Model.WhatAreas</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Experiences</label>
+                <div class="">
+                    <textarea id="Experience" disabled required class="form-control" name="Experience" value="@Model.Experience">@Model.Experience</textarea>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+
+
+
+
+
+

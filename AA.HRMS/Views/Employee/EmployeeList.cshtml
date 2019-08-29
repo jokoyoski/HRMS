@@ -1,0 +1,317 @@
+﻿@using PagedList.Mvc;
+@model AA.HRMS.Interfaces.IEmployeeOnBoardListView
+
+@{
+    ViewBag.Title = "Employee List";
+    var hasInfo = ((Model != null) && (Model.EmployeeList != null) && Model.EmployeeList.Any());
+
+}
+
+
+@using (Html.BeginForm("EmployeeList", "Employee", FormMethod.Post, new
+{
+    id = "filterForm"
+}))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="breadcomb-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="breadcomb-list">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-support"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>@ViewBag.Title</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                                <div class="breadcomb-report">
+                                    <a data-toggle="tooltip" data-placement="left" title="Add Employee" class="btn" href="~/Employee/AddEmployee"><i class="notika-icon notika-plus-symbol"></i></a>
+                                    <a data-toggle="tooltip" data-placement="left" title="Upload Employees Excel Sheet" class="btn" onclick="createModal('/Employee/UploadExcel')"><i class="notika-icon notika-sent"></i></a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+    {
+        <div>
+            <div class="container">
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+                </div>
+
+            </div>
+        </div>
+    }
+
+    if (!ViewData.ModelState.IsValid)
+    {
+        <div>
+            <div class="container">
+                <div class="alert alert-info alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        <div class="container">
+            <div class="" role="alert">
+                @using (Html.BeginForm("EmployeeList", "Employee"))
+                {
+                    <div class="form-group">
+                        <div class="nk-int-st search-input search-overt">
+                            <input name="searchString" type="text" class="form-control" placeholder="Search Employee..." />
+                            <button type="submit" class="btn search-ib">Search</button>
+                        </div>
+                    </div>
+
+                    <div class="inbox-btn-st-ls btn-toolbar">
+                        <div class="btn-group ib-btn-gp active-hook nk-email-inbox">
+                            <a href="~/Employee/EmployeeList" class="btn btn-default btn-sm"><i class="notika-icon notika-refresh"></i> Refresh</a>
+
+                        </div>
+                        <div class="btn-group ib-btn-gp active-hook nk-act nk-email-inbox">
+                            @Html.PagedListPager(Model.EmployeeList, page => Url.Action("EmployeeList",
+                                new { page }))
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+
+
+
+    if (hasInfo)
+    {
+
+        <div class="contact-area">
+            <div class="container">
+                <div class="row">
+                    @{
+                        int count = 0;
+                        foreach (var d in Model.EmployeeList)
+                        {
+                            var hasImage = d.Photograph != null;
+
+                            var imgSrc = "/Images/avt.jpg";
+
+                            if (hasImage)
+                            {
+                                var base64 = Convert.ToBase64String(d.Photograph.TheDigitalFile);
+                                imgSrc = string.Format("data:{0};base64,{1}", d.Photograph.ContentType, base64);
+                            }
+
+
+
+
+
+                            count = count + 1;
+
+                            if (count == 4)
+                            {
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="contact-list">
+                                            <div class="contact-win">
+                                                <div class="contact-img">
+                                                    <img src="@imgSrc" class="rounded-0 img-thumbnail" style="width: 150px; height: 150px">
+                                                </div>
+                                                <div class="conct-sc-ic">
+                                                    <a class="btn" data-trigger="hover" data-toggle="popover" data-placement="top" data-content="Click to view more details ablout the employee" href="/employee/viewemployee?employeeId=@d.EmployeeId" title="View Employee" data-original-title="Popover Title"><i class="notika-icon notika-eye"></i></a>
+                                                    <a class="btn" data-trigger="hover" data-toggle="popover" data-placement="top" data-content="@d.Email" title="Email" data-original-title="Popover Title" href="#"><i class="notika-icon notika-mail"></i></a>
+                                                    <a class="btn" href="#" data-trigger="hover" data-toggle="popover" data-placement="top" data-content="@d.MobileNumber" title="Phone" data-original-title="Popover Title"><i class="notika-icon notika-phone"></i></a>
+                                                    <a class="btn" href="#" data-trigger="hover" data-toggle="popover" data-placement="top" data-content="@d.HomeAddress" title="Address" data-original-title="Popover Title"><i class="notika-icon notika-ip-locator"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="contact-ctn">
+                                                <div class="contact-ad-hd">
+                                                    <h2>@d.FirstName @d.LastName</h2>
+                                                    <p class="ctn-ads">@d.StaffNumber</p>
+                                                </div>
+                                                <p>@d.About</p>
+                                            </div>
+                                            <div class="">
+                                                <div class="social-sn">
+                                                    <h2>Department:</h2>
+                                                    <p>@d.Department</p>
+                                                </div>
+
+                                                <br />
+
+                                                <div class="social-sn">
+                                                    <h2>Level:</h2>
+                                                    <p>@d.LevelName</p>
+                                                </div>
+
+                                                <br />
+
+                                                @if (d.IsLocked == true)
+                                                {
+                                                    <div class="social-sn">
+                                                        <h2>Status:</h2>
+                                                        <p style="color: red;">Employee is Locked</p>
+                                                    </div>
+
+                                                }
+
+                                                <br />
+
+                                                @if (d.IsExit == true)
+                                                {
+                                                    <div class="social-sn">
+                                                        <h2>Status:</h2>
+                                                        <p style="color: red;">Employee has Existed</p>
+                                                    </div>
+
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                count = 0;
+                                <br />
+                            }
+                            else
+                            {
+
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="contact-list">
+                                        <div class="contact-win">
+                                            <div class="contact-img">
+                                                <img src="@imgSrc" class="rounded-0 img-thumbnail" style="width: 150px; height: 150px">
+                                            </div>
+                                            <div class="conct-sc-ic">
+                                                <a class="btn" data-trigger="hover" data-toggle="popover" data-placement="top" data-content="Click to view more details ablout the employee" href="/employee/viewemployee?employeeId=@d.EmployeeId" title="View Employee" data-original-title="Popover Title"><i class="notika-icon notika-eye"></i></a>
+                                                <a class="btn" href="#" data-trigger="hover" data-toggle="popover" data-placement="top" data-content="@d.Email" title="Email" data-original-title="Popover Title"><i class="notika-icon notika-mail"></i></a>
+                                                <a class="btn" href="#" data-trigger="hover" data-toggle="popover" data-placement="top" data-content="@d.MobileNumber" title="Phone" data-original-title="Popover Title"><i class="notika-icon notika-phone"></i></a>
+                                                <a class="btn" href="#" data-trigger="hover" data-toggle="popover" data-placement="top" data-content="@d.HomeAddress" title="Address" data-original-title="Popover Title"><i class="notika-icon notika-ip-locator"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="contact-ctn">
+                                            <div class="contact-ad-hd">
+                                                <h2>@d.FirstName @d.LastName</h2>
+                                                <p class="ctn-ads">@d.StaffNumber</p>
+                                            </div>
+                                            <p>@d.About</p>
+                                        </div>
+                                        <div class="">
+                                            <div class="social-sn">
+                                                <h2>Department:</h2>
+                                                <p>@d.Department</p>
+                                            </div>
+
+                                            <br />
+
+                                            <div class="social-sn">
+                                                <h2>Level:</h2>
+                                                <p>@d.LevelName</p>
+                                            </div>
+
+                                            <br />
+
+                                            @if (d.IsLocked == true)
+                                            {
+                                                <div class="social-sn">
+                                                    <h2>Status:</h2>
+                                                    <p style="color: red;">Employee is Locked</p>
+                                                </div>
+
+                                            }
+
+                                            <br />
+
+                                            @if (d.IsExit == true)
+                                            {
+                                                <div class="social-sn">
+                                                    <h2>Status:</h2>
+                                                    <p style="color: red;">Employee has Exited</p>
+                                                </div>
+
+                                            }
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            }
+
+                        }
+                    }
+                </div>
+
+
+
+            </div>
+
+
+
+        </div>
+    }
+    else
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="alert alert-info alert-mg-b-0" role="alert">
+                        <p>No Employee</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+
+}
+
+
+
+
+<div class="modal fade" id="createModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayCreate">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var URL = "";
+
+    function createModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayCreate").html(data);
+            }
+        });
+
+        $("#createModal").modal();
+    }
+
+</script>

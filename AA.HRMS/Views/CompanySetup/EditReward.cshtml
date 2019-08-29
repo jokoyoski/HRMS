@@ -1,0 +1,49 @@
+﻿@model AA.HRMS.Interfaces.IRewardView
+@{
+    ViewBag.Title = "Edit Reward";
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+            
+        
+    @using (Html.BeginForm("EditReward", "CompanySetup", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <input type="hidden" id="companyId" name="companyId" value="@Model.CompanyId" />
+        <input type="hidden" id="rewardId" name="rewardId" value="@Model.RewardId" />
+
+        <div class="modal-body">
+            @Html.ValidationSummary()
+            @Model.ProcessingMessage
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Reward Name</label>
+
+                    <div class="">
+                        <input id="rewardName" name="rewardName" class="form-control ", type="text" value="@Model.RewardName" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Amount</label>
+               
+                    <div class="">
+                    <input id="amount" name="amount"class="form-control ", type="number" value="@Model.Amount" />
+                </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Save Changes</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+    }
+

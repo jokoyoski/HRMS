@@ -1,0 +1,255 @@
+﻿
+@model AA.HRMS.Interfaces.ITrainingHistoryListView
+
+@{
+    ViewBag.Title = "Certificate List";
+    var hasInfo = (Model != null) && (Model.trainingHistoryModel.Any());
+}
+
+
+
+@*<a class="popupUrl" id="CreateTrainingHistory" href="/Training/CreateTrainingHistory?userId=@Model.UserId">Add New Training History(s) </a>*@
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>Training History List</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                            <div class="breadcomb-report">
+                                <button class="btn" data-toggle="tooltip" onclick="createModal('/Training/CreateTrainingHistory')" data-placement="left" title="Add Training History"><i class="notika-icon notika-plus-symbol"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+        @if (hasInfo)
+         {
+                            <div class="data-table-area">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="data-table-list">
+                                                <div class="table-responsive">
+                                                    <table id="data-table-basic" class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Company Name</th>
+                                                                <th>Employee Name</th>
+                                                                <th>Training Name</th>
+                                                                <th>Trainer Rating</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var d in Model.trainingHistoryModel)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        @d.UserName
+                                                                    </td>
+
+                                                                    <td>
+                                                                        @d.CertificateName
+                                                                    </td>
+                                                                    <td>
+                                                                        @d.VendorName
+                                                                    </td>
+
+                                                                    <td>
+                                                                        @d.Year
+                                                                    </td>
+                                                                    <td>
+                                                                        @d.IsActive
+                                                                    </td>
+
+
+                                                                    @{
+                                                                        if (d.IsActive == true)
+                                                                        {
+                                                                            <td>
+                                                                                <button class="btn btn-primary" onclick="editModal('/Training/EditTrainingHistory?trainingHistoryId=@d.TrainingHistoryId')" data-placement="left" title="Edit Training History">Edit</button>
+                                                                            </td>
+
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>
+                                                                                Edit Disabled
+                                                                            </td>
+
+                                                                        }
+                                                                    }
+
+
+
+
+
+                                                                    @{
+                                                                        if (d.IsActive == true)
+                                                                        {
+                                                                            <td>
+                                                                                <button class="btn btn-primary" onclick="deleteModal('/Training/DeleteTrainingHistory?trainingHistoryId=@d.TrainingHistoryId')" data-placement="left" title="Delete Training History">Delete</button>
+                                                                            </td>
+
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>
+                                                                                Inactive
+                                                                            </td>
+                                                                        }
+                                                                    }
+
+
+
+                                                                </tr>
+                                                                        }
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th>Company Name</th>
+                                                                <th>Employee Name</th>
+                                                                <th>Training Name</th>
+                                                                <th>Trainer Rating</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+         }
+
+
+<div class="modal fade" id="createModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayCreate">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayEdit">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayDelete">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var URL = "";
+
+    function createModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayCreate").html(data);
+            }
+        });
+
+        $("#createModal").modal();
+    }
+
+    function editModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayEdit").html(data);
+            }
+        });
+
+        $("#editModal").modal();
+
+    }
+
+    function deleteModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayDelete").html(data);
+            }
+        });
+
+        $("#deleteModal").modal();
+
+    }
+
+</script>
+
+<!-- Input Mask JS
+        ============================================ -->
+<script src="js/jasny-bootstrap.min.js"></script>
+
+<!-- icheck JS
+        ============================================ -->
+<script src="js/icheck/icheck.min.js"></script>
+<script src="js/icheck/icheck-active.js"></script>
+<!-- rangle-slider JS
+    ============================================ -->
+<script src="js/rangle-slider/jquery-ui-1.10.4.custom.min.js"></script>
+<script src="js/rangle-slider/jquery-ui-touch-punch.min.js"></script>
+<script src="js/rangle-slider/rangle-active.js"></script>
+<!-- datapicker JS
+    ============================================ -->
+<script src="js/datapicker/bootstrap-datepicker.js"></script>
+<script src="js/datapicker/datepicker-active.js"></script>
+<!-- bootstrap select JS
+    ============================================ -->
+<script src="js/bootstrap-select/bootstrap-select.js"></script>
+<!--  color-picker JS
+    ============================================ -->
+<script src="js/color-picker/farbtastic.min.js"></script>
+<script src="js/color-picker/color-picker.js"></script>
+<!--  notification JS
+    ============================================ -->
+<script src="js/notification/bootstrap-growl.min.js"></script>
+<script src="js/notification/notification-active.js"></script>
+<!--  summernote JS
+    ============================================ -->
+<script src="js/summernote/summernote-updated.min.js"></script>
+<script src="js/summernote/summernote-active.js"></script>
+<!-- dropzone JS
+    ============================================ -->
+<script src="js/dropzone/dropzone.js"></script>

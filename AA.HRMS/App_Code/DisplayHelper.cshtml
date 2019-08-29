@@ -1,0 +1,107 @@
+﻿@using AA.HRMS.Interfaces;
+
+@helper YesOrNo(bool value)
+{@( value ? "Yes" : "No")}
+
+@helper Checked(bool isChecked)
+{@( isChecked ? "checked" : "")}
+
+@helper TablePager(int count = 0)
+{
+    var isDisplayPage = count > 10 ? "" : "display:none;";
+    <div id="pager" class="pager" style="@isDisplayPage">
+        <img src="/Content/tablesorter/icons/first.png" class="first" alt="first" />
+        <img src="/Content/tablesorter/icons/prev.png" class="prev" alt="prev" />
+        <input type="text" class="pagedisplay" />
+        <img src="/Content/tablesorter/icons/next.png" class="next" alt="next" />
+        <img src="/Content/tablesorter/icons/last.png" class="last" alt="last" />
+        <select class="pagesize">
+            <option selected="selected" value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+    </div>
+}
+
+@helper DisplayVacancy(IVacancyDetail vacancy)
+{
+    if (vacancy != null)
+    {
+        <div class="col-12">
+            @if (vacancy.VacancyId > 0)
+            {
+
+                <a href="/Job/ViewJobs?vacancyId=@vacancy.VacancyId">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="text-dark-blue text-capitalize">@vacancy.JobTitle</h4>
+                            <p class="mb-1 text-black text-small"><span class="fa fa-briefcase "></span> @vacancy.CompanyAlias</p>
+                            <p class="mb-1 text-black"><span class="fa fa-map-marker"></span> @vacancy.CompanyState </p>
+                            <p class="text-right"><a href="/Job/ViewJobs?vacancyId=@vacancy.VacancyId">Learn more &gt &gt</a></p>
+                        </div>
+                    </div>
+                </a>
+
+
+
+            }
+        </div>
+    }
+}
+
+
+@helper DisplayUserApplicationsList(IApplicationModel application)
+{
+    if (application != null)
+    {
+        <div class="col-12">
+            @if (application.VacancyId > 0)
+            {
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h2 class="card-title text-black">@application.JobTitle</h2>
+                        <h6 class="card-subtitle mb-2 text-muted text-capitalize">
+                            <span class="fa fa-briefcase text-capitalize"></span> @application.CompanyAlias
+                        </h6>
+                        <h6 class="card-subtitle mb-2 text-muted text-capitalize">
+                            <span class="fa fa-map-marker "></span> <span class="text-capitalize">@application.CompanyState</span>
+                        </h6>
+                        <h6 class="card-subtitle mb-2 text-muted text-capitalize">
+                            <span class="fa fa-calendar"></span> <span class="text-capitalize">@application.ApplicationDate</span>
+                        </h6>
+
+
+                        <a href="/Job/ViewJobs?vacancyId=@application.VacancyId" class="card-link text-danger pull-right">Learn more >> </a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}
+
+@helper IsDisabled(bool isDisabled)
+{
+    /**/
+    @(isDisabled ? "disabled = 'disabled'" : "")
+}
+
+
+@helper DisplayDate(DateTime? date)
+{
+    /**/
+    @(date?.ToString("yyyy-MM-dd") ?? "")
+}
+
+@helper DisplayInt(int intValue)
+{
+    /**/
+    @(intValue < 1 ? "" : intValue.ToString())
+}
+
+@helper DisplayDec(decimal decValue)
+{
+    /**/
+    @(decValue < 1 ? "" : decValue.ToString())
+}
+

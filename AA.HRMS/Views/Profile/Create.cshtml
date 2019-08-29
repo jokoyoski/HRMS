@@ -1,0 +1,267 @@
+﻿@model AA.HRMS.Interfaces.IProfileView
+@{
+    ViewBag.Title = "Create Profile";
+
+
+}
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-form"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                    <p>Create your profile <span class="bread-ntd">here</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="form-element-area">
+    <div class="container">
+        <div>
+            <div>
+                @using (Html.BeginForm("Create", "Profile", FormMethod.Post, new { id = "editForm", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+                {
+
+
+                    <input type="hidden" id="userId" name="userId" value="@Model.User.UserId" />
+                    
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-element-list">
+
+                                @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+                                {
+
+                                    <div class="alert alert-info alert-dismissible" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+                                    </div>
+                                }
+
+                                @if (!ViewData.ModelState.IsValid)
+                                {
+                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+                                    </div>
+                                }
+
+                                @Html.AntiForgeryToken()
+
+                                @if (Model.User.CompanyId == 0)
+                                {
+
+                                    <div class="row mt-0 pt-0">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <a id="btnSubmit" name="btnSubmit" href="/Administration/CompanyList" class="btn btn-primary notika-btn-primary"><i class="notika-icon notika-right-arrow"></i> Skip To Manage Company</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int float-lb floating-lb">
+                                            <div class="form-ic-cmp">
+                                                <img hidden src="" id="idimg" style="width: 100px; height: 100px;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div id="text" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int float-lb floating-lb">
+                                            <div class="form-ic-cmp">
+                                                <label>Employee Image</label>
+                                                <input type="file" accept="image/png,image/gif,imgae/tiff,image/bmp, image/jpg" onchange="readURL(this)" id="employeePhoto" alt="employeePhoto" name="profilePicture" title="Upload/Replace profile picture" value="" class="form-control-file" />
+                                                <shadow></shadow>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row">
+                                    <div id="text" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int float-lb floating-lb">
+                                            <div class="form-ic-cmp">
+                                                <label>Your Resume</label>
+                                                <input type="file" accept="application/msword, application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document" title="Upload/Replace CV" class="form-control-file" name="profileCV" id="profileCV" />
+                                                <shadow></shadow>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div id="text" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int float-lb floating-lb">
+                                            <div class="form-ic-cmp">
+                                                <label>Date of Birth</label>
+                                                <div class="input-group">
+                                                    <input type="date" class="form-control form-control-sm datetimepicker-input" data-target="#DateOfBirth" name="DateOfBirth" value="@DisplayHelper.DisplayDate(Model.DateOfBirth)" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <input hidden name="userId" value="@Model.User.UserId" />
+
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <label class="bold">State of Origin</label>
+                                                <input type="text" class="form-control" name="StateOfOrigin" id="StateOfOrigin" value="@Model.StateOfOrigin" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <label class="bold">Nationality</label>
+                                                @Html.DropDownList("countryId", Model.CountryDropDown, new { @class = "form-control form-control-sm", id = "countryId" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <label class="bold">Gender</label>
+                                                @Html.DropDownList("genderId", Model.GenderDropDown, new { @class = "form-control form-control-sm", id = "genderId" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="genderOtherId" style="display: none;">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="form-group ic-cmp-int">
+                                                <div class="form-ic-cmp">
+                                                    <label class="bold">Other Gender</label>
+                                                    <input type="text" class="form-control" name="genderOther" id="genderOther" value="@Model.GenderOther" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <label class="bold">Address</label>
+                                                <textarea class="form-control" name="Address" id="Address">@Model.Address</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <label class="bold">Profile Summary</label>
+                                                <textarea class=" form-control " name="ProfileSummary" id="ProfileSummary">@Model.ProfileSummary</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="submit" name="submitButton" value="Submit" class="btn btn-primary" data-dismiss="modal">Submit</button>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+        $('#genderId').change(function () {
+            $('#genderId').trigger("propertychange");
+        });
+
+        $('#genderId').bind('input propertychange', function () {
+
+            var aboutUsSourceId = $('#genderId').val() == 3;
+
+            if (aboutUsSourceId) {
+
+                document.getElementById("genderOtherId").style.display = "block";
+
+                genderOther.required = true;
+
+            } else {
+                document.getElementById("genderOtherId").style.display = "none";
+            }
+
+
+        });
+    });
+
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#idimg')
+                    .removeAttr('hidden');
+                $('#idimg')
+                    .attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+</script>
+

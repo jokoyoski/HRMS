@@ -1,0 +1,108 @@
+﻿@model AA.HRMS.Interfaces.ITrainingReportViewModel
+
+@{
+    ViewBag.Title = "View Training Report";
+
+    int progressTrainingRating = 0;
+
+    int progressTrainerRating = 0;
+
+    if (Model.TrainingEvaluationRating == 1)
+    {
+        progressTrainingRating = 25;
+    }
+    else if (Model.TrainingEvaluationRating == 2)
+    {
+        progressTrainingRating = 70;
+    }
+    else
+    {
+        progressTrainingRating = 100;
+    }
+
+    if (Model.TrainerEvaluationRating == 1)
+    {
+        progressTrainerRating = 25;
+    }
+    else if (Model.TrainerEvaluationRating == 2)
+    {
+        progressTrainerRating = 70;
+    }
+    else
+    {
+        progressTrainerRating = 100;
+    }
+
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+@using (Html.BeginForm("ViewTrainingReport", "Training", FormMethod.Post, new { id = "TrainingReportForm", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+
+{
+    @Html.AntiForgeryToken()
+
+    <div class="model-body">
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <div class="nk-int-st">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><h1>@Model.TrainerName</h1></li>
+                        <li class="list-group-item"><small>Start: </small><strong>@Model.TrainingStarts</strong></li>
+                        <li class="list-group-item"><small>Ends: </small><strong>@Model.TrainingEnds</strong></li>
+                        <li class="list-group-item">Report at @Model.DateCreated</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <div class="nk-int-st">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><h2>@Model.EmployeeName</h2></li>
+                        <li class="list-group-item">@Model.CompanyName</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="form-example-int">
+            <div class="form-group">
+                <div class="nk-int-st">
+                    <div>
+                        <label>Training Evaluation</label>
+                        <p>@Model.TrainingEvaluationComment</p>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="@progressTrainingRating" aria-valuemin="0%" aria-valuemax="100%"><strong>@Model.TrainingEvaluationRatingName</strong></div>
+                    </div>
+                </div>
+                <div class="form-example-int">
+                    <div class="form-group">
+                        <div class="nk-int-st">
+                            <label>Trainer Evaluation</label>
+                            <div>
+                                <p>@Model.TrainerEvaluationComment</p>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="@progressTrainerRating" aria-valuemin="0%" aria-valuemax="100%"><strong>@Model.TrainerEvaluationRatingName</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="modal-footer">
+        <a href="/Training/TrainingReportList" type="button" class="btn btn-default" data-dismiss="modal">Close</a>
+    </div>
+}
+
+

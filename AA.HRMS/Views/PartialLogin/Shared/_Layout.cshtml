@@ -1,0 +1,53 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    @*    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125979354-1"></script>*@
+    @*    <script>*@
+    @*        window.dataLayer = window.dataLayer || [];*@
+    @*        function gtag() { dataLayer.push(arguments); }*@
+    @*        gtag('js', new Date());*@
+    @**@
+    @*        gtag('config', 'UA-125979354-1');*@
+    @*    </script>*@
+    <title>HRMS | @ViewBag.Title</title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link href="~/Content/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    @Styles.Render("~/Content/css/style")
+    @RenderSection("Stylesheets", false)
+
+    @Scripts.Render("~/bundles/jquery")
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Google Fonts
+        ============================================ -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
+
+    <script src="~/Scripts/js/vendor/modernizr-2.8.3.min.js"></script>
+
+</head>
+<body>
+
+    @RenderBody()
+
+    <div class="footer-copyright-area">
+        <div class="container">
+            @Html.Partial("_Footer")
+        </div>
+    </div>
+
+    @Scripts.Render("~/Scripts/js/script")
+    @RenderSection("JavaScriptsIncludes", false)
+    @RenderSection("JavaScriptsExecution", false)
+    @RenderSection("Scripts", false)
+
+
+
+</body>
+</html>
+

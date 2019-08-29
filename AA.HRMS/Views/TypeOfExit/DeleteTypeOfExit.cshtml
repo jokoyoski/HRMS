@@ -1,0 +1,39 @@
+﻿@model AA.HRMS.Interfaces.ITypeOfExitView
+@{
+    ViewBag.Title = "Delete TypeOfExit";
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+
+@using (Html.BeginForm("DeleteTypeOfExit", "TypeOfExit", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" id="typeOfExitId" name="typeOfExitId" value="@Model.TypeOfExitId" />
+    <input type="hidden" id="companyId" name="companyId" value="@Model.CompanyId" />
+
+    <div class="modal-body">
+
+        @Html.ValidationSummary()
+        @Model.ProcessingMessage
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>TypeOfExit Name: </label> <label><strong>@Model.TypeOfExitName</strong></label>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Delete</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+}
+

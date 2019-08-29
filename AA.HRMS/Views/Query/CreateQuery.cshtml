@@ -1,0 +1,91 @@
+﻿
+@model AA.HRMS.Interfaces.IQueryView
+
+
+@{
+    ViewBag.Title = "AA HRMS - Create Query";
+}
+
+
+
+<div class="jumbotron">
+    <div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; width: 100%;">
+        <div class="validation-summary-errors">
+            @Html.ValidationSummary()
+            @Model.ProcessingMessage
+        </div>
+    </div>
+    @using (Html.BeginForm("CreateQuery", "Query", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <input name="companyId" value="@Model.CompanyId" hidden/> 
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                @*<a href="~/Views/Query/CreateQuery.cshtml">~/Views/Query/CreateQuery.cshtml</a>*@
+                <span class="required">*</span>Query Name:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <input id="QueryName" name="QueryName" style="width: 250px;" type="text" maxlength="50" value="@Model.QueryName" />
+            </div>
+        </div>
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span>Consequences:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <input id="Consequences" name="Consequences" style="width: 250px;" type="text" maxlength="50" value="@Model.Consequences" />
+            </div>
+        </div>
+
+
+        <div class="columns" style="width: 100%; padding-top: 15px; padding-bottom: 5px;">
+            <div class="modal-footer">
+                <button type="button" name="submitButton" class="btn btn-default" data-dismiss="modal">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+            <div class="column" style="font-size: 9px; font-weight: bold; font-style: italic; padding-left: 5px; padding-top: 2px;">
+                You must enter all information above correctly to enable submission.
+            </div>
+        </div>
+    }
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("span.ui-dialog-title").text('Create Query');
+
+        $('#btnCancel').click(function () {
+            window.location.href = '/Query/QueryList';
+            return false;
+        });
+
+        $('#QueryName').change(function () {
+            $('#QueryName').trigger("propertychange");
+        });
+
+        $('#Consequences').change(function () {
+            $('#QueryName').trigger("propertychange");
+        });
+
+        $('#QueryName').bind('input propertychange', function () {
+            $('#btnSubmit').prop("class", "grayButton");
+            $('#btnSubmit').prop("disabled", true);
+
+            var industryNameOkay = $('#QueryName').val().length > 0;
+
+            if ((industryNameOkay)) {
+                $('#btnSubmit').prop("class", "blueButton");
+                $('#btnSubmit').prop("disabled", false);
+            }
+        });
+
+        $('#QueryName').trigger("propertychange");
+
+    });
+</script>
+

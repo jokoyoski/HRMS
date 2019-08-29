@@ -1,0 +1,43 @@
+﻿@model AA.HRMS.Interfaces.ILeaveRequestModel
+
+@{
+    ViewBag.Title = "Leave Request Details";
+}
+
+@*<h2>Leave Request Details</h2>*@
+<style>
+    .subject {
+        width: 100%;
+        font-weight: 200;
+        color: blue;
+        font-size: 120%;
+    }
+</style>
+<div width="700px;">
+    <table class="tablesorter" id="tableList" style="width: 25%;padding:30px;border-color: transparent;background-color:azure;">
+
+        <colgroup>
+            <col style="width: 150px;" />
+            <col style="width: 450px;" />
+
+        </colgroup>
+        <tr><td class="subject">Employee Id: </td><td>@Model.EmployeeID</td></tr>
+        <tr><td class="subject">Leave Type: </td><td>@Model.LeaveType</td></tr>
+        <tr><td class="subject">Date Leave Starts: </td><td>@Model.DateLeaveStart</td></tr>
+        <tr><td class="subject">Date Leave Ends: </td><td>@Model.DateLeaveEnds</td>
+        <tr>
+        <tr><td class="subject">Leave Status Id: </td><td>@Model.LeaveStatusID</td></tr>
+        <tr><td class="subject">Date Requested: </td><td>@Model.DateRequested</td></tr>
+        <tr><td class="subject">Approving Officer: </td><td>@Model.ApprovingAuthority</td></tr>
+        <tr><td class="subject">Officer's Comment: </td><td>@Model.ApprovingAuthorityComment</td></tr>
+        <tr><td class="subject">Human Resource Officer: </td><td>@Model.HRApprover</td></tr>
+        <tr><td class="subject">HR's Comment: </td><td>@Model.HRApprover</td></tr>
+        <tr><td class="subject">Date Department Approves: </td><td>@Model.DateApprovedDept</td></tr>
+        <tr><td class="subject">Date HR Approves: </td><td>@Model.DateApprovedHR</td></tr>
+        <tr><td class="subject">Date Created: </td><td>@Model.DateCreated</td></tr>
+
+    </table>
+    <br />
+    <a href="/Benefits/LeaveRequestListUp">Back to main list</a>
+</div>
+

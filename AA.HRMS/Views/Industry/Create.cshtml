@@ -1,0 +1,89 @@
+﻿
+@model AA.HRMS.Interfaces.IIndustryView
+
+
+@{
+    ViewBag.Title = "AA HRMS - Industry Registration";
+}
+
+@section PageTitle{
+    Create Industry
+}
+
+
+
+
+<a href="/Administration/IndustryList?industryId=@Model.IndustryId"> All Industries</a>
+
+
+
+<div class="jumbotron">
+    <div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; width: 100%;">
+        <div class="validation-summary-errors">
+            @Html.ValidationSummary()
+            @Model.ProcessingMessage
+        </div>
+    </div>
+    @using (Html.BeginForm("Create", "Industry", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <input type="hidden" id="industryId" name="IndustryId" value="@Model.IndustryId" />
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span>Industry Name:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <input id="industryName" name="industryName" style="width: 250px;" type="text" maxlength="50" value="@Model.IndustryName" />
+            </div>
+        </div>
+
+
+        <div class="columns" style="width: 100%; padding-top: 15px; padding-bottom: 5px;">
+            <div class="column" style="margin-left: 195px;">
+                <input class="grayButton" id="btnSubmit" name="submitButton" style="width: 80px;" disabled type="submit" value="Submit" />
+            </div>
+            <div class="column" style="margin-left: 15px;">
+                <input id="btnCancel" class="blueButton" name="submitButton" style="width: 80px;"
+                       type="submit" value="Cancel" />
+            </div>
+            <div class="column" style="font-size: 9px; font-weight: bold; font-style: italic; padding-left: 5px; padding-top: 2px;">
+                You must enter all information above correctly to enable submission.
+            </div>
+        </div>
+    }
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("span.ui-dialog-title").text('Create Industry');
+
+        $('#btnCancel').click(function () {
+            window.location.href = '/Industry/IndustryList';
+            return false;
+        });
+
+        $('#industryName').change(function () {
+            $('#industryId').trigger("propertychange");
+        });
+
+        $('#industryId').bind('input propertychange', function () {
+            $('#btnSubmit').prop("class", "grayButton");
+            $('#btnSubmit').prop("disabled", true);
+
+            var industryNameOkay = $('#industryName').val().length > 0;
+
+            if ((industryNameOkay)) {
+                $('#btnSubmit').prop("class", "blueButton");
+                $('#btnSubmit').prop("disabled", false);
+            }
+        });
+
+        $('#industryId').trigger("propertychange");
+
+    });
+</script>

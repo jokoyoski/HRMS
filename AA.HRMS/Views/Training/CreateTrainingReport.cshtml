@@ -1,0 +1,140 @@
+﻿@model AA.HRMS.Interfaces.ITrainingReportViewModel
+@{
+    ViewBag.Title = "Write Training Report";
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+ 
+   
+ @using (Html.BeginForm("CreateTrainingReport", "Training", FormMethod.Post, new { id = "addTrainingReportForm" }))
+ {
+        @Html.AntiForgeryToken()
+
+<div class="modal-body">
+
+    @Html.ValidationSummary()
+    @Model.ProcessingMessage
+
+    @if (Model.EmployeeID < 1 || Model.EmployeeID == null)
+    {
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Employee</label>
+                <div class="">
+                    @Html.DropDownList("EmployeeID", Model.EmployeeDropDownlist, new { @class = "form-control", id = "EmployeeID" })
+
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+    <input name="companyId" value="@Model.CompanyID" hidden />
+    <input name="employeeID" value="@Model.EmployeeID" hidden />
+    <input name="trainingId" value="@Model.Training.TrainingID" hidden />
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Trainer's Name</label>
+            <div class="">
+                <input id="trainerName" required name="trainerName" type="text" class="form-control" value="@Model.TrainerName" />
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Training Calendar</label>
+                <div class="">
+                    @Html.DropDownList("TrainingCalendarID", Model.TrainingCalendarDropDownlist, new { @class = "form-control", id = "TrainingCalendarID" })
+
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Training Evaluation Rating</label>
+                <div class="">
+                    @Html.DropDownList("TrainingEvaluationRating", Model.TrainingEvaluationRatingDropDownlist, new { @class = "form-control", id = "TrainingEvaluationRating" })
+
+                </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Training Evaluation Comment:</label>
+                    <div class="">
+                        <textarea id="trainingEvaluationComment" required type="text" name="trainingEvaluationComment" class="form-control" value="@Model.TrainingEvaluationComment">@Model.TrainingEvaluationComment</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Trainer Evaluation Rating:</label>
+                    <div class="">
+                        @Html.DropDownList("TrainerEvaluationRating", Model.TrainingEvaluationRatingDropDownlist, new { @class = "form-control", id = "TrainerEvaluationRating" })
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Trainer Evaluation Comment:</label>
+                    <div class="">
+                        <textarea id="trainerEvaluationComment" required type="text" name="trainerEvaluationComment" class="form-control" value="@Model.TrainerEvaluationComment">@Model.TrainerEvaluationComment</textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+        <div class="modal-footer">
+            <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Submit Report</button>
+            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+        </div>
+ }
+
+        <!-- Input Mask JS
+            ============================================ -->
+        <script src="js/jasny-bootstrap.min.js"></script>
+
+        <!-- icheck JS
+            ============================================ -->
+        <script src="js/icheck/icheck.min.js"></script>
+        <script src="js/icheck/icheck-active.js"></script>
+        <!-- rangle-slider JS
+        ============================================ -->
+        <script src="js/rangle-slider/jquery-ui-1.10.4.custom.min.js"></script>
+        <script src="js/rangle-slider/jquery-ui-touch-punch.min.js"></script>
+        <script src="js/rangle-slider/rangle-active.js"></script>
+        <!-- datapicker JS
+        ============================================ -->
+        <script src="js/datapicker/bootstrap-datepicker.js"></script>
+        <script src="js/datapicker/datepicker-active.js"></script>
+        <!-- bootstrap select JS
+        ============================================ -->
+        <script src="js/bootstrap-select/bootstrap-select.js"></script>
+        <!--  color-picker JS
+        ============================================ -->
+        <script src="js/color-picker/farbtastic.min.js"></script>
+        <script src="js/color-picker/color-picker.js"></script>
+        <!--  notification JS
+        ============================================ -->
+        <script src="js/notification/bootstrap-growl.min.js"></script>
+        <script src="js/notification/notification-active.js"></script>
+        <!--  summernote JS
+        ============================================ -->
+        <script src="js/summernote/summernote-updated.min.js"></script>
+        <script src="js/summernote/summernote-active.js"></script>
+        <!-- dropzone JS
+        ============================================ -->
+        <script src="js/dropzone/dropzone.js"></script>

@@ -1,0 +1,250 @@
+﻿@model AA.HRMS.Interfaces.IOnBoardingView
+
+@{
+    ViewBag.Title = "AA HRMS - OnBoarding Registration";
+}
+@section PageTitle{
+    Edit Employee
+}
+<div class="jumbotron">
+
+    <div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; width: 100%;">
+        <div class="validation-summary-errors">
+            @Html.ValidationSummary()
+            @Model.ProcessingMessage
+        </div>
+    </div>
+
+    @using (Html.BeginForm("EditDepartment", "Administration", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" id="employeeId" name="employeeId" value="@Model.EmployeeID" />
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span>First Name:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <input id="firstName" name="firstName" style="width: 250px;" type="text" maxlength="50" value="@Model.FirstName" />
+            </div>
+        </div>
+
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span>Last Name:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+                    <input id="lastName" name="lastName" style="width: 250px;" type="text" maxlength="50" value="@Model.LastName" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span>Middle Name:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="middleName" name="middleName" style="width: 250px;" type="text" maxlength="50" value="@Model.MiddleName" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span>MaidenName:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="maidenName" name="maidenName" style="width: 250px;" type="text" maxlength="50" value="@Model.MaidenName" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Nationality :
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="nationality" name="nationality" style="width: 250px;" type="text" maxlength="50" value="@Model.Nationality" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> StaffNumber :
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="staffNumber" name="staffNumber" style="width: 250px;" type="text" maxlength="50" value="@Model.StaffNumber" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Email:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="email" name="email" style="width: 250px;" type="text" maxlength="50" value="@Model.Email" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> MobileNumber:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="mobileNumber" name="mobileNumber" style="width: 250px;" type="text" maxlength="50" value="@Model.MobileNumber" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Permanent Address:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="permanentAddress" name="permanentAddress" style="width: 250px;" type="text" maxlength="50" value="@Model.PermanentAddress" />
+                </div>
+            </div>
+
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Permanent Address City:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="permanentAddressCity" name="permanentAddressCity" style="width: 250px;" type="text" maxlength="50" value="@Model.PermanentAddressCity" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Permanent Address State:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="permanentAddressState" name="permanentAddressState" style="width: 250px;" type="text" maxlength="50" value="@Model.PermanentAddressState" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Home Address:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="homeAddress" name="homeAddress" style="width: 250px;" type="text" maxlength="50" value="@Model.HomeAddress" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Home Address City:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="homeAddressCity" name="homeAddressCity" style="width: 250px;" type="text" maxlength="50" value="@Model.HomeAddressCity" />
+                </div>
+            </div>
+
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Home Address State:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="homeAddressState" name="homeAddressState" style="width: 250px;" type="text" maxlength="50" value="@Model.HomeAddressState" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Birthday:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="birthday" name="birthday" style="width: 250px;" type="text" maxlength="50" value="@Model.Birthday" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span>About :
+                </div>
+                <div class="data column" style="overflow: hidden;">
+                    <input id="about" name="about" style="width: 250px;" type="text" maxlength="50" value="@Model.About" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span>SkillSet:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+                    <input id="skillSet" name="skillSet" style="width: 250px;" type="text" maxlength="50" value="@Model.SkillSet" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span>Seating Location:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+                    <input id="seatingLocation " name="seatingLocation" style="width: 250px;" type="text" maxlength="50" value="@Model.SeatingLocation" />
+                </div>
+            </div>
+            <div class="columns" style="width: 100%; padding-top: 15px; padding-bottom: 5px;">
+
+                <div class="modal-footer">
+                    <button type="button" name="submitButton" class="btn btn-default" data-dismiss="modal">Submit</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+                <div class="column" style="font-size: 9px; font-weight: bold; font-style: italic; padding-left: 5px; padding-top: 2px;">
+                    You must enter all information above correctly to enable submission.
+                </div>
+            </div>
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("span.ui-dialog-title").text('Edit OnBoarding ' + $('#LastName').val());
+
+        $('#btnCancel').click(function () {
+            window.location.href = '/OnBoarding/OnBoardingList?EmployeeId=' + @Model.EmployeeID;
+            return false;
+        });
+
+        $('#lastName').change(function () {
+            $('#employeeId').trigger("propertychange");
+        });
+
+        //$('#description').change(function () {
+        //    $('#departmentId').trigger("propertychange");
+        //});
+
+        //$('#departmentId').change(function () {
+        //    $('#departmentId').trigger("propertychange");
+        //});
+
+        $('#employeeId').bind('input propertychange', function () {
+            $('#btnSubmit').prop("class", "grayButton");
+            $('#btnSubmit').prop("disabled", true);
+
+            var employeeIdOkay = $('#employeeId').val().length > 0;
+            var lastNameOkay = $('#lastName').val().length > 0;
+
+            if ((employeeIdOkay) && (lastNameOkay)) {
+                $('#btnSubmit').prop("class", "blueButton");
+                $('#btnSubmit').prop("disabled", false);
+            }
+        });
+
+        $('#employeeId').trigger("propertychange");
+
+    });
+</script>
+

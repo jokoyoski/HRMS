@@ -1,0 +1,62 @@
+﻿@model AA.HRMS.Interfaces.ISkillSetModelView
+
+@{
+    ViewBag.Title = "Edit Skill Set";
+}
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+@Html.ValidationSummary()
+@Model.ProcessingMessage
+
+@using (Html.BeginForm("Edit", "SkillSet", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+<div class="modal-body">
+
+    <input type="hidden" id="SkillId" name="SkillId" value="@Model.SkillId" />
+
+    <input type="hidden" id="url" name="url" value="@Model.URL" />
+
+    <input name="employeeId" id="employeeId" value="@Model.EmployeeId" hidden />
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Skill Name</label>
+            <div class="">
+                <input id="SkillName" name="SkillName" type="text" class="form-control" value="@Model.SkillName" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>skill Description</label>
+            <div class="">
+                <textarea id="skillDescription" type="text" name="skillDescription" class="form-control" value="@Model.SkillDescription">@Model.SkillDescription</textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Experience</label>
+            <div class="">
+                @Html.DropDownList("Experience", Model.ExperienceDropDown, new { @class = "form-control", id = "Experience" })
+            </div>
+        </div>
+    </div>
+</div>
+            <div class="modal-footer">
+                <button type="submit" name="submitButton" class="btn btn-default">Modify</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+   
+}
+

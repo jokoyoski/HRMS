@@ -1,0 +1,84 @@
+﻿
+@model AA.HRMS.Interfaces.ITrainingHistoryViewModel
+
+
+<script src="~/Scripts/jquery.validate.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js" type="text/javascript"></script>
+@{
+    ViewBag.Title = "Add New TrainingHistory";
+}
+@Html.ValidationSummary()
+@Model.processingmessage
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+@Html.ValidationSummary()
+@Model.processingmessage
+
+
+@using (Html.BeginForm("EditTrainingHistory", "Training", FormMethod.Post, new { id = "displayEdit" }))
+            {
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+
+        <div class="modal-body">
+
+            <input type="hidden" id="TrainingHistoryId" name="TrainingHistoryId" value="@Model.TrainingHistoryId" />
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Training</label>
+                    <div class="nk-int-st">
+                        @Html.DropDownList("TrainingId", Model.TrainingDropDownList, new { @class = "form-control input-sm", id = "TrainingId" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Training Vendor</label>
+                    <div class="nk-int-st">
+                        @Html.DropDownList("TrainingVendorId", Model.TrainingVendorDropList, new { @class = "form-control input-sm", id = "TrainingVendorId" })
+                    </div>
+                </div>
+            </div>
+
+            <input type="hidden" id="UserId" name="UserId" value="@Model.UserId" />
+
+            <input type="hidden" id="IsActive" name="IsActive" value="@Model.IsActive" />
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Certificate Type</label>
+                    <div class="nk-int-st">
+                        @Html.DropDownList("CertificationId", Model.CertificateDropDownList, new { @class = "form-control input-sm", id = "CertificationId" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Select Year</label>
+                    <div class="nk-int-st">
+                        <input type="date" class="form-control input-sm" name="Year" value="@Model.Year" id="Year" />
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="modal-footer">
+                <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Save changes</button>
+                <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+}
+

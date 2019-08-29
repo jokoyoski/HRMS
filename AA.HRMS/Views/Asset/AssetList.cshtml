@@ -1,0 +1,221 @@
+﻿@model AA.HRMS.Interfaces.IAssetListView
+
+@{
+    ViewBag.Title = "AA HRMS - Asset List";
+    var hasInfo = ((Model != null) && (Model.assetsCollection != null) && Model.assetsCollection.Any());
+}
+@section PageTitle{
+   Asset List
+}
+
+<a class="editUrl" id="createAsset" href="/HR/AddAsset"> Create Asset </a>
+<div class="jumbotron" style="padding-top: 10px; margin-bottom: 5px">
+    @using (Html.BeginForm("AssetList", "Asset", FormMethod.Post, new
+    {
+        id = "filterForm"
+    }))
+    {
+        @Html.AntiForgeryToken()
+        if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+        {
+            <div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; width: 100%;">
+                <div class="validation-summary-errors">
+                    @Model.ProcessingMessage
+                </div>
+            </div>
+        }
+        <div class="columns" style="font-size: 12px; padding-bottom: 1px; padding-top: 15px;">
+            <div class="column" style="font-weight: bold;">
+                Filter Asset List by:
+            </div>
+        </div>
+        <div class="columns" style="font-size: 12px; padding-bottom: 2px; width: 100%;">
+
+            <div class="column">
+                <div class="columns" style="width: 100%; padding-top: 5px;">
+                    <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                        Company:
+                    </div>
+                    <div class="data column" style="overflow: hidden;">
+                        @Html.DropDownList("selectedCompanyId", Model.CompanyDropDownList, new { style = "width:204px;height:20px;", id = "selectedCompanyId" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="columns" style="font-size: 12px; margin-top: 10px; padding-bottom: 2px; width: 100%;">
+
+            <div class="modal-footer">
+                <button type="button" name="submitButton" class="btn btn-default" data-dismiss="modal">Submit</button>             
+            </div>
+            <div class="column" style="margin-left: 25px; vertical-align: middle;">
+                <a href="/Asset/AssetList" style="vertical-align: middle; font-weight: bold;">Reset</a>
+            </div>
+        </div>
+        if (hasInfo)
+        {
+            <div class="columns" style="font-size: 12px; width: 100%; font-style: italic;">
+                Hold down the shift key to sort with multiple columns.
+            </div>
+
+            <div class="columns" style="width: 100%;">
+                <div class="column" style="width: 100%;">
+                    <table id="assetList" class="tablesorter" style="border-color: transparent; width: 100%;">
+                        <colgroup>
+                            <col style="width: 80px;" />
+                            <col style="width: 200px;" />
+                            <col style="width: 200px;" />
+                            @*                            <col style="width: 200px;" />*@
+                            <col style="width: 200px;" />
+                            <col style="width: 100px;" />
+                            <col style="width: 80px;" />
+                        </colgroup>
+                        <thead style="width: 100%;">
+                            <tr style="width: 100%;">
+                                <th>Department Id</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                @*                                <th>Parent Asset</th>*@
+                                <th>Company</th>
+                                <th>Is Active?</th>
+                                <th colspan="5">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var d in Model.assetsCollection)
+                            {
+                                <tr style="width: 100%;">
+
+                                    <td>
+                                        @d.AssetId
+                                    </td>
+                                    <td>
+                                        @d.AssetName
+                                    </td>
+                                    <td>
+                                        @d.AssetSerialNumber
+                                    </td>
+                                    @*                                    <td>*@
+                                    @*                                        @d.ParentAssetName*@
+                                    @*                                    </td>*@
+                                    <td>
+                                        @d.CompanyId
+                                    </td>
+                                    <td style="border: 1px solid #FFF !important;">
+                                        @DisplayHelper.YesOrNo(d.IsActive)
+                                    </td>
+
+                                    <td style="border: 1px solid #FFF !important;">
+                                        <a class="popupUrl" id="coy_edit_@(d.CompanyId)" href="/HR/EditDepartment?departmentId=@d.AssetId&companyId=@d.CompanyId">Edit</a>
+                                    </td>
+                                    @{
+                                        if (d.IsActive == true)
+                                        {
+                                            <td style="border: 1px solid #FFF !important;">
+                                                <a class="popupUrl" id="dept_@(d.CompanyId)" href="/HR/DeleteDepartment?departmentId=@d.AssetId&companyId=@d.CompanyId">Delete</a>
+                                            </td>
+                                        }
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="columns" style="margin-top: 10px; width: 100%;">
+                <div class="column">
+                    @DisplayHelper.TablePager(Model.assetsCollection.Count())
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; margin-top: 15px; width: 100%;">
+                <div class="validation-summary-errors">
+                    No Asset meets search criteria or none is setup
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@section JavaScriptsIncludes
+{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.validate.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery-ui-1.12.1.js" type="text/javascript"></script>
+    <script src="/Scripts/tablesorter/jquery.tablesorter.js" type="text/javascript"></script>
+    <script src="/Scripts/tablesorter/jquery.tablesorter.widgets.js" type="text/javascript"></script>
+    <script src="/Scripts/tablesorter/jquery.tablesorter.pager.js" type="text/javascript"></script>
+}
+
+@section JavaScriptsExecution
+{
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+
+            $(function () {
+                $('#AssetList').tablesorter({
+                    theme: 'blue',
+                    headers: { 6: { sorter: false }, 7: { sorter: false } },
+                    widthFixed: true,
+                    widgets: ['zebra'],
+                    size: 10
+                }).tablesorterPager({ container: $("#pager"), size: 10 });
+            });
+
+            // popup page
+            var $popupDialog = $('<div></div>').dialog({
+                autoOpen: false,
+                appendTo: "form",
+                width: 650,
+                height: 300,
+                modal: true,
+                title: '',
+                closeText: "",
+                closeOnEscape: false,
+                resizable: false
+            });
+
+            $('.popupUrl').click(function () {
+                $popupDialog.html('<img src="/Content/Images/ajaxLoaderBlue.gif" alt="Viewing page..."/>');
+                $("span.ui-dialog-title").text('Loading the Page');
+                var dt = new Date();
+                var theTime = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+                var href = this.href ;
+
+                $popupDialog.load(encodeURI(href));
+                $popupDialog.dialog('open');
+
+                return false;
+            });
+
+
+            $('.editUrl').click(function () {
+                $popupDialog.html('<img src="/Content/Images/ajaxLoaderBlue.gif" alt="Viewing page..."/>');
+
+                $("span.ui-dialog-title").text('Loading the Page');
+
+                var dt = new Date();
+                var theTime = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+                var href = this.href;
+
+                $popupDialog.load(encodeURI(href));
+                $popupDialog.dialog('open');
+
+                return false;
+            });
+        });
+    </script>
+}
+
+@section Stylesheets
+{
+    <link href="/Content/themes/base/all.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/tablesorter/theme.blue.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/tablesorter/jquery.tablesorter.pager.css" rel="stylesheet" type="text/css" />
+}

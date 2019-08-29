@@ -1,0 +1,107 @@
+﻿@model AA.HRMS.Interfaces.IDepartmentView
+
+@{
+    ViewBag.Title = "AA HRMS - Department Registration";
+}
+@section PageTitle{
+    Edit Department
+}
+<div class="jumbotron">
+
+    <div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; width: 100%;">
+        <div class="validation-summary-errors">
+            @Html.ValidationSummary()
+            @Model.ProcessingMessage
+        </div>
+    </div>
+
+    @using (Html.BeginForm("EditDepartment", "Administration", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" id="departmentId" name="departmentId" value="@Model.DepartmentId" />
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                Company:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                @Html.DropDownList("companyId", Model.CompanyDropDownList, new { style = "width:204px;height:20px;", id = "companyId" })
+            </div>
+        </div>
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span>Department Name:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <input id="departmentName" name="departmentName" style="width: 250px;" type="text" maxlength="50" value="@Model.DepartmentName" />
+            </div>
+        </div>
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span>Parent Department:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                @Html.DropDownList("parentDepartmentId", Model.ParentDepartmentDropDown, new { style = "width:204px;height:20px;", id = "parentDepartmentId" })
+            </div>
+        </div>
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span>Description:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <input id="description" name="description" style="width: 250px;" type="text" maxlength="50" value="@Model.Description" />
+            </div>
+        </div>
+        <div class="columns" style="width: 100%; padding-top: 15px; padding-bottom: 5px;">
+            <div class="column" style="margin-left: 195px;">
+                <input class="blueButton" id="btnSubmit" name="submitButton" style="width: 80px;" type="submit" value="Submit" />
+            </div>
+            <div class="column" style="margin-left: 15px;">
+                <input id="btnCancel" class="blueButton" name="submitButton" style="width: 80px;"
+                       type="submit" value="Cancel" />
+            </div>
+            <div class="column" style="font-size: 9px; font-weight: bold; font-style: italic; padding-left: 5px; padding-top: 2px;">
+                You must enter all information above correctly to enable submission.
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("span.ui-dialog-title").text('Edit Department ' + $('#departmentName').val());
+
+        $('#btnCancel').click(function () {
+            window.location.href = '/Administration/DepartmentList?CompanyId=' + @Model.CompanyId;
+            return false;
+        });
+
+        $('#departmentName').change(function () {
+            $('#departmentId').trigger("propertychange");
+        });
+
+        $('#description').change(function () {
+            $('#departmentId').trigger("propertychange");
+        });
+
+        $('#departmentId').change(function () {
+            $('#departmentId').trigger("propertychange");
+        });
+
+        $('#departmentId').bind('input propertychange', function () {
+            $('#btnSubmit').prop("class", "grayButton");
+            $('#btnSubmit').prop("disabled", true);
+
+            var departmentIdOkay = $('#departmentId').val().length > 0;
+            var departmentNameOkay = $('#departmentName').val().length > 0;
+            var descriptionOkay = $('#description').val().length > 0;
+
+            if ((departmentIdOkay) && (departmentNameOkay) && (descriptionOkay)) {
+                $('#btnSubmit').prop("class", "blueButton");
+                $('#btnSubmit').prop("disabled", false);
+            }
+        });
+
+        $('#departmentId').trigger("propertychange");
+
+    });
+</script>

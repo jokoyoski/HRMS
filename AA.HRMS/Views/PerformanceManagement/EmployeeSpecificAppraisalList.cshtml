@@ -1,0 +1,308 @@
+﻿@using AA.HRMS.Interfaces.ValueTypes
+@using System.Web
+
+@model AA.HRMS.Interfaces.IAppraisalListView
+
+@{
+
+    ViewBag.Title = "Appraisal List";
+    var hasInfo = ((Model != null) && (Model.EmployeeAppraisalCollection != null) && Model.EmployeeAppraisalCollection.Any());
+    var role = (String[])HttpContext.Current.Session[SessionKey.UserRoles];
+}
+
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                @if (role.Contains("CompanyAdmin"))
+                                {
+                                    <div class="breadcomb-ctn">
+                                        <h2>@Model.Employee.LastName Appraisal</h2>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="breadcomb-ctn">
+                                        <h2>My Appraisal</h2>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        @if (role.Contains("CompanyAdmin"))
+                        {
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                                <div class="breadcomb-report">
+                                    <a class="btn" href="/employee/viewemployee?employeeid=@Model.Employee.EmployeeId" data-placement="left" title="back to @Model.Employee.LastName"><i class="notika-icon notika-back"></i></a>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+@if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+{
+    <div>
+        <div class="container">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+            </div>
+
+        </div>
+    </div>
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div>
+        <div class="container">
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@Html.AntiForgeryToken()
+
+<input hidden name="url" value="@Model.URL" />
+
+@if (hasInfo)
+{
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="table-responsive">
+                            <table id="data-table-basic" class="table table-striped">
+
+                                <thead>
+                                    <tr>
+                                        <th>Appraisal Period</th>
+                                        <th>Appraisal Year</th>
+                                        <th>Date Initiate</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (var d in Model.EmployeeAppraisalCollection)
+                                    {
+                                    <tr>
+
+                                        <td>
+                                            @d.AppraisalPeriod
+                                        </td>
+                                        <td>
+                                            @d.AppraisalYear
+                                        </td>
+                                        <td>
+                                            @d.DateInitiated
+                                        </td>
+
+                                        <td>
+                                            <a class="btn btn-sm btn-primary" href="/PerformanceManagement/AppraisalGoalList?employeeAppraisalId=@d.EmployeeAppraisalId&url=@Model.URL" data-placement="left" title="View Appraisal Goal">Appraisal Goal(s)</a>
+                                        </td>
+
+                                        @if (d.Status == "Appraisee" && !role.Contains("CompanyAdmin"))
+                                        {
+                                            <td>
+                                                <a class="btn btn-sm btn-primary" href="/PerformanceManagement/EditAppraisal?employeeAppraisalId=@d.EmployeeAppraisalId&url=@Model.URL" data-placement="left" title="Fill Appraisal">Fill Form</a>
+                                            </td>
+                                        }
+                                        else if (d.Status == "Appraiser" && (role.Contains("Supervisor") && d.SupervisorId > 0) && !role.Contains("CompanyAdmin"))
+                                        {
+                                            <td>
+                                                <a class="btn btn-sm btn-primary" href="/PerformanceManagement/EditAppraisal?employeeAppraisalId=@d.EmployeeAppraisalId&url=@Model.URL" data-placement="left" title="Fill Appraisal">Fill Form (Appraiser)</a>
+                                            </td>
+                                        }
+                                        else if (d.Status == "Moderation" && role.Contains("CompanyAdmin"))
+                                        {
+                                            <td>
+                                                <a class="btn btn-sm btn-primary" href="/PerformanceManagement/EditEmployeeAppraisal?employeeAppraisalId=@d.EmployeeAppraisalId&url=@Model.URL" data-placement="left" title="Fill Appraisal">Fill Form (Moderation)</a>
+                                            </td>
+                                        }
+                                        else if (d.Status == "Appraised")
+                                        {
+                                            <td>
+                                                <a class="btn btn-sm btn-primary" href="/PerformanceManagement/ViewEmployeeAppraisal?employeeAppraisalId=@d.EmployeeAppraisalId&url=@Model.URL" data-placement="left" title="View Appraisal">View Appraised Form</a>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <button class="btn btn-sm btn-default">Appraisal In Transit</button>
+                                            </td>
+                                        }
+
+                                    </tr>
+                                        }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Appraisal Period</th>
+                                        <th>Appraisal Year</th>
+                                        <th>Date Initiate</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-info alert-mg-b-0" role="alert">
+                    <p>No Appraisal Available</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div class="modal fade" id="viewModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayView">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="viewModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayView">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayCreate">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayEdit">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayDelete">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var URL = "";
+
+    function viewModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayView").html(data);
+            }
+        });
+
+        $("#viewModal").modal();
+    }
+
+
+    function createModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayCreate").html(data);
+            }
+        });
+
+        $("#createModal").modal();
+    }
+
+    function editModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayEdit").html(data);
+            }
+        });
+
+        $("#editModal").modal();
+
+    }
+
+    function deleteModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayDelete").html(data);
+            }
+        });
+
+        $("#deleteModal").modal();
+
+    }
+
+</script>
+
+
+
+

@@ -1,0 +1,37 @@
+﻿@using PagedList.Mvc;@model AA.HRMS.Interfaces.IEmployeeOnBoardListView
+@{
+    ViewBag.Title = "PDF Report";
+}
+
+<div class="row" id="reportId">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="normal-table-list mg-t-30">
+            <div class="bsc-tbl-st">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Level</th>
+                            <th>Grade</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.EmployeeList)
+                        {
+                            <tr>
+                                <td>@item.LastName @item.FirstName</td>
+                                <td>@item.Department</td>
+                                <td>@item.LevelName</td>
+                                <td>@item.GradeName</td>
+                                <td></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

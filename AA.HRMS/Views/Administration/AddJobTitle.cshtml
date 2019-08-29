@@ -1,0 +1,110 @@
+﻿@model AA.HRMS.Interfaces.IJobTitleView
+
+@{
+    ViewBag.Title = "AA HRMS - Edit Job Title";
+}
+
+@section PageTitle{
+    Add Job Title
+}
+
+<a href="/Administration/JobTitleList?companyId=@Model.CompanyId"> All Job Titles</a>
+
+<div class="jumbotron">
+    <div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; width: 100%;">
+        <div class="validation-summary-errors">
+            @Html.ValidationSummary()
+            @Model.ProcessingMessage
+        </div>
+    </div>
+
+    @using (Html.BeginForm("AddJobTitle", "Administration", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.JobTitleId)
+
+        <input type="hidden" id="companyId" name="companyId" value="@Model.CompanyId"/>
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span>Job Name:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <input required id="jobTitleName" name="jobTitleName" style="width: 250px;" type="text" maxlength="50" value="@Model.JobTitleName"/>
+            </div>
+        </div>
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span>Job Definition
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <textarea id="jobDefinition" name="jobDefinition" style="width: 250px;">@Model.JobDefinition</textarea>
+            </div>
+        </div>
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span>Job Function
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <textarea id="jobFunction" name="jobFunction" style="width: 250px;">@Model.JobFunction</textarea>
+
+            </div>
+        </div>
+
+        <div class="columns" style="width: 100%; padding-top: 15px; padding-bottom: 5px;">
+            <div class="column" style="margin-left: 195px;">
+                <input class="grayButton" id="btnSubmit" name="submitButton" style="width: 80px;" disabled type="submit" value="Submit" />
+            </div>
+            <div class="column" style="margin-left: 15px;">
+                <input id="btnCancel" class="blueButton" name="submitButton" style="width: 80px;"
+                       type="submit" value="Cancel"/>
+            </div>
+            <div class="column" style="font-size: 9px; font-weight: bold; font-style: italic; padding-left: 5px; padding-top: 2px;">
+                You must enter all information above correctly to enable submission.
+            </div>
+        </div>
+    }
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("span.ui-dialog-title").text('Add JobTitle');
+
+        $('#btnCancel').click(function () {
+            window.location.href = '/Administration/CompanyList';
+            return false;
+        });
+
+        $('#jobTitleName').change(function () {
+            $('#companyId').trigger("propertychange");
+        });
+
+        $('#jobDefinition').change(function () {
+            $('#companyId').trigger("propertychange");
+        });
+
+        $('#jobFunction').change(function () {
+            $('#companyId').trigger("propertychange");
+        });
+
+        $('#companyId').bind('input propertychange', function () {
+            $('#btnSubmit').prop("class", "grayButton");
+            $('#btnSubmit').prop("disabled", true);
+
+            var jobTitleOkay = $('#jobTitleName').val().length > 0;
+            var jobDefinitionOkay = $('#jobDefinition').val().length > 0;
+            var jobFunctionOkay = $('#jobFunction').val().length > 0;
+
+            if ((jobTitleOkay) && (jobDefinitionOkay) && (jobFunctionOkay)) {
+                $('#btnSubmit').prop("class", "blueButton");
+                $('#btnSubmit').prop("disabled", false);
+            }
+        });
+
+        $('#companyId').trigger("propertychange");
+
+    });
+</script>

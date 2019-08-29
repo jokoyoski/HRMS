@@ -1,0 +1,111 @@
+﻿
+@model AA.HRMS.Interfaces.IEmployeeOnBoardView
+
+@{
+    ViewBag.Title = "AA HRMS - Employee Registration";
+}
+
+@{
+
+    //Profile Photo
+    var hasImage = Model.ProfilePictureDetail != null;
+    var imgSrc = "/Images/avt.jpg";
+    if (hasImage)
+    {
+        var base64 = Convert.ToBase64String(Model.ProfilePictureDetail.TheDigitalFile);
+        imgSrc = string.Format("data:{0};base64,{1}", Model.ProfilePictureDetail.ContentType, base64);
+    }
+}
+
+@section PageTitle{
+    Lock Employee
+}
+<div class="jumbotron">
+
+    <div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; width: 100%;">
+        <div class="validation-summary-errors">
+            @Html.ValidationSummary()
+            @Model.ProcessingMessage
+        </div>
+    </div>
+
+    @using (Html.BeginForm("LockEmployee", "Employee", FormMethod.Post, new { id = "employeeForm", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+    {
+        <input type="hidden" id="employeeId" name="employeeId" value="@Model.EmployeeID" />
+        <input type="hidden" name="companyId" id="companyId" value="@Model.CompanyID" />
+
+        <div>Are you sure you want to @{if (Model.IsLocked == true)
+            {
+                <span>Unlock</span>
+            }
+            else
+            {
+                <span>Lock</span>
+            }
+
+         } the employee with these details</div>
+        <div>Firstname: @Model.FirstName</div>
+        <div>Lastname: @Model.LastName</div>
+
+        @Html.AntiForgeryToken()
+       
+
+        <div class="columns" style="width: 100%; padding-top: 15px; padding-bottom: 5px;">
+
+            <div class="modal-footer">
+                <button type="button" name="submitButton" class="btn btn-default" data-dismiss="modal">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+            <div class="column" style="font-size: 9px; font-weight: bold; font-style: italic; padding-left: 5px; padding-top: 2px;">
+                You must enter all information above correctly to enable submission.
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("span.ui-dialog-title").text('Lock Employee');
+
+        $('#btnCancel').click(function () {
+            window.location.href = '/Employee/EmployeeList?CompanyId=' + @Model.CompanyID;
+            return false;
+        });
+
+            $("span.ui-dialog-title").text('View Employee');
+
+            //$("input").attr('disabled', 'disabled');
+
+            
+        //$('#lastName').change(function () {
+        //    $('#employeeId').trigger("propertychange");
+        //});
+
+        //$('#description').change(function () {
+        //    $('#departmentId').trigger("propertychange");
+        //});
+
+        //$('#departmentId').change(function () {
+        //    $('#departmentId').trigger("propertychange");
+        //});
+
+        //$('#departmentId').bind('input propertychange', function () {
+        //    $('#btnSubmit').prop("class", "grayButton");
+        //    $('#btnSubmit').prop("disabled", true);
+
+        //    var departmentIdOkay = $('#departmentId').val().length > 0;
+        //    var departmentNameOkay = $('#departmentName').val().length > 0;
+        //    var descriptionOkay = $('#description').val().length > 0;
+
+        //    if ((departmentIdOkay) && (departmentNameOkay) && (descriptionOkay)) {
+        //        $('#btnSubmit').prop("class", "blueButton");
+        //        $('#btnSubmit').prop("disabled", false);
+        //    }
+        //});
+
+        //$('#departmentId').trigger("propertychange");
+
+    });
+</script>
+

@@ -1,0 +1,155 @@
+﻿@model AA.HRMS.Interfaces.ITrainingNeedAnalysisView
+
+@{
+    ViewBag.Title = "View Training Need Analysis";
+}
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+    
+
+
+<div class="modal-body">
+
+    @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+    {
+
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+        </div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+        </div>
+    }
+
+
+    <input type="hidden" name="trainingNeedAnalysisId" value="@Model.TrainingNeedAnalysisID" />
+
+    <input name="companyId" value="@Model.CompanyID" hidden />
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Training Name</label>
+            <div class="">
+                @Html.DropDownList("TrainingId", Model.TrainingDropDownList, new { @class = "form-control", id = "TrainingId", @disabled = "disabled" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Job Title</label>
+            <div class="">
+                @Html.DropDownList("JobId", Model.JobDropDownList, new { @class = "form-control", id = "JobId", @disabled = "disabled" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Frequency of Delivery</label>
+            <div class="">
+                @Html.DropDownList("FrequencyOfDeliveryID", Model.FrequencyOfDeliveryDropDownList, new { @class = "form-control", id = "FrequencyOfDeliveryID", @disabled = "disabled" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Currency</label>
+            <div class="">
+                @Html.DropDownList("currency", Model.CurrencyDropDownList, new { @class = "form-control", id = "currency", @disabled = "disabled" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Method of Delivery</label>
+            <div class="">
+                @Html.DropDownList("methodOfDelivery", Model.MethodOfDeliveryDropDown, new { @class = "form-control", id = "methodOfDelivery", @disabled = "disabled" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Training Provider</label>
+            <div class="">
+                <input disabled id="trainingprovider" name="trainingprovider" class="form-control" value="@Model.TrainingProvider" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Training Description</label>
+            <div class="">
+                <textarea id="TrainingDescription" name="TrainingDescription" disabled class="form-control" value="@Model.TrainingDescription">@Model.TrainingDescription</textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Cost</label>
+            <div class="">
+                <input id="cost" name="cost" class="form-control" disabled value="@Model.Cost" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Training Location</label>
+            <div class="">
+                <input disabled id="location" name="location" class="form-control" value="@Model.Location" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Certificate Issued</label>
+            <div class="">
+                <input disabled id="certificateissued" name="certificateissued" class="form-control" value="@Model.CertificateIssued" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Training Duration</label>
+            <div class="">
+                <input id="trainingduration" disabled name="trainingduration" class="form-control" value="@Model.TrainingDuration" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Approved Budget Currency</label>
+            <div class="">
+                @Html.DropDownList("approvedBudgetCurrency", Model.ApprovedBudgetCurrencyDropDownList, new { @class = "form-control", id = "approvedBudgetCurrency", @disabled = "disabled" })
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+
+
+
+
+

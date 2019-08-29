@@ -1,0 +1,92 @@
+﻿@model AA.HRMS.Interfaces.IChildrenInformationView
+
+
+@{
+    ViewBag.Title = "Add Employee Children's Details";
+}
+
+
+
+@Html.ValidationSummary()
+
+@Model.ProcessingMessage
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+@using (Html.BeginForm("CreateChildrenInformation", "Employee", FormMethod.Post))
+{
+<div class="modal-body">
+
+
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary()
+
+    @Model.ProcessingMessage
+
+    <input name="employeeId" id="employeeId" value="@Model.EmployeeId" hidden />
+    <input name="url" id="url" value="@Model.URL" hidden />
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Child Name</label>
+            <div class="">
+                <input id="childName" required name="childName" type="text" class="form-control" value="@Model.ChildName" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Child Date Of Birth</label>
+            <div class="">
+                <input id="dateOfBirth" required name="dateOfBirth" type="date" class="form-control" value="@Model.DateOfBirth" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Child Email</label>
+            <div class="">
+                <input id="Email" required name="Email" type="email" class="form-control" value="@Model.Email" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Child Mobile Contact</label>
+            <div class="">
+                <input id="Mobile" required name="Mobile" type="text" class="form-control" value="@Model.Mobile" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Child Address</label>
+            <div class="">
+                <textarea id="Address" required name="Address" wrap="soft" cols="3" type="text" class="form-control" value="@Model.Address">@Model.Address</textarea>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    <div class="modal-footer">
+        <button type="submit" name="submitButton" class="btn btn-default">Add</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+    </div>
+}
+
+
+
+
+
+

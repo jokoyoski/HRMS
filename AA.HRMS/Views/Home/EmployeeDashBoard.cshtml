@@ -1,0 +1,588 @@
+﻿@using AA.HRMS.Interfaces.ValueTypes
+@model AA.HRMS.Interfaces.IEmployeeProfileView
+
+@{
+    ViewBag.Title = Model.Company.CompanyName + " - Dash board";
+
+    var roles = (String[])HttpContext.Current.Session[SessionKey.UserRoles];
+
+    var profilePicture = "";
+
+    profilePicture = (string)HttpContext.Current.Session[SessionKey.ProfilePicture];
+
+    if (string.IsNullOrEmpty(profilePicture))
+    {
+        profilePicture = "/Images/avt.jpg";
+    }
+
+    var isCompanyExist = (Model.User.CompanyId == 0) ? true : false;
+}
+
+
+
+@if (Model.Profile == null)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-danger alert-mg-b-0" role="alert">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <a href="~/Profile/Index">You have not created a profile. Please click here to create a profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <br />
+}
+
+<!-- Start Status area -->
+<div class="notika-email-post-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="blog-inner-list notika-shadow mg-t-30 tb-res-ds-n dk-res-ds">
+                    <div class="blog-img">
+                        <img src="@profilePicture" alt="" width="400" height="950" />
+                    </div>
+                    <div class="blog-ctn">
+                        <div class="blog-hd-sw">
+                            <h2> The best viral website ideas!</h2>
+                            <a class="bg-au" href="#">By Malinda on 9th June 2018</a>
+                        </div>
+                        <p>Donec ullamcorper nulla non metus auctor fringilla. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                <div class="ongoing-task-inner notika-shadow mg-t-30">
+                    <div class="realtime-ctn">
+                        <div class="realtime-title ongoing-hd-wd">
+                            <h2>Ongoing Tasks</h2>
+                            <p>Magna cursus malesuada lacinia</p>
+                        </div>
+                    </div>
+                    <div class="skill-content-3 ongoing-tsk">
+                        <div class="skill">
+                            <div class="progress">
+                                <div class="lead-content">
+                                    <p>HTML5 Validation Report</p>
+                                </div>
+                                <div class="progress-bar wow fadeInLeft" data-progress="95%" style="width: 95%;" data-wow-duration="1.5s" data-wow-delay="1.2s">
+                                    <span>95%</span>
+                                </div>
+                            </div>
+                            <div class="progress">
+                                <div class="lead-content">
+                                    <p>Google Chrome Extension</p>
+                                </div>
+                                <div class="progress-bar wow fadeInLeft" data-progress="85%" style="width: 85%;" data-wow-duration="1.5s" data-wow-delay="1.2s"><span>85%</span> </div>
+                            </div>
+                            <div class="progress">
+                                <div class="lead-content">
+                                    <p>Social Internet Projects</p>
+                                </div>
+                                <div class="progress-bar wow fadeInLeft" data-progress="70%" style="width: 70%;" data-wow-duration="1.5s" data-wow-delay="1.2s"><span>70%</span> </div>
+                            </div>
+                            <div class="progress">
+                                <div class="lead-content">
+                                    <p>Bootstrap Admin</p>
+                                </div>
+                                <div class="progress-bar wow fadeInLeft" data-progress="60%" style="width: 60%;" data-wow-duration="1.5s" data-wow-delay="1.2s"><span>60%</span> </div>
+                            </div>
+                            <div class="progress progress-bt">
+                                <div class="lead-content">
+                                    <p>Youtube App</p>
+                                </div>
+                                <div class="progress-bar wow fadeInLeft" data-progress="50%" style="width: 50%;" data-wow-duration="1.5s" data-wow-delay="1.2s"><span>50%</span> </div>
+                            </div>
+                        </div>
+                        <div class="view-all-onging">
+                            <a href="#">View All Tasks</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- End Status area-->
+<!-- Start Sale Statistic area-->
+<div class="contact-info-area mg-t-30">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="contact-inner">
+                    <div class="contact-hd widget-ctn-hd">
+                        <h2>Contact Information</h2>
+                        <p>Fusce eget dolor id justo luctus commodo vel pharetra nisi. Donec velit libero</p>
+                    </div>
+                    <div class="contact-dt">
+                        <ul class="contact-list widget-contact-list">
+                            <li>
+                                <i class="notika-icon notika-phone"></i> @if (!string.IsNullOrEmpty(Model.Employee.MobileNumber))
+                                {<span>@Model.Employee.MobileNumber</span> }
+                            else
+                            { <span>N/A</span>}
+                            </li>
+                            <li>
+                                <i class="notika-icon notika-mail"></i> @if (!string.IsNullOrEmpty(Model.Employee.Email))
+                                {<span>@Model.Employee.Email</span> }
+                            else
+                            { <span>N/A</span>}
+                            </li>
+                            <li><i class="notika-icon notika-facebook"></i> lucid facebook</li>
+                            <li><i class="notika-icon notika-twitter"></i> lucid twitter</li>
+                            <li>
+                                <i class="notika-icon notika-map"></i> @if (!string.IsNullOrEmpty(Model.Employee.PermanentAddress) || !string.IsNullOrEmpty(Model.Employee.PermanentAddressCity) || !string.IsNullOrEmpty(Model.Employee.PermanentAddressState))
+                                {<span>@Model.Employee.PermanentAddress, @Model.Employee.PermanentAddressCity, @Model.Employee.PermanentAddressState</span> }
+                            else
+                            { <span>N/A</span>}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="contact-map widget-contact-map">
+                        <div id="map6"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+
+                <div id="calender"></div>
+
+
+                <div class="modal fade" id="createModal" role="dialog">
+                    <div class="modal-dialog modals-default">
+                        <div class="modal-content">
+                            <div id="displayCreate">
+                                <div class="modal-header">
+                                    <h3><span id="eventTitle"></span></h3>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="pDetails">
+                                        <div class="form-example-int">
+                                            <div class="form-group">
+                                                <label>Start Date</label>
+                                                <div class="">
+                                                    <label><span id="startDate"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-example-int">
+                                            <div class="form-group">
+                                                <label>End Date</label>
+                                                <div class="">
+                                                    <label><span id="endDate"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-example-int">
+                                            <div class="form-group">
+                                                <label>All Day</label>
+                                                <div class="">
+                                                    <label><span id="allDay"></span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-example-int">
+                                            <div class="form-group">
+                                                <div class="">
+                                                    <button id="btnDelete" class="btn btn-default btn-sm pull-right">
+                                                        <span class="notika-icon notika-trash"></span> Remove
+                                                    </button>
+                                                    <button id="btnEdit" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">
+                                                        <span class="notika-icon notika-edit"></span> Edit
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                                
+
+                                                
+
+
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="modal fade" id="viewModal" role="dialog">
+                    <div class="modal-dialog modals-default">
+                        <div class="modal-content">
+                            <div id="displayView">
+                                <div class="modal-header">
+                                    <h3>Add Event</h3>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="pDetails">
+
+                                        <input type="hidden" id="hdEventID" value="0" />
+
+                                        <div class="form-example-int">
+                                            <div class="form-group">
+                                                <label>Subject</label>
+                                                <div class="">
+                                                    <input id="txtSubject" class="form-control input-sm" name="" type="text" value="" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-example-int">
+                                            <div class="form-group">
+                                                <label>Start Date</label>
+                                                <div class="input-group date" id="dtp1">
+                                                    <input id="txtStart" class="form-control input-sm" name="startDate" type="text" value="" />
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="divEndDate" class="form-example-int" style="display:none">
+                                            <div class="form-group">
+                                                <label>End Date</label>
+                                                <div class="input-group date" id="dtp2">
+                                                    <input id="txtEnd" class="form-control input-sm" name="endDate" type="text" value="" />
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-example-int">
+                                            <div class="form-group">
+                                                <label>All Day</label>
+                                                <div class="">
+                                                    <label><input type="checkbox" id="chkIsFullDay" checked="checked" />  Is Full Day event</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-example-int">
+                                            <div class="form-group">
+                                                <label>Theme Color</label>
+                                                <div class="">
+                                                    @Html.DropDownList("ThemeColor", new List<SelectListItem>
+                                                 {
+                                                    new SelectListItem() {Text = "Red", Value="red"},
+                                                    new SelectListItem() {Text = "Blue", Value="blue"},
+                                                    new SelectListItem() {Text = "Black", Value="black"},
+                                                    new SelectListItem() {Text = "Green", Value="green"}
+                                                 }, "[Select Theme Color]", new { @class = "form-control input-sm", id = "ddThemeColor" })
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" id="btnSave" class="btn btn-default">Save</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    @section Stylesheets{
+        <link href="~/Content/fullcalendar/cs/core/main.css" rel="stylesheet" />
+        <link href="~/Content/fullcalendar/cs/daygrid/main.css" rel="stylesheet" />
+        <link href="~/Content/fullcalendar/cs/timegrid/main.css" rel="stylesheet" />
+        <link href="~/Content/fullcalendar/cs/list/main.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+
+    }
+
+    @section Scripts{
+        <script src="~/Scripts/moment.min.js"></script>
+        <script src="~/Scripts/fullcalendar/js/core/main.js"></script>
+        <script src="~/Scripts/fullcalendar/js/daygrid/main.js"></script>
+        <script src="~/Scripts/fullcalendar/js/interaction/main.js"></script>
+        <script src="~/Scripts/fullcalendar/js/timegrid/main.js"></script>
+        <script src="~/Scripts/fullcalendar/js/list/main.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+
+
+        <script>
+
+            $(document).ready(function () {
+
+                var calendar = null;
+                var eventLists = [];
+                var selectedEvent = null;
+                FetchEventAndRenderCalendar();
+                function FetchEventAndRenderCalendar() {
+                    eventLists = [];
+                    $.ajax({
+                        type: "GET",
+                        url: "/calendar/GetEvents",
+                        success: function (data) {
+
+                            $.each(data, function (i, v) {
+
+                                eventLists.push({
+                                    eventId: v.EventId,
+                                    title: v.Subject,
+                                    description: v.Description,
+                                    start: new Date(moment(v.Start)),
+                                    end: v.End != null ? new Date(moment(v.End)) : null,
+                                    color: v.ThemeColor,
+                                    allDay: v.IsFullDay
+                                });
+
+                            });
+
+                            GenerateCalender(eventLists);
+                        },
+                        error: function (error) {
+                            alert('failed');
+                        }
+                    });
+
+                }
+
+                
+
+                function GenerateCalender(eventLists) {
+
+                    var calendarEl = document.getElementById('calender');
+
+                    calendar = new FullCalendar.Calendar(calendarEl, {
+
+                        customButtons: {
+                            myCustomButton: {
+                                text: 'agenda',
+                                click: function () {
+                                    $("#viewModal").modal();
+                                }
+                            }
+                        },
+
+                        plugins: ['interaction', 'dayGrid', 'timeGrid', 'list', 'interactionPlugin'],
+
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek,myCustomButton'
+                        },
+
+                        defaultDate: new DateTime(),
+                        contentHeight: 450,
+                        navLinks: true, // can click day/week names to navigate views
+
+                        weekNumbers: true,
+                        weekNumbersWithinDays: true,
+                        weekNumberCalculation: 'ISO',
+                        droppable: true,
+                        editable: true,
+                        eventLimit: true,
+                        events: eventLists,
+
+                        eventClick: function (info) {
+
+                            $('#createModal #eventTitle').text(info.event.title);
+                            $('#createModal #startDate').text(info.event.start);
+                            $('#createModal #endDate').text(info.event.end);
+                            if (info.event.allDay == true) { $('#createModal #allDay').text("Yes"); } else { $('#createModal #allDay').text("No"); }
+
+                            $('#createModal').modal();
+                        },
+
+                        select: function (start, end) {
+                            selectedEvent = {
+                                eventId: 0,
+                                title: '',
+                                description: '',
+                                start: start,
+                                end: end,
+                                allDay: false,
+                                color: ''
+                            };
+                            openAddEditForm();
+                            $('#calendar').fullCalendar('unselect');
+                        },
+
+                        eventDrop: function (event) {
+                            var data = {
+                                EventId: event.eventId,
+                                Subject: event.title,
+                                Start: event.start.format('DD/MM/YYYY HH:mm A'),
+                                End: event.end != null ? event.end.format('DD/MM/YYYY HH:mm A') : null,
+                                ThemeColor: event.color,
+                                IsFullDay: event.allDay
+                            };
+                            SaveEvent(data);
+                        }
+
+                    });
+                    
+                    calendar.render();
+                }
+
+                $('#btnEdit').click(function () {
+                    //Open modal dialog for edit event
+                    openAddEditForm();
+                });
+
+                $('#btnDelete').click(function () {
+                    if (selectedEvent != null && confirm('Are you sure?')) {
+                        $.ajax({
+                            type: "POST",
+                            url: '/calendar/DeleteEvent',
+                            data: { 'eventId': data.eventId },
+                            success: function (data) {
+                                if (data.status) {
+                                    //Refresh the calender
+                                    calendar.destroy();
+                                    FetchEventAndRenderCalendar();
+
+                                    $('#createModal').modal('hide');
+                                }
+                            },
+                            error: function () {
+                                alert('Failed');
+                            }
+                        })
+                    }
+                });
+
+                $('#dtp1,#dtp2').datetimepicker({
+                    format: 'DD/MM/YYYY HH:mm A'
+                });
+
+                $('#chkIsFullDay').change(function () {
+                    if ($(this).is(':checked')) {
+                        $('#divEndDate').hide();
+                    }
+                    else {
+                        $('#divEndDate').show();
+                    }
+                });
+
+                function openAddEditForm() {
+                    if (selectedEvent != null) {
+                        $('#hdEventID').val(selectedEvent.eventId);
+                        $('#txtSubject').val(selectedEvent.title);
+                        $('#txtStart').val(selectedEvent.start.format('DD/MM/YYYY HH:mm A'));
+                        $('#chkIsFullDay').prop("checked", selectedEvent.allDay || false);
+                        $('#chkIsFullDay').change();
+                        $('#txtEnd').val(selectedEvent.end != null ? selectedEvent.end.format('DD/MM/YYYY HH:mm A') : '');
+                        $('#ddThemeColor').val(selectedEvent.color);
+                    }
+                    $('#createModal').modal('hide');
+                    $('#ViewModal').modal();
+                }
+
+                $('#btnSave').click(function () {
+                    //Validation/
+                    if ($('#txtSubject').val().trim() == "") {
+                        alert('Subject required');
+                        return;
+                    }
+                    if ($('#txtStart').val().trim() == "") {
+                        alert('Start date required');
+                        return;
+                    }
+                    if ($('#chkIsFullDay').is(':checked') == false && $('#txtEnd').val().trim() == "") {
+                        alert('End date required');
+                        return;
+                    }
+                    else {
+                        var startDate = moment($('#txtStart').val(), "DD/MM/YYYY HH:mm A").toDate();
+                        var endDate = moment($('#txtEnd').val(), "DD/MM/YYYY HH:mm A").toDate();
+                        if (startDate > endDate) {
+                            alert('Invalid end date');
+                            return;
+                        }
+                    }
+
+                    var data = {
+                        EventID: $('#hdEventID').val(),
+                        Subject: $('#txtSubject').val().trim(),
+                        Start: $('#txtStart').val().trim(),
+                        End: $('#chkIsFullDay').is(':checked') ? null : $('#txtEnd').val().trim(),
+                        ThemeColor: $('#ddThemeColor').val(),
+                        IsFullDay: $('#chkIsFullDay').is(':checked')
+                    }
+                    SaveEvent(data);
+                    // call function for submit data to the server
+                });
+
+                function SaveEvent(data) {
+                    $.ajax({
+                        type: "POST",
+                        url: '/calendar/SaveEvent',
+                        data: data,
+                        success: function (data) {
+                            if (data.status) {
+                                //Refresh the calender
+                                calendar.destroy();
+                                FetchEventAndRenderCalendar();
+
+                                $("#viewModal").modal("hide");
+                            }
+                        },
+                        error: function () {
+                            alert('Failed');
+                        }
+                    })
+                }
+
+
+            });
+
+            function createModal(URL) {
+
+                $.ajax({
+                    type: "GET",
+                    url: URL,
+                    success: function (data) {
+                        $("#displayCreate").html(data);
+                    }
+                });
+            }
+
+
+
+        </script>
+
+    }
+
+
+
+
+
+

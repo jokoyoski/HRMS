@@ -1,0 +1,446 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AA.HRMS.Interfaces
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public interface IEmployee
+    {
+        /// <summary>
+        /// Gets or sets the employee identifier.
+        /// </summary>
+        /// <value>
+        /// The employee identifier.
+        /// </value>
+        int EmployeeId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the last name.
+        /// </summary>
+        /// <value>
+        /// The last name.
+        /// </value>
+        string LastName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the first name.
+        /// </summary>
+        /// <value>
+        /// The first name.
+        /// </value>
+        string FirstName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the middle.
+        /// </summary>
+        /// <value>
+        /// The name of the middle.
+        /// </value>
+        string MiddleName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the staff number.
+        /// </summary>
+        /// <value>
+        /// The staff number.
+        /// </value>
+        string StaffNumber { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets the email.
+        /// </summary>
+        /// <value>
+        /// The email.
+        /// </value>
+        string Email { get; set; }
+
+        /// <summary>
+        /// Gets or sets the gender oother.
+        /// </summary>
+        /// <value>
+        /// The gender oother.
+        /// </value>
+        string GenderOother { get; set; }
+
+        /// <summary>
+        /// Gets or sets the company identifier.
+        /// </summary>
+        /// <value>
+        /// The company identifier.
+        /// </value>
+        int CompanyId { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets the name of the company.
+        /// </summary>
+        /// <value>
+        /// The name of the company.
+        /// </value>
+        string CompanyName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the level identifier.
+        /// </summary>
+        /// <value>
+        /// The level identifier.
+        /// </value>
+        int LevelId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the level.
+        /// </summary>
+        /// <value>
+        /// The name of the level.
+        /// </value>
+        string LevelName { get; set; }
+        /// <summary>
+        /// Gets or sets the grade identifier.
+        /// </summary>
+        /// <value>
+        /// The grade identifier.
+        /// </value>
+        int GradeId { get; set; }
+        /// <summary>
+        /// Gets or sets the name of the grade.
+        /// </summary>
+        /// <value>
+        /// The name of the grade.
+        /// </value>
+        string GradeName { get; set; }
+        /// <summary>
+        /// Gets or sets the mobile number.
+        /// </summary>
+        /// <value>
+        /// The mobile number.
+        /// </value>
+        string MobileNumber { get; set; }
+        /// <summary>
+        /// Gets or sets the religion other.
+        /// </summary>
+        /// <value>
+        /// The religion other.
+        /// </value>
+        string ReligionOther { get; set; }
+        /// <summary>
+        /// Gets or sets the permanent address.
+        /// </summary>
+        /// <value>
+        /// The permanent address.
+        /// </value>
+        string PermanentAddress { get; set; }
+        /// <summary>
+        /// Gets or sets the permanent address city.
+        /// </summary>
+        /// <value>
+        /// The permanent address city.
+        /// </value>
+        string PermanentAddressCity { get; set; }
+        /// <summary>
+        /// Gets or sets the state of the permanent address.
+        /// </summary>
+        /// <value>
+        /// The state of the permanent address.
+        /// </value>
+        int PermanentAddressStateId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the state of the permanent address.
+        /// </summary>
+        /// <value>
+        /// The state of the permanent address.
+        /// </value>
+        string PermanentAddressState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the home address.
+        /// </summary>
+        /// <value>
+        /// The home address.
+        /// </value>
+        string HomeAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets the home address city.
+        /// </summary>
+        /// <value>
+        /// The home address city.
+        /// </value>
+        string HomeAddressCity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the state of the home address.
+        /// </summary>
+        /// <value>
+        /// The state of the home address.
+        /// </value>
+        int HomeAddressStateId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the state of the home address.
+        /// </summary>
+        /// <value>
+        /// The state of the home address.
+        /// </value>
+        string HomeAddressState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the other email.
+        /// </summary>
+        /// <value>
+        /// The other email.
+        /// </value>
+        string OtherEmail { get; set; }
+
+        /// <summary>
+        /// Gets or sets the birthday.
+        /// </summary>
+        /// <value>
+        /// The birthday.
+        /// </value>
+        DateTime? Birthday { get; set; }
+
+        /// <summary>
+        /// Gets or sets the marital status.
+        /// </summary>
+        /// <value>
+        /// The marital status.
+        /// </value>
+        string MaritalStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets the gender identifier.
+        /// </summary>
+        /// <value>
+        /// The gender identifier.
+        /// </value>
+        int? GenderId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the supervisor employee identifier.
+        /// </summary>
+        /// <value>
+        /// The supervisor employee identifier.
+        /// </value>
+        int? SupervisorEmployeeId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the employment type identifier.
+        /// </summary>
+        /// <value>
+        /// The employment type identifier.
+        /// </value>
+        int EmploymentTypeId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the martial status.
+        /// </summary>
+        /// <value>
+        /// The martial status.
+        /// </value>
+        int? MartialStatusId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the gender.
+        /// </summary>
+        /// <value>
+        /// The gender.
+        /// </value>
+        string Gender { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date employed.
+        /// </summary>
+        /// <value>
+        /// The date employed.
+        /// </value>
+        DateTime DateEmployed { get; set; }
+
+        /// <summary>
+        /// Gets or sets the about.
+        /// </summary>
+        /// <value>
+        /// The about.
+        /// </value>
+        string About { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date exited.
+        /// </summary>
+        /// <value>
+        /// The date exited.
+        /// </value>
+        DateTime? DateExited { get; set; }
+
+        /// <summary>
+        /// Gets or sets the skill set.
+        /// </summary>
+        /// <value>
+        /// The skill set.
+        /// </value>
+        string SkillSet { get; set; }
+
+        /// <summary>
+        /// Gets or sets the photo digital file identifier.
+        /// </summary>
+        /// <value>
+        /// The photo digital file identifier.
+        /// </value>
+        int? PhotoDigitalFileId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the supervisor identifier.
+        /// </summary>
+        /// <value>
+        /// The supervisor identifier.
+        /// </value>
+        int? SupervisorId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the supervisor.
+        /// </summary>
+        /// <value>
+        /// The supervisor.
+        /// </value>
+        string Supervisor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the religion identifier.
+        /// </summary>
+        /// <value>
+        /// The religion identifier.
+        /// </value>
+        int? ReligionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the religion.
+        /// </summary>
+        /// <value>
+        /// The religion.
+        /// </value>
+        string Religion { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date created.
+        /// </summary>
+        /// <value>
+        /// The date created.
+        /// </value>
+        DateTime DateCreated { get; set; }
+
+        /// <summary>
+        /// Gets or sets the seating location.
+        /// </summary>
+        /// <value>
+        /// The seating location.
+        /// </value>
+        string SeatingLocation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the department identifier.
+        /// </summary>
+        /// <value>
+        /// The department identifier.
+        /// </value>
+        int? DepartmentId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the department.
+        /// </summary>
+        /// <value>
+        /// The department.
+        /// </value>
+        string Department { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the maiden.
+        /// </summary>
+        /// <value>
+        /// The name of the maiden.
+        /// </value>
+        string MaidenName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the photo data.
+        /// </summary>
+        /// <value>
+        /// The photo data.
+        /// </value>
+        byte[] PhotoData { get; set; }
+
+        /// <summary>
+        /// Gets or sets the photograph.
+        /// </summary>
+        /// <value>
+        /// The photograph.
+        /// </value>
+        IDigitalFile Photograph { get; set; }
+
+        /// <summary>
+        /// Gets or sets the nationality.
+        /// </summary>
+        /// <value>
+        /// The nationality.
+        /// </value>
+        int NationalityId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the nationality.
+        /// </summary>
+        /// <value>
+        /// The nationality.
+        /// </value>
+        string Nationality { get; set; }
+
+        /// <summary>
+        /// Gets or sets the level grade identifier.
+        /// </summary>
+        /// <value>
+        /// The level grade identifier.
+        /// </value>
+        int LevelGradeId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is active.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is active; otherwise, <c>false</c>.
+        /// </value>
+        Nullable<bool> IsActive { get; set; }
+        /// <summary>
+        /// Gets or sets the job title identifier.
+        /// </summary>
+        /// <value>
+        /// The job title identifier.
+        /// </value>
+        int? JobTitleId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the job title.
+        /// </summary>
+        /// <value>
+        /// The job title.
+        /// </value>
+        string JobTitle { get; set; }
+        /// <summary>
+        /// Gets or sets the is locked.
+        /// </summary>
+        /// <value>
+        /// The is locked.
+        /// </value>
+        bool? IsLocked { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is exit.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is exit; otherwise, <c>false</c>.
+        /// </value>
+        bool? IsExit { get; set; }
+    }
+}

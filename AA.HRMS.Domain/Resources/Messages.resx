@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AlreadyApplied" xml:space="preserve">
+    <value>You have already applied for this job</value>
+    <comment>Message when User has already applied for a particular job</comment>
+  </data>
+  <data name="ApplicationEducationHistoryAlreadyExisted" xml:space="preserve">
+    <value>Degree already exist</value>
+  </data>
+  <data name="AwardAlreadyExist" xml:space="preserve">
+    <value>Award already exist</value>
+    <comment>Create Award</comment>
+  </data>
+  <data name="BenefitAlreadyExisted" xml:space="preserve">
+    <value>Benefit Already Exist </value>
+    <comment>Create Benefit</comment>
+  </data>
+  <data name="CACNumberAlreadyExisted" xml:space="preserve">
+    <value>Company CAC number already existed, please check and try again</value>
+    <comment>Company Registration</comment>
+  </data>
+  <data name="CompanyInfomationDoesNotExist" xml:space="preserve">
+    <value>Company Information does not exit. Please check</value>
+    <comment>CopanyInformation</comment>
+  </data>
+  <data name="ConfirmRegistrationText" xml:space="preserve">
+    <value>Check your email to confirm your registration</value>
+  </data>
+  <data name="CreateProfile" xml:space="preserve">
+    <value>Profile is Created</value>
+  </data>
+  <data name="DeductionAlreadyExist" xml:space="preserve">
+    <value>Deduction Already Exist</value>
+    <comment>Create Deduction</comment>
+  </data>
+  <data name="DepartmentAlreadyExisted" xml:space="preserve">
+    <value>Department Name already exist</value>
+  </data>
+  <data name="EmailAlreadyUsedText" xml:space="preserve">
+    <value>Email already used for registration.</value>
+  </data>
+  <data name="EmploymentHistoryAlreadyExisted" xml:space="preserve">
+    <value>Employment History Already Exist</value>
+    <comment>Creating Employement History</comment>
+  </data>
+  <data name="GradeAlreadyExisted" xml:space="preserve">
+    <value>Grade Name already exist</value>
+  </data>
+  <data name="IncorrectPasswordText" xml:space="preserve">
+    <value>The user name or password provided is incorrect.</value>
+  </data>
+  <data name="IndustryAlreadyExisted" xml:space="preserve">
+    <value>Industry already exist, Please check</value>
+    <comment>Add Industry</comment>
+  </data>
+  <data name="InvalidActivationCode" xml:space="preserve">
+    <value>Activation Code is Invalid.</value>
+  </data>
+  <data name="JobTitleAlreadyExist" xml:space="preserve">
+    <value>Job Title Already Exist </value>
+    <comment>Creating Job Title</comment>
+  </data>
+  <data name="OnBoarderAlreadyExist" xml:space="preserve">
+    <value>Employee already exist</value>
+    <comment>Check if employee exist</comment>
+  </data>
+  <data name="ParentDepartmentNotSetupText" xml:space="preserve">
+    <value>Parent Department not setup for Company</value>
+  </data>
+  <data name="PasswordValidationError" xml:space="preserve">
+    <value>You must specify a password.</value>
+    <comment>Account Login</comment>
+  </data>
+  <data name="ProfileDoesntExist" xml:space="preserve">
+    <value>Your profile is not good enough to apply for a job , Please update add a profile and education history to apply</value>
+    <comment>Vacancy Service While Applying</comment>
+  </data>
+  <data name="RewardAlreadyExist" xml:space="preserve">
+    <value>Reward Already Exist</value>
+    <comment>Create Reward</comment>
+  </data>
+  <data name="UpdateProfile" xml:space="preserve">
+    <value>Profile Updated</value>
+    <comment>Update Profile</comment>
+  </data>
+  <data name="UserAlreadyExistText" xml:space="preserve">
+    <value>Username already used for registration, please specify another username.</value>
+  </data>
+  <data name="UsernameExist" xml:space="preserve">
+    <value>Username Already Exist</value>
+    <comment>Processing User App Role</comment>
+  </data>
+  <data name="UserNameValidationError" xml:space="preserve">
+    <value>You must specify a username.</value>
+    <comment>Account Login</comment>
+  </data>
+  <data name="UserNameWatermarkMessage" xml:space="preserve">
+    <value>Username</value>
+    <comment>Account Login</comment>
+  </data>
+  <data name="VacancyAlreadyExistText" xml:space="preserve">
+    <value>Vacancy already exist </value>
+    <comment>Create Vacancy</comment>
+  </data>
+  <data name="NoEmployeeRecord" xml:space="preserve">
+    <value>No Employee Record</value>
+    <comment>Generation of Payroll</comment>
+  </data>
+  <data name="levelGradeRecordExist" xml:space="preserve">
+    <value>No Level or Grade Record Exit</value>
+    <comment>Genreration of Payroll</comment>
+  </data>
+  <data name="TrainingCalendarAlreadyExist" xml:space="preserve">
+    <value>Training Already Exist In Calendar</value>
+    <comment>Creating Training In Calendar</comment>
+  </data>
+  <data name="TrainingAnalysisAlreadyExist" xml:space="preserve">
+    <value>Training Anaysis Already Exist</value>
+    <comment>Create Training Analysis</comment>
+  </data>
+  <data name="TrainingAlreadyExist" xml:space="preserve">
+    <value>Training Already Exist</value>
+    <comment>Create Training</comment>
+  </data>
+  <data name="gradeRecordExist" xml:space="preserve">
+    <value>Employee Grade Does Not Exist</value>
+  </data>
+  <data name="levelRecordExist" xml:space="preserve">
+    <value>Employee(s) salary scale not set. Check you employee records.</value>
+  </data>
+  <data name="PayrollAlreadyExist" xml:space="preserve">
+    <value>Payroll Already Exist</value>
+  </data>
+  <data name="LeaveRunning" xml:space="preserve">
+    <value>You have a running leave</value>
+    <comment>Leave Request Service</comment>
+  </data>
+  <data name="LeavePending" xml:space="preserve">
+    <value>You have a pending leave</value>
+    <comment>Leave Request</comment>
+  </data>
+  <data name="AlreadyRunningLoan" xml:space="preserve">
+    <value>You have an already running loan</value>
+  </data>
+  <data name="LevelRecordAlreadyExit" xml:space="preserve">
+    <value>Level Name Already Exist</value>
+    <comment>Create Level</comment>
+  </data>
+  <data name="payScaleAlreadyExist" xml:space="preserve">
+    <value>Pay Scale Already Exist</value>
+    <comment>Creation of Payscale</comment>
+  </data>
+  <data name="AppraisalAlreadyExist" xml:space="preserve">
+    <value>Appraisal Already Exist for this Year and Period</value>
+    <comment>Creating Appraisal</comment>
+  </data>
+  <data name="NextOfKinExistText" xml:space="preserve">
+    <value>Next of Kin already exist</value>
+    <comment>Create Next Of Kin</comment>
+  </data>
+  <data name="BeneficiaryAlreadyExists" xml:space="preserve">
+    <value>Beneficiary Already exist</value>
+    <comment>Create Beneficiary</comment>
+  </data>
+  <data name="EmergencyContactAlreadyExists" xml:space="preserve">
+    <value>Emergency contact already exists</value>
+    <comment>Create Emergency Contact</comment>
+  </data>
+  <data name="ChildInformationAlreadyExist" xml:space="preserve">
+    <value>CHild Information Already Exist</value>
+    <comment>Create Child Information</comment>
+  </data>
+  <data name="AnnualAssessingPerformanceAlreadyExist" xml:space="preserve">
+    <value>Annual Assessing Performance Already Exist</value>
+    <comment>Initiating Annual Performance</comment>
+  </data>
+  <data name="EmployeeFeedBackAlreadyExist" xml:space="preserve">
+    <value>Employee Feedback already Exist</value>
+    <comment>giving feed back</comment>
+  </data>
+  <data name="FeedBackAlreadyExist" xml:space="preserve">
+    <value>Feedback Already Exist</value>
+  </data>
+  <data name="EmailDoesNotExist" xml:space="preserve">
+    <value>Email Does Not Exist</value>
+  </data>
+  <data name="CompanyMostBeAChildofExistingCompany" xml:space="preserve">
+    <value>Company must be a child of an existing Company</value>
+    <comment>CreatingCompany</comment>
+  </data>
+  <data name="PayScaleNotSet" xml:space="preserve">
+    <value>One or More PayScale not set </value>
+    <comment>Generating Payroll</comment>
+  </data>
+  <data name="TypeOfExitAlreadyExisted" xml:space="preserve">
+    <value>Type of Exit Already Exist</value>
+    <comment>Create Type of Exit</comment>
+  </data>
+  <data name="CompanySetupNotComplete" xml:space="preserve">
+    <value>Company Setup Not Complete</value>
+  </data>
+  <data name="LeaveTypeNameAlreadyExist" xml:space="preserve">
+    <value>Leave Type Already Exist</value>
+    <comment>Checking for duplicate leave type name</comment>
+  </data>
+  <data name="ExitTypeAlreayExist" xml:space="preserve">
+    <value>Exit Type Already Exist</value>
+    <comment>Check for duplicate exit type</comment>
+  </data>
+</root>

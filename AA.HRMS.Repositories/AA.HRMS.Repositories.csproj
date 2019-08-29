@@ -1,0 +1,655 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6122F324-45B9-4016-BD23-5F563319E0AA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AA.HRMS.Repositories</RootNamespace>
+    <AssemblyName>AA.HRMS.Repositories</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AA.Infrastructure">
+      <HintPath>..\Dependencies\AA.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataAccess\AboutUsSource.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\ActionTaken.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Advertisement.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AdvertStatu.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AnnualAssessingPerformance.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AnswerFormat.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AppActivityLog.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\ApplicationStatu.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Appraisal.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AppraisalAction.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AppraisalGoal.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AppraisalPeriod.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AppraisalQualitativeMetric.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AppraisalQuantitiveMetric.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AppraisalQuestion.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AppraisalRating.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Appraiser.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AppRole.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AssessingPerformance.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Asset.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Award.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Beneficiary.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Benefit.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\CalendarEvent.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Certification.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\ChangePassword.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Child.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Company.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\CompanyAdministrator.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Country.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Currency.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Day.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Deduction.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Department.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\DigitalFile.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\DigitalType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Discipline.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\EducationHistory.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\EmailLog.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Emergency.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Employee.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\EmployeeAnnualAssessingPerformance.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\EmployeeAppraisal.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\EmployeeDeduction.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\EmployeeExit.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\EmployeeFeedback.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\EmployeeInfraction.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\EmployeeLoan.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\EmployeeQuestionRating.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\EmployeeReward.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\EmployeeTask.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\EmployeeTraining.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\EmploymentHistory.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\EmploymentType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Experience.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\FeedBack.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\FrequencyOfDelivery.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Gender.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Grade.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\HRMS.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HRMS.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\HRMS.Context.Partial.cs" />
+    <Compile Include="DataAccess\HRMS.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\HRMS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HRMS.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Industry.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Infraction.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\JobApplicationVacancy.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\JobApplicationVacancyAnswer.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\JobTitle.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\LeaveRequest.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\LeaveStatu.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\LeaveType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Level.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Loan.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\LoanType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\MaritalStatu.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\MethodOfDelivery.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Milestone.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Month.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\NextOfKin.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\OverTimesheet.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Payroll.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\PayrollEmployeeDeduction.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\PayrollEmployeeLoan.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\PayrollEmployeeReward.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\PayrollHistory.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\PayScale.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\PayScaleBenefit.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Profile.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Promotion.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Query.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\QueryStatu.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Registration.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Religion.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Reward.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Schedule.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\SkillSet.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Spouse.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\State.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Suspension.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Tax.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Training.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\TrainingCalender.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\TrainingEvaluationRating.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\TrainingHistory.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\TrainingNeedAnalysi.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\TrainingReport.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\TrainingStatu.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\TypeOfExit.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\User.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\UserActivationCode.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\UserAppRole.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Vacancy.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\VacancyQuestion.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Week.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\Year.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Factories\DbContextFactory.cs" />
+    <Compile Include="Models\ActionTakenModel.cs" />
+    <Compile Include="Models\AnnualAssesingPerformanceModel.cs" />
+    <Compile Include="Models\AppraisalMetricModel.cs" />
+    <Compile Include="Models\AppraisalPeriodModel.cs" />
+    <Compile Include="Models\AppraisalQualitativeMetricModel.cs" />
+    <Compile Include="Models\AppraisalQuantitativeMetricModel.cs" />
+    <Compile Include="Models\AppraisalQuestionModel.cs" />
+    <Compile Include="Models\AssessingPerformanceModel.cs" />
+    <Compile Include="Models\BeneficiariesModel.cs" />
+    <Compile Include="Models\CalendarEventModel.cs" />
+    <Compile Include="Models\CertificationModel.cs" />
+    <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\ChildrenModel.cs" />
+    <Compile Include="Models\CountryModel.cs" />
+    <Compile Include="Models\DayModel.cs" />
+    <Compile Include="Models\DisciplineModel.cs" />
+    <Compile Include="Models\EmergencyModel.cs" />
+    <Compile Include="Models\EmployeeAnnualAssessingPerformanceModel.cs" />
+    <Compile Include="Models\EmployeeAppraisalModel.cs" />
+    <Compile Include="Models\EmployeeFeedbackModel.cs" />
+    <Compile Include="Models\EmployeeQuestionRatingModel.cs" />
+    <Compile Include="Models\EmploymentTypeModel.cs" />
+    <Compile Include="Models\FeedbackModel.cs" />
+    <Compile Include="Models\MilestoneModel.cs" />
+    <Compile Include="Models\NextOfKinModel.cs" />
+    <Compile Include="Models\PayrollEmployeeDeductionModel.cs" />
+    <Compile Include="Models\PayrollEmployeeLoanModel.cs" />
+    <Compile Include="Models\PayrollEmployeeRewardModel.cs" />
+    <Compile Include="Models\PayrollHistoryModel.cs" />
+    <Compile Include="Models\PayScaleBenefitModel.cs" />
+    <Compile Include="Models\PromotionModel.cs" />
+    <Compile Include="Models\QueryModel.cs" />
+    <Compile Include="Models\QueryStatusModel.cs" />
+    <Compile Include="Models\ResultModel.cs" />
+    <Compile Include="Models\ScheduleModel.cs" />
+    <Compile Include="Models\SpouseModel.cs" />
+    <Compile Include="Models\StateModel.cs" />
+    <Compile Include="Models\SuspensionModel.cs" />
+    <Compile Include="Models\EmployeeTaskModel.cs" />
+    <Compile Include="Models\TrainingHistoryModel.cs" />
+    <Compile Include="Models\TrainingReportModel.cs" />
+    <Compile Include="Models\ApplicationsListViewInThree.cs" />
+    <Compile Include="Models\ApplicationsModel.cs" />
+    <Compile Include="Models\AppraisalActionModel.cs" />
+    <Compile Include="Models\AppraisalGoalModel.cs" />
+    <Compile Include="Models\AppraisalModel.cs" />
+    <Compile Include="Models\AppraisalRatingModel.cs" />
+    <Compile Include="Models\AppraiserModel.cs" />
+    <Compile Include="Models\AppRoleModel.cs" />
+    <Compile Include="Models\AssetModel.cs" />
+    <Compile Include="Models\AwardModel.cs" />
+    <Compile Include="Models\BenefitModel.cs" />
+    <Compile Include="Models\CurrencyModel.cs" />
+    <Compile Include="Models\DeductionModel.cs" />
+    <Compile Include="Models\EmployeeDeductionModel.cs" />
+    <Compile Include="Models\EmployeeExitModel.cs" />
+    <Compile Include="Models\EmployeeLoanModel.cs" />
+    <Compile Include="Models\EmployeeRewardModel.cs" />
+    <Compile Include="Models\EmployeeTrainingModel.cs" />
+    <Compile Include="Models\EmploymentHistoryModel.cs" />
+    <Compile Include="Models\ExperienceModel.cs" />
+    <Compile Include="Models\FrequencyOfDeliveryModel.cs" />
+    <Compile Include="Models\IndustryModel.cs" />
+    <Compile Include="Models\InfractionModel.cs" />
+    <Compile Include="Models\JobTitleModel.cs" />
+    <Compile Include="Models\AdvertisementModel.cs" />
+    <Compile Include="Models\AnswerFormatModel.cs" />
+    <Compile Include="Models\AppActivityLogModel.cs" />
+    <Compile Include="Models\EducationHistoryModel.cs" />
+    <Compile Include="Models\CompanyAdministratorModel.cs" />
+    <Compile Include="Models\CompanyRegistrationModel.cs" />
+    <Compile Include="Models\DepartmentModel.cs" />
+    <Compile Include="Models\DigitalFileModel.cs" />
+    <Compile Include="Models\DigitalTypeModel.cs" />
+    <Compile Include="Models\EmployeeModel.cs" />
+    <Compile Include="Models\GradeModel.cs" />
+    <Compile Include="Models\HowSource.cs" />
+    <Compile Include="Models\JobApplicationModel.cs" />
+    <Compile Include="Models\JobApplicationVacancyModel.cs" />
+    <Compile Include="Models\JobApplicationVacancyAnswerModel.cs" />
+    <Compile Include="Models\LeaveRequestModel.cs" />
+    <Compile Include="Models\LeaveStatusModel.cs" />
+    <Compile Include="Models\LeaveTypeModel.cs" />
+    <Compile Include="Models\PayScaleModel.cs" />
+    <Compile Include="Models\LevelModel.cs" />
+    <Compile Include="Models\LoanTypeModel.cs" />
+    <Compile Include="Models\MaritalStatusModel.cs" />
+    <Compile Include="Models\MethodOfDeliveryModel.cs" />
+    <Compile Include="Models\MonthModel.cs" />
+    <Compile Include="Models\OverTimesheetModel.cs" />
+    <Compile Include="Models\PayrollModel.cs" />
+    <Compile Include="Models\ProfileModel.cs" />
+    <Compile Include="Models\RegistrationRepModel.cs" />
+    <Compile Include="Models\ReligionModel.cs" />
+    <Compile Include="Models\RewardModel.cs" />
+    <Compile Include="Models\SkillSetModel.cs" />
+    <Compile Include="Models\TaxModel.cs" />
+    <Compile Include="Models\TrainingAnalysisModel.cs" />
+    <Compile Include="Models\TrainingCalendarModel.cs" />
+    <Compile Include="Models\TrainingEvaluationRatingModel.cs" />
+    <Compile Include="Models\TrainingModel.cs" />
+    <Compile Include="Models\TrainingNeedAnalysisModel.cs" />
+    <Compile Include="Models\TrainingStatusModel.cs" />
+    <Compile Include="Models\TypeOfExitModel.cs" />
+    <Compile Include="Models\UserActivationCodeModel.cs" />
+    <Compile Include="Models\UserAppRoleModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\UserRegistrationModel.cs" />
+    <Compile Include="Models\VacancyDetail.cs" />
+    <Compile Include="Models\VacancyInThreeColumn.cs" />
+    <Compile Include="Models\VacancyQuestionModel.cs" />
+    <Compile Include="Models\WeekModel.cs" />
+    <Compile Include="Models\YearModel.cs" />
+    <Compile Include="Models\YourGender.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queries\AccountQueries.cs" />
+    <Compile Include="Queries\AssetQueries.cs" />
+    <Compile Include="Queries\AwardQueries.cs" />
+    <Compile Include="Queries\BenefitQueries.cs" />
+    <Compile Include="Queries\CertificateQueries.cs" />
+    <Compile Include="Queries\DeductionQueries.cs" />
+    <Compile Include="Queries\DisciplineQueries.cs" />
+    <Compile Include="Queries\EmployeeDeductionQueries.cs" />
+    <Compile Include="Queries\DigitalFileQueries.cs" />
+    <Compile Include="Queries\EducationHistoryQueries.cs" />
+    <Compile Include="Queries\CompanyQueries.cs" />
+    <Compile Include="Queries\DepartmentQueries.cs" />
+    <Compile Include="Queries\EmployeeLoanQueries.cs" />
+    <Compile Include="Queries\EmployeeOnBoardQueries.cs" />
+    <Compile Include="Queries\EmployeeQueries.cs" />
+    <Compile Include="Queries\EmployeeRewardQueries.cs" />
+    <Compile Include="Queries\EmployeeTrainingQueries.cs" />
+    <Compile Include="Queries\EmploymentHistoryQueries.cs" />
+    <Compile Include="Queries\ExitManagementQueries.cs" />
+    <Compile Include="Queries\FrequencyOfDeliveryQueries.cs" />
+    <Compile Include="Queries\GradeQueries.cs" />
+    <Compile Include="Queries\IndustryQueries.cs" />
+    <Compile Include="Queries\OverTimesheetQueries.cs" />
+    <Compile Include="Queries\JobTitleQueries.cs" />
+    <Compile Include="Queries\LeaveQueries.cs" />
+    <Compile Include="Queries\LevelGradeQueries.cs" />
+    <Compile Include="Queries\LevelQueries.cs" />
+    <Compile Include="Queries\LoanQueries.cs" />
+    <Compile Include="Queries\LookupQueries.cs" />
+    <Compile Include="Queries\PayrollQueries.cs" />
+    <Compile Include="Queries\PerformanceManagementQueries.cs" />
+    <Compile Include="Queries\ProfileQueries.cs" />
+    <Compile Include="Queries\QueryQueries.cs" />
+    <Compile Include="Queries\RewardQueries.cs" />
+    <Compile Include="Queries\SkillSetQueries.cs" />
+    <Compile Include="Queries\SuspensionQueries.cs" />
+    <Compile Include="Queries\taxQueries.cs" />
+    <Compile Include="Queries\TrainingAnalysisQueries.cs" />
+    <Compile Include="Queries\TrainingNeedAnalysisQueries.cs" />
+    <Compile Include="Queries\TrainingQueries.cs" />
+    <Compile Include="Queries\TypeOfExitQueries.cs" />
+    <Compile Include="Queries\UserQueries.cs" />
+    <Compile Include="Queries\UsersQueries.cs" />
+    <Compile Include="Services\AccountRepository.cs" />
+    <Compile Include="Services\AdvertisementModelRepository.cs" />
+    <Compile Include="Services\AppraisalActionRepository.cs" />
+    <Compile Include="Services\AppraisalRatingRepository.cs" />
+    <Compile Include="Services\AppraiserRepository.cs" />
+    <Compile Include="Services\AssetRepository.cs" />
+    <Compile Include="Services\AwardRepository.cs" />
+    <Compile Include="Services\BenefitRepository.cs" />
+    <Compile Include="Services\CertificationRepository.cs" />
+    <Compile Include="Services\DeductionRepository.cs" />
+    <Compile Include="Services\DigitalFileRepository.cs" />
+    <Compile Include="Services\DisciplineRepository.cs" />
+    <Compile Include="Services\EducationHistoryRepository.cs" />
+    <Compile Include="Services\CompanyRepository.cs" />
+    <Compile Include="Services\DepartmentRepository.cs" />
+    <Compile Include="Services\EmployeeDeductionRepository.cs" />
+    <Compile Include="Services\EmployeeLoanRepository.cs" />
+    <Compile Include="Services\EmployeeOnBoardRepository.cs" />
+    <Compile Include="Services\EmployeeRepository.cs" />
+    <Compile Include="Services\EmployeeRewardRepository.cs" />
+    <Compile Include="Services\EmployeeTrainingRepository.cs" />
+    <Compile Include="Services\EmploymentHistoryRepository.cs" />
+    <Compile Include="Services\ExitManagementRepository.cs" />
+    <Compile Include="Services\FrequencyOfDeliveryRepository.cs" />
+    <Compile Include="Services\GradeRepository.cs" />
+    <Compile Include="Services\IndustryRepository.cs" />
+    <Compile Include="Services\JobApplicationVacancyRepository.cs" />
+    <Compile Include="Services\JobTitleRepository.cs" />
+    <Compile Include="Services\LeaveRepository.cs" />
+    <Compile Include="Services\LevelGradeRepository.cs" />
+    <Compile Include="Services\LevelRepository.cs" />
+    <Compile Include="Services\LoanRepository.cs" />
+    <Compile Include="Services\LookupRepository.cs" />
+    <Compile Include="Services\OverTimesheetRepository.cs" />
+    <Compile Include="Services\PayrollRepository.cs" />
+    <Compile Include="Services\PerformanceManagementRepository.cs" />
+    <Compile Include="Services\ProfileRepository.cs" />
+    <Compile Include="Services\QueryRepository.cs" />
+    <Compile Include="Services\RewardRepository.cs" />
+    <Compile Include="Services\SkillSetRepository.cs" />
+    <Compile Include="Services\SuspensionRepository.cs" />
+    <Compile Include="Services\TaxRepository.cs" />
+    <Compile Include="Services\TrainingRepository.cs" />
+    <Compile Include="Services\TypeOfExitRepository.cs" />
+    <Compile Include="Services\UserRepository.cs" />
+    <Compile Include="Services\UsersRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="DataAccess\HRMS.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HRMS.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DataAccess\HRMS.edmx.diagram">
+      <DependentUpon>HRMS.edmx</DependentUpon>
+    </None>
+    <None Include="Factories\packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="EntityFramework">
+      <Version>6.2.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNet.Mvc">
+      <Version>5.2.7</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AA.HRMS.Interfaces\AA.HRMS.Interfaces.csproj">
+      <Project>{8AF6D3E4-25DD-43A6-BB25-8FF4C1B02A1A}</Project>
+      <Name>AA.HRMS.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataAccess\HRMS.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HRMS.edmx</DependentUpon>
+      <LastGenOutput>HRMS.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataAccess\HRMS.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HRMS.edmx</DependentUpon>
+      <LastGenOutput>HRMS.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

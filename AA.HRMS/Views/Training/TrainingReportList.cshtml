@@ -1,0 +1,137 @@
+﻿@model AA.HRMS.Interfaces.ITrainingReportListView
+
+@{
+    ViewBag.Title = "Training Report";
+    var hasInfo = ((Model != null) && (Model.TrainingReportCollection != null) && Model.TrainingReportCollection.Any());
+}
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (hasInfo)
+{
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="table-responsive">
+
+                            <table id="data-table-basic" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Company Name</th>
+                                        <th>Employee Name</th>
+                                        <th>Training Name</th>
+                                        <th>Trainer Rating</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var d in Model.TrainingReportCollection)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @d.CompanyName
+                                            </td>
+                                            <td>
+                                                @d.EmployeeName
+                                            </td>
+                                            <td>
+                                                @d.TrainingName
+                                            </td>
+                                            <td>
+                                                @d.TrainerRating
+                                            </td>
+
+
+                                            <td>
+                                                <button class="btn btn-primary" onclick="viewModal('/Training/ViewTrainingReport?trainingReportId=@d.TrainingReportId')" data-placement="left" title="View Training Report">View</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Company Name</th>
+                                        <th>Employee Name</th>
+                                        <th>Training Name</th>
+                                        <th>Trainer Rating</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        }
+        else
+        {
+<div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-info alert-mg-b-0" role="alert">
+                    <p>No Training Report.</p>
+                </div>
+            </div>
+        </div>
+</div>
+
+}
+
+<div class="modal fade" id="viewModal" role="dialog">
+        <div class="modal-dialog modals-default">
+            <div class="modal-content">
+                <div id = "displayView" >
+
+                </div>
+            </div>
+        </div>
+</div>
+
+
+
+
+<script>
+
+        var URL = "";
+
+        function viewModal(URL)
+{
+
+            $.ajax({
+        type: "GET",
+                url: URL,
+                success: function(data) {
+                    $("#displayView").html(data);
+        }
+    });
+
+            $("#viewModal").modal();
+}
+        </script>
+

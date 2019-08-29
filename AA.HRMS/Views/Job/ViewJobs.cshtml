@@ -1,0 +1,96 @@
+﻿@model AA.HRMS.Interfaces.IVacancyDetail
+@{
+    ViewBag.Title = Model.JobTitle;
+    bool isAuthenticated = ViewContext.HttpContext.User.Identity.IsAuthenticated;
+}
+
+
+@using (Html.BeginForm("Apply", "Job", FormMethod.Post))
+{
+    <input type="hidden" id="VacancyId" name="VacancyId" value="@Model.VacancyId"/>
+
+
+    <section id="job-details" class="mt-4">
+
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-8">
+                    <h4 class="text-dark-blue">@Model.JobTitle</h4>
+                    @if (Model.HasApplied)
+                    {
+                        <div class="alert alert-danger">
+                            <h6>
+                                <span class="fa fa-information"></span> You have already
+                                applied for this job
+                            </h6>
+                        </div>
+                    }
+                    <div class="card">
+                        <div class="card-body">
+
+                            <p class="mb-1 text-black">
+                                <span class="fa fa-briefcase "></span> @Model.CompanyAlias
+                            </p>
+                            <p class="mb-1 text-black">
+                                <span class="fa fa-map-marker"></span> @Model.CompanyState
+                            </p>
+
+                            <p class="mb-1 text-black">
+                                <span class="fa fa-calender"></span>Posted : @Model.OpenDate.ToString("d")
+                            </p>
+
+
+                            <hr/>
+
+
+                            <br/>
+                            <h5 class="text-danger bold">Job Definition</h5>
+
+                            <p>@Html.Raw(Model.JobFunction)</p>
+
+
+                            <br/>
+                            <h5 class="text-danger bold">Candidate Requirement/Qualification</h5>
+                            <p>@Html.Raw(Model.Qualification)</p>
+
+                            <br/>
+                            <h5 class="text-danger bold">Job Experience</h5>
+
+                            <p>@Html.Raw(@Model.Experience)</p>
+
+
+                            <hr/>
+                            <br/>
+                            <p class="text-danger">Application Closes : @Model.Closedate.ToString("d")</p>
+
+                            @if (isAuthenticated && !Model.HasApplied)
+                            {
+                                 <div class="col-12">
+  
+                                    <button type="button" name="submitButton" class="btn btn-default" data-dismiss="modal">Apply Now</button>
+                                   
+                             
+                                </div>
+                            }
+                            else if (!isAuthenticated)
+                            {
+                                <a href="/Job/Apply?vacancyId=@Model.VacancyId" class="btn btn-primary mt-2 px-5 bg-dark-blue right"> Apply Now</a>
+                            }
+
+                            <div class="row">
+                                <br/>
+                                <p>Click here to return for more <a href="/Home/Index">jobs</a></p>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+}

@@ -1,0 +1,148 @@
+﻿@model AA.HRMS.Interfaces.ILeaveRequestViewModel
+
+@{
+    ViewBag.Title = "Approve Leave";
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+
+@using (Html.BeginForm("ChangeLeaveRequestApprovalStatusHR", "Leave", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+<div class="modal-body">
+
+    @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+    {
+
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+        </div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+        </div>
+    }
+
+    <input value="@Model.LeaveID" name="LeaveID" id="LeaveID" type="hidden" />
+    <input id="LeaveTypeID" name="LeaveTypeID" hidden value="@Model.LeaveTypeID" />
+    <input id="EmployeeID" name="EmployeeID" hidden value="@Model.EmployeeID" />
+    <input id="HRApproverID" name="HRApproverID" hidden value="@Model.HRApproverID" />
+    <input id="url" name="url" hidden value="@Model.URL" />
+
+    @if (((Model.DateLeaveEnds - Model.DateLeaveStart).Days > Model.LeaveType.Duration) && Model.LeaveType.LeaveTypeName != "Annual Leave")
+    {
+        var overDue = ((Model.DateLeaveEnds - Model.DateLeaveStart).Days - Model.LeaveType.Duration) + 1;
+
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button>This Leave Request is exceeds @Model.LeaveType.LeaveTypeName by @overDue Days
+        </div>
+    }
+
+    @if (((Model.DateLeaveEnds - Model.DateLeaveStart).Days > Model.Grade.AnnualLeaveDuration) && Model.LeaveType.LeaveTypeName == "Annual Leave")
+    {
+        var overDue = ((Model.DateLeaveEnds - Model.DateLeaveStart).Days - Model.Grade.AnnualLeaveDuration) + 1;
+
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button>This Leave Request is exceeds @Model.LeaveType.LeaveTypeName by @overDue Days
+        </div>
+    }
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Employee Name</label>
+            <div class="">
+                <input id="EmployeeName" name="EmployeeName" type="text" class="form-control" disabled , value="@Model.EmployeeName" />
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Leave Type Name</label>
+            <div class="">
+                <input id="LeaveTypeName" name="LeaveTypeName" type="text" class="form-control" disabled , value="@Model.LeaveType.LeaveTypeName" />
+            </div>
+        </div>
+    </div>
+
+    @if (Model.LeaveType.LeaveTypeName.Equals("Annual Leave"))
+    {
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Duration (Days)</label>
+                <div class="">
+                    <input id="Duration" name="Duration" type="text" class="form-control" disabled , value="@Model.Grade.AnnualLeaveDuration" />
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Duration (Days)</label>
+                <div class="">
+                    <input id="Duration" name="Duration" type="text" class="form-control" disabled , value="@Model.LeaveType.Duration" />
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>DateLeaveStart</label>
+            <div class="">
+                <input id="DateLeaveStart" name="DateLeaveStart" type="date" class="form-control" value="@DisplayHelper.DisplayDate(Model.DateLeaveStart)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Date Leave End</label>
+            <div class="">
+                <input id="DateLeaveEnds" name="DateLeaveEnds" type="date" class="form-control" value="@DisplayHelper.DisplayDate(Model.DateLeaveEnds)" />
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>HR Comment:</label>
+            <div class="">
+                <textarea id="HRApproverComment" name="HRApproverComment" type="text" class="form-control" , value="@Model.HRApproverComment">@Model.HRApproverComment</textarea>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<div class="modal-footer">
+    <button type="submit" name="LeaveStatusID" value="1" class="btn btn-primary">Approve</button>
+    <button type="submit" name="LeaveStatusID" value="2" class="btn btn-danger">Decline</button>
+</div>
+ }
+
+
+
+
+
+
+
+

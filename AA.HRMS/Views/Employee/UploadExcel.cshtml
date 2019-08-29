@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Upload Excel";
+}
+
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="modal-body">
+
+        @Html.ValidationSummary()
+
+
+        <p style="color:red;">Uploading employee record means you have properly setup your company.</p>
+
+        <p style="color:red;">The excel sheet upload is sensitive, <a href="~/Content/Employee Sample.xlsx">Click to Download format</a></p>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="form-group ic-cmp-int float-lb floating-lb">
+                <div class="form-ic-cmp">
+                    <label>Upload File</label>
+                    <input data-placement="left" class="file" title="Upload Level Excel Sheet" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="employeeExcelSheet" value="" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Upload</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+
+}
+

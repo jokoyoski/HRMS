@@ -1,0 +1,67 @@
+﻿@model AA.HRMS.Interfaces.IEmployeeTrainingView
+
+@{
+    ViewBag.Title = "Edit Employee Training";
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+@using (Html.BeginForm("EditEmployeeTraining", "EmployeeTraining", FormMethod.Post, new { id = "EmployeeTrainingName", enctype = "multipart / form - data", encoding = "multipart / form - data" }))
+{
+
+    @Html.AntiForgeryToken()
+
+
+    <input type="hidden" name="EmployeeTrainingId" id="EmployeeTrainingId" value="@Model.EmployeeTrainingId" />
+    <input type="hidden" name="EmployeeId" id="EmployeeId" value="@Model.EmployeeId" />
+    <input type="hidden" name="SupervisorId" id="SupervisorId" value="@Model.SupervisorId" />
+    <input type="hidden" name="TrainingId" id="TrainingId" value="@Model.TrainingId" />
+    <input type="hidden" name="CompanyId" id="CompanyId" value="@Model.CompanyId" />
+    <input type="hidden" name="url" id="url" value="@Model.URL" />
+
+    <div class="modal-body">
+
+
+        @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+        {
+
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+            </div>
+        }
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+            </div>
+        }
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Training</label>
+                <div class="">
+                    @Html.DropDownList("TrainingId", Model.TrainingDropDownList, new { @class = "form-control", id = "TrainingId", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+
+    <div class="modal-footer">
+        <button type="submit" name="IsApproved" value="true" class="btn btn-primary">Approve</button>
+        <button type="submit" name="IsApproved" value="false" class="btn btn-danger">Decline</button>
+    </div>
+
+}
+
+

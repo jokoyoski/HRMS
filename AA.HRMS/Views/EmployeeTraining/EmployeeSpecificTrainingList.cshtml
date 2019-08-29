@@ -1,0 +1,314 @@
+﻿@using AA.HRMS.Interfaces.ValueTypes
+@using System.Web
+
+@model AA.HRMS.Interfaces.IEmployeeTrainingListView
+
+@{
+    /**/
+
+    ViewBag.Title = "EmployeeTraining List";
+    var hasInfo = ((Model != null) && (Model.employeeTrainingView != null) && Model.employeeTrainingView.Any());
+    var roles = (String[])HttpContext.Current.Session[SessionKey.UserRoles];
+}
+
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                @if (roles.Contains("CompanyAdmin") || roles.Contains("Administration"))
+                                {
+                                    <div class="breadcomb-ctn">
+                                        <h2>@Model.Employee.LastName Trainings</h2>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="breadcomb-ctn">
+                                        <h2>My Training</h2>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                            <div class="breadcomb-report">
+                                @if (roles.Contains("CompanyAdmin"))
+                                {
+                                    <a class="btn" data-toggle="tooltip" href="/employee/viewemployee?employeeId=@Model.Employee.EmployeeId" data-placement="left" title="Back to @Model.Employee.LastName"><i class="notika-icon notika-back"></i></a>
+                                }
+                                <button class="btn" data-toggle="tooltip" onclick="createModal('/EmployeeTraining/CreateEmployeeTrainingRequest?employeeId=@Model.Employee.EmployeeId')" data-placement="left" title="Put @Model.Employee.LastName on Training"><i class="notika-icon notika-plus-symbol"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@{ var role = (String[])HttpContext.Current.Session[SessionKey.UserRoles];}
+
+@if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+{
+    <div class="container">
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("EmployeeSpecificTrainingList", "EmployeeTraining", FormMethod.Post, new
+{
+    id = "filterForm"
+}))
+{
+
+
+    var redirect = Model.URL;
+
+    @Html.AntiForgeryToken()
+
+
+
+    if (hasInfo)
+    {
+        <div class="data-table-area">
+            <div class="container">
+
+
+
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="data-table-list">
+                            <div class="table-responsive">
+                                <table id="data-table-basic" class="table table-striped">
+                                    <thead>
+                                        <tr>
+
+                                            <th>Employee Name</th>
+                                            <th>Training Name</th>
+                                            <th>Date Requested</th>
+                                            <th>Status</th>
+                                            @if (role.Contains("Supervisor") || role.Contains("CompanyAdmin"))
+                                            {
+
+                                                <th>Action</th>
+                                                <th>Action</th>
+                                            }
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var d in Model.employeeTrainingView)
+                                        {
+
+                                            var input = "";
+                                        <tr>
+
+                                            <td>
+                                                @d.EmployeeName
+                                            </td>
+                                            <td>
+                                                @d.TrainingName
+                                            </td>
+                                            <td>
+                                                @d.DateCreated.Date
+                                            </td>
+
+                                            @if (d.IsApproved == true)
+                                            {
+                                                input = "disabled";
+                                                <td><a href="#" class="btn btn-sm btn-success">Approved</a></td>
+                                                if (role.Contains("Employee"))
+                                                {
+                                                    <td>
+                                                        <a class="btn btn-sm btn-primary" onclick="createModal('/Training/CreateTrainingReport?trainingId=@d.TrainingId')">Write Report</a>
+                                                    </td>
+
+                                                }
+
+                                            }
+                                            else if (d.IsApproved == false)
+                                            {
+                                                input = "disabled";
+
+
+                                                <td><a href="#" class="btn btn-sm btn-danger">Declined</a></td>
+                                            }
+                                            else
+                                            {
+                                                <td><a href="#" class="btn btn-sm btn-default">Pending</a></td>
+                                            }
+
+
+                                            @if (role.Contains("Supervisor") || role.Contains("CompanyAdmin"))
+                                            {
+
+                                                if (d.IsApproved == null)
+                                                {
+                                                    <td>
+                                                        <a class="btn btn-sm btn-primary" @input onclick="editModal('/EmployeeTraining/EditEmployeeTraining?Id=@d.EmployeeTrainingId&url=@(redirect)')">Approve/Decline</a>
+                                                    </td>
+                                                }
+
+
+
+                                                <td>
+                                                    <a class="btn btn-sm btn-danger" onclick="deleteModal('/EmployeeTraining/DeleteEmployeeTraining?Id=@d.EmployeeTrainingId')">Delete</a>
+                                                </td>
+                                            }
+                                        </tr>
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+
+                                            <th>Employee Name</th>
+                                            <th>Training Name</th>
+                                            <th>Date Requested</th>
+                                            <th>Status</th>
+                                            @if (role.Contains("Supervisor") || role.Contains("CompanyAdmin"))
+                                            {
+
+                                                <th>Action</th>
+                                                <th>Action</th>
+                                            }
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+    else
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="alert alert-info alert-mg-b-0" role="alert">
+                        <p>No Training Exist</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+}
+
+
+<div class="modal fade" id="viewModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayView">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayCreate">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayEdit">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayDelete">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var URL = "";
+
+
+    function viewModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayView").html(data);
+            }
+        });
+
+
+        $("#viewModal").modal();
+    }
+
+    function createModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayCreate").html(data);
+            }
+        });
+
+
+        $("#createModal").modal();
+    }
+
+    function editModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayEdit").html(data);
+            }
+        });
+
+        $("#editModal").modal();
+
+    }
+
+    function deleteModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayDelete").html(data);
+            }
+        });
+
+        $("#deleteModal").modal();
+
+    }
+
+</script>

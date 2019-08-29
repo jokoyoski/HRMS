@@ -1,0 +1,101 @@
+﻿@model AA.HRMS.Interfaces.IHomeView
+
+@{
+    ViewBag.Title = "Vacancies";
+}
+
+@section PageTitle{
+    Featured jobs
+}
+
+
+<div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; width: 100%;">
+
+    <div class="validation-summary-errors">
+
+        @Model.ProcessingMessage
+    </div>
+</div>
+
+
+<section id="jobs">
+
+    <div class="row mt-0" style="margin-top:0px">
+        @if (Model.VacancyList != null && Model.VacancyList.Any())
+        {
+            <div class="container-fluid mt-0 pt-0" style="width: 100%;">
+                <div class="row mt-0" style="width: 100%;">
+                    <table id="vacanciesList" class="tablesorter" style="border-color: transparent; width: 100%;">
+                        <colgroup>
+                            <col style="width: 30%;"/>
+                            <col style="width: 30%;"/>
+                            <col style="width: 30%;"/>
+                        </colgroup>
+                        <thead>
+                        </thead>
+                        <tbody>
+                        @foreach (var d in Model.VacancyList)
+                        {
+                            <tr style="width: 100%; margin-bottom: 10px">
+                                <td style="border: 1px solid #FFF !important;">
+                                    @DisplayHelper.DisplayVacancy(d.Column1)
+                                </td>
+                                <td>
+                                    @DisplayHelper.DisplayVacancy(d.Column2)
+                                </td>
+                                <td>
+                                    @DisplayHelper.DisplayVacancy(d.Column3)
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="columns" style="margin-top: 10px; width: 100%;">
+                <div class="column">
+                    @DisplayHelper.TablePager(Model.VacancyList.Count())
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger">No Vacancies found for your search criteria</div>
+        }
+    </div>
+</section>
+
+
+@section JavaScriptsIncludes
+{
+    <script src="/Scripts/jquery-ui-1.12.1.js" type="text/javascript"></script>
+    <script src="/Scripts/tablesorter/jquery.tablesorter.js" type="text/javascript"></script>
+    <script src="/Scripts/tablesorter/jquery.tablesorter.widgets.js" type="text/javascript"></script>
+    <script src="/Scripts/tablesorter/jquery.tablesorter.pager.js" type="text/javascript"></script>
+}
+
+@section JavaScriptsExecution
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(function() {
+                $('#vacanciesList').tablesorter({
+                    theme: 'red',
+                    headers: { 0: { sorter: false }, 1: { sorter: false }, 2: { sorter: false } },
+                    widthFixed: true,
+                    widgets: ['zebra'],
+                    size: 10
+                }).tablesorterPager({ container: $("#pager"), size: 10 });
+            });
+
+
+        });
+    </script>
+}
+
+@section Stylesheets
+{
+    <link href="/Content/themes/base/all.css" rel="stylesheet" type="text/css"/>
+    <link href="/Content/tablesorter/theme.blue.css" rel="stylesheet" type="text/css"/>
+    <link href="/Content/tablesorter/jquery.tablesorter.pager.css" rel="stylesheet" type="text/css"/>
+}

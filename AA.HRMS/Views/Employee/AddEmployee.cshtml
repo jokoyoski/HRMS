@@ -1,0 +1,613 @@
+﻿@model AA.HRMS.Interfaces.IEmployeeOnBoardView
+
+@{
+    ViewBag.Title = "Add Employee";
+
+    string compulsoryFields = "";
+}
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-form"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                    <p>Add New Employee <span class="bread-ntd">here</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                            <div class="breadcomb-report">
+                                <a href="~/Employee/EmployeeList" data-toggle="tooltip" data-placement="left" title="Back to Employee" class="btn"><i class="notika-icon notika-back"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-element-area">
+    <div class="container">
+        <div>
+
+
+            @using (Html.BeginForm("AddEmployee", "Employee", FormMethod.Post, new { id = "employeeForm", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+
+
+
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-element-list"> 
+
+                                @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+                                {
+                            <div class="container">
+
+                                <div class="alert alert-info alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+                                </div>
+                            </div>
+                                }
+
+                                @if (!ViewData.ModelState.IsValid)
+                                {
+                            <div class="container">
+
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+                                </div>
+                            </div>
+                                }
+
+                            <div id="request">
+
+                                <div class="basic-tb-hd">
+                                    <h2>Personal Section</h2>
+                                    <p>Fill the form, with your personal information. Required fields are marked <span style="color: red;">*</span></p>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int float-lb floating-lb">
+                                            <div class="form-ic-cmp">
+                                                <img hidden src="" id="idimg" style="width: 100px; height: 100px;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div id="text" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int float-lb floating-lb">
+                                            <div class="form-ic-cmp">
+                                                <label>Employee Image</label>
+                                                <input type="file" onchange="readURL(this)" id="employeePhoto" alt="employeePhoto" name="employeePhoto" value="" class="form-control-file" />
+                                                <shadow></shadow>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <!--Name Section-->
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Firsts Name</label>
+                                                <input @compulsoryFields id="firstName" name="firstName" type="text" class="form-control" placeholder="First Name" value="@Model.FirstName" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Last Name</label>
+                                                <input @compulsoryFields id="lastName" name="lastName" type="text" class="form-control" placeholder="Last Name" value="@Model.LastName" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <label>Middle Name</label>
+                                                <input id="middleName" name="middleName" type="text" class="form-control" placeholder="Middle Name" value="@Model.MiddleName" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Sex Address Section-->
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Gender</label>
+                                                @Html.DropDownList("genderId", Model.GenderDropDownList, new { @class = "form-control", id = "genderId" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="genderOtherId" style="display: none;">
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                            <div class="form-group ic-cmp-int">
+                                                <div class="form-ic-cmp">
+                                                    <label class="bold">Other Gender</label>
+                                                    <input type="text" class="form-control" name="genderOther" id="genderOther" value="@Model.GenderOther" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Marital Status</label>
+                                                @Html.DropDownList("maritalStatusId", Model.MaritalStatusDropDownList, new { @class = "form-control", id = "maritalStatusId" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Date of Birth</label>
+                                                <input @compulsoryFields type="date" class="form-control" name="birthday" id="birthday" value="@DisplayHelper.DisplayDate(Model.Birthday)" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Religion</label>
+                                                @Html.DropDownList("religionId", Model.ReligionDropDownList, new { @class = "form-control", id = "religionId" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="religionOtherId" style="display: none;">
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                            <div class="form-group ic-cmp-int">
+                                                <div class="form-ic-cmp">
+                                                    <label class="bold">Other Religion</label>
+                                                    <input type="text" class="form-control" name="religionOther" id="religionOther" value="@Model.ReligionOther" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Nationality</label>
+                                                @Html.DropDownList("nationalityId", Model.CountryDropDownList, new { @class = "form-control", id = "nationalityId" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Contact Section-->
+                                <div class="row">
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Mobile Number</label>
+                                                <input @compulsoryFields id="mobileNumber" name="mobileNumber" type="text" class="form-control" placeholder="Mobile Number" value="@Model.MobileNumber" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Email</label>
+                                                <input @compulsoryFields id="email" name="email" type="text" class="form-control" placeholder="Email Address" value="@Model.Email" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <label>Other Email</label>
+                                                <input id="otheremail" name="otheremail" type="text" class="form-control" placeholder="Other Email Address" value="@Model.OtherEmail" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!--Permanent Address Section-->
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int form-elet-mg res-mg-fcs">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Permanent Address</label>
+                                                <textarea id="permanentAddress" @compulsoryFields name="permanentAddress" type="text" class="form-control" placeholder="Permanent Address" value="@Model.PermanentAddress">@Model.PermanentAddress</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int form-elet-mg res-mg-fcs">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Permanent Address City</label>
+                                                <input @compulsoryFields id="permanentAddressCity" name="permanentAddressCity" type="text" class="form-control" placeholder="Permanent Address City" value="@Model.PermanentAddressCity" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Permanent Address State</label>
+                                                @Html.DropDownList("permanentAddressStateId", Model.PermanentStateDropDownList, new { @class = "form-control", id = "permanentAddressStateId" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <!--Home Address Section-->
+                                <div class="row">
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int form-elet-mg res-mg-fcs">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Home Address</label>
+                                                <textarea id="homeAddress" name="homeAddress" type="text" class="form-control" placeholder="Home Address" value="@Model.HomeAddress">@Model.HomeAddress</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int form-elet-mg res-mg-fcs">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Home Address City</label>
+                                                <input id="homeAddressCity" name="homeAddressCity" type="text" class="form-control" placeholder="Home Address City" value="@Model.HomeAddressCity" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            <div class="form-group ic-cmp-int">
+                                                <div class="form-ic-cmp">
+                                                    <span style="color: red;">*</span><label>Home Address State</label>
+                                                    @Html.DropDownList("homeAddressStateId", Model.HomeStateDropDownList, new { @class = "form-control", id = "homeAddressStateId" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <hr />
+
+                                <div class="basic-tb-hd">
+                                    <h2>Work Informations</h2>
+                                    <p>Fill in appropiate work details. Required fields are marked <span style="color: red;">*</span></p>
+                                </div>
+
+                                <div class="row">
+
+                                    <input name="companyId" value="@Model.CompanyID" hidden />
+
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Date Employeed</label>
+                                                <input @compulsoryFields id="DateEmployed" name="DateEmployed" type="date" placeholder="Date Employeed" class="form-control" value="@DisplayHelper.DisplayDate(Model.DateEmployed)" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        <div class="form-group ic-cmp-int form-elet-mg res-mg-fcs">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Staff Number</label>
+                                                <input @compulsoryFields id="staffNumber" name="staffNumber" type="text" placeholder="Staff Number" class="form-control" value="@Model.StaffNumber" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Job Title</label>
+                                                @Html.DropDownList("jobTitleId", Model.JobTitleDropDownList, new { @class = "form-control", id = "jobTitleId" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <label>Supervisor</label>
+                                                @Html.DropDownList("supervisorEmployeeId", Model.EmployeeDropDownList, new { @class = "form-control", id = "supervisorEmployeeId" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Employment Type</label>
+                                                @Html.DropDownList("employmentTypeId", Model.EmploymentTypeDropDownList, new { @class = "form-control", id = "employmentTypeId" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Department</label>
+                                                @Html.DropDownList("departmentId", Model.DepartmentDropDownList, new { @class = "form-control", id = "departmentId" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <span style="color: red;">*</span><label>Grade Level</label>
+                                                @Html.DropDownList("levelGrade", Model.PayScaleDropDownList, new { @class = "form-control", id = "levelGrade" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class=" row col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <p><small>If neither grade nor level doesn't drop down you need to setup your pay scale properly</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            
+                                        <div class="fm-checkbox">
+                                            <input class="checkbox" type="checkbox" id="myCheck" onclick="myFunction()" name="rad" />
+                                            <label>Do you have an Excel Sheet?</label>
+                                        </div>
+
+                            <div class="container" id="uploadContent" style="display:none">
+
+                                <p style="color:red;">Uploading employee record means you have properly setup your company.</p>
+
+                                <p style="color:red;">The excel sheet upload is sensitive, <a href="~/Content/Employee Sample.xlsx">Click to Download format</a></p>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <label>Upload File</label>
+                                            <input data-placement="left" class="file" title="Upload Level Excel Sheet" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="employeeExcelSheet" value="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="pull-right">
+                                <div class="form-group">
+                                    <button class="btn btn-primary btn-icon-notika" id="btnSubmit" name="submitButton"><i class="notika-icon notika-right-arrow"></i> Submit</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+
+        $('input:file').change(function (e) {
+            var files = e.originalEvent.target.files;
+            for (var i = 0, len = files.length; i < len; i++) {
+                var fileSize = files[i].size;
+                var filename = files[i].name;
+
+
+
+                if (fileSize > (20 * 1024 * 1024)) {
+                    alert('Please deselect this file : "' +
+                        filename +
+                        '."it is larger than maximum filesize allowed(20MB). Sorry!');
+                }
+            }
+
+        });
+
+        
+
+
+
+        $("#companyId").change(function () {
+
+            var url = '@Url.Action("FetchDepartments", "HR")';
+            var departments = $('#departmentId');
+            var grades = $('#gradeId');
+            var jobTitles = $('#jobTitleId');
+            var levels = $('#levelId');
+            var levelGrades = $('#levelGrade');
+
+            var id = $(this).val();
+
+            $.getJSON(url, { companyId: id }, function (response) {
+                departments.empty(); // remove any existing options
+                $.each(response, function (index, item) {
+                    departments.append($('<option></option>').text(item.DepartmentName).val(item.DepartmentId));
+                });
+            });
+
+            url = '@Url.Action("FetchGrades", "HR")';
+            $.getJSON(url, { companyId: id }, function (response) {
+                grades.empty(); // remove any existing options
+                $.each(response, function (index, item) {
+                    grades.append($('<option></option>').text(item.GradeName).val(item.GradeId));
+                });
+            });
+
+            url = '@Url.Action("FetchJobTitles", "HR")';
+            $.getJSON(url, { companyId: id }, function (response) {
+                jobTitles.empty(); // remove any existing options
+                $.each(response, function (index, item) {
+                    jobTitles.append($('<option></option>').text(item.JobTitleName).val(item.JobTitleId));
+                });
+            });
+
+            url = '@Url.Action("FetchLevels", "CompanySetup")';
+            $.getJSON(url, { companyId: id }, function (response) {
+                levels.empty(); // remove any existing options
+                $.each(response, function (index, item) {
+                    levels.append($('<option></option>').text(item.LevelName).val(item.LevelId));
+                });
+            });
+
+            url = '@Url.Action("FetchGradeLevel", "CompanySetup")';
+            $.getJSON(url, { companyId: id }, function (response) {
+                levelGrades.empty(); // remove any existing options
+                $.each(response, function (index, item) {
+                    levelGrades.append($('<option></option>').text(item.GradeName + ' ' + item.LevelName).val(item.LevelGrade));
+                });
+            });
+
+
+        });
+
+    });
+
+
+
+
+    $(document).ready(function () {
+
+
+        $('#genderId').change(function () {
+            $('#genderId').trigger("propertychange");
+        });
+
+        $('#genderId').bind('input propertychange', function () {
+
+            var aboutUsSourceId = $('#genderId').val() == 3;
+
+            if (aboutUsSourceId) {
+
+                document.getElementById("genderOtherId").style.display = "block";
+
+                genderOther.required = true;
+
+            } else {
+                document.getElementById("genderOtherId").style.display = "none";
+            }
+
+
+        });
+    });
+
+
+    $(document).ready(function () {
+
+
+        $('#religionId').change(function () {
+            $('#religionId').trigger("propertychange");
+        });
+
+        $('#religionId').bind('input propertychange', function () {
+
+            var aboutUsSourceId = $('#religionId').val() == 3;
+
+            if (aboutUsSourceId) {
+
+                document.getElementById("religionOtherId").style.display = "block";
+
+                religionOther.required = true;
+
+            } else {
+                document.getElementById("religionOtherId").style.display = "none";
+            }
+
+
+        });
+    });
+
+    //Display Image on Upload
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#idimg')
+                    .removeAttr('hidden');
+                $('#idimg')
+                    .attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function myFunction() {
+        // Get the checkbox
+        var checkBox = document.getElementById("myCheck");
+        // Get the output textbox
+        var uploadContent = document.getElementById("uploadContent");
+        var request = document.getElementById("request");
+
+        // If the checkbox is checked, display the output textbox
+        if (checkBox.checked == true) {
+            uploadContent.style.display = "block";
+            request.style.display = "none"
+            @(compulsoryFields = "")
+
+        } else {
+            uploadContent.style.display = "none";
+            request.style.display = "block"
+            @(compulsoryFields = "required")
+        }
+        }
+
+</script>
+

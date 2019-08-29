@@ -1,0 +1,140 @@
+﻿@model AA.HRMS.Interfaces.IAppraisalView
+
+@{
+    ViewBag.Title = "Employee Appraisal";
+    var hasInfo = (Model != null) && (Model.EmployeeAppraisalCollection.Any()) && (Model.EmployeeAppraisalCollection.Count() > 0);
+}
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                            <div class="breadcomb-report">
+                                <a class="btn" data-toggle="tooltip" href="/PerformanceManagement/AppraisalList" data-placement="left" title="Back "><i class="notika-icon notika-back"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@Html.AntiForgeryToken()
+
+@if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+{
+    <div>
+        <div class="container">
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+            </div>
+
+        </div>
+    </div>
+}
+
+@if (hasInfo)
+{
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="table-responsive">
+                            <table id="data-table-basic" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Supervisor Name</th>
+                                        <th>Status</th>
+                                        <th>Date Agreed</th>
+                                        <th>Date Approved</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (var d in Model.EmployeeAppraisalCollection)
+                                    {
+                                    <tr>
+                                        <td>
+                                            @d.EmployeeName
+                                        </td>
+                                        <td>
+                                            @d.SupervisorName
+                                        </td>
+                                        <td>
+                                            @d.Status
+                                        </td>
+                                        <td>
+                                            @d.DateAgreed
+                                        </td>
+                                        <td>
+                                            @d.DateApproved
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-primary" onclick="viewModal('/PerformanceManagement/viewemployeeappraisal?employeeappraisalId=@d.EmployeeAppraisalId')" data-placement="left" title="View Company">View</button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-primary" onclick="editModal('/PerformanceManagement/editemployeeappraisal?employeeappraisalId=@d.EmployeeAppraisalId')" data-placement="left" title="Edit Company">Modify</button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger" onclick="deleteModal('/PerformanceManagement/deleteemployeeappraisal?employeeappraisalId=@d.EmployeeAppraisalId')" data-placement="left" title="Delete Company">Delete</button>
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Supervisor Name</th>
+                                        <th>Status</th>
+                                        <th>Date Agreed</th>
+                                        <th>Date Approved</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button>No Appraisal Exists.
+
+        </div>
+    </div>
+}
+
+
+
+

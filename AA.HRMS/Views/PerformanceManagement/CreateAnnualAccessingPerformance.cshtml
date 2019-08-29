@@ -1,0 +1,70 @@
+﻿@model AA.HRMS.Interfaces.IAnnualAssessingPerformanceView
+@{
+    ViewBag.Title = "Initiate Annual Assessment";
+}
+
+
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+@using (Html.BeginForm("CreateAnnualAccessingPerformance", "PerformanceManagement", FormMethod.Post, new { id = "AddAppraisalForm" }))
+{
+    
+
+<div class="modal-body">
+
+    <input hidden name="companyId" value="@Model.User.CompanyId" />
+
+    @Html.AntiForgeryToken()
+
+
+    @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+    {
+        <div>
+            <div class="container">
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+                </div>
+
+            </div>
+        </div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div>
+            <div class="container">
+                <div class="alert alert-info alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Year </label>
+            <div class="">
+                @Html.DropDownList("yearId", Model.YearDropDown, new { @class = "form-control", id = "yearId" })
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <div class="modal-footer">
+        <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Initiate</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+
+
+
+
+}
+
+

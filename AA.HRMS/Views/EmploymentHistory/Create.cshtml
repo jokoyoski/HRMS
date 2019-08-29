@@ -1,0 +1,92 @@
+﻿@model AA.HRMS.Interfaces.IEmploymentHistoryView
+
+
+@{
+    ViewBag.Title = "Add Employment History";
+}
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+@Html.ValidationSummary()
+@Model.ProcessingMessage
+
+@using (Html.BeginForm("Create", "EmploymentHistory", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="modal-body">
+
+        <input value="@Model.URL" name="url" id="url" hidden />
+        <input value="@Model.EmployeeId" name="employeeId" id="employeeId" hidden />
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Company</label>
+                <div class="">
+                    <input id="CompanyName" name="CompanyName" type="text" class="form-control" value="@Model.CompanyName" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Start Date</label>
+                <div class="">
+                    <input id="StartDate" name="StartDate" type="date" class="form-control" value="@Model.StartDate" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>End Date</label>
+                <div class="">
+                    <input id="EndDate" name="EndDate" type="date" class="form-control" value="@Model.EndDate" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Level on Exit</label>
+                <div class="">
+                    <input id="LevelOnExit" name="LevelOnExit" type="text" class="form-control" value="@Model.LevelOnExit" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Reason For Exit</label>
+                <div class="">
+                    <input id="ReasonExit" name="ReasonExit" type="text" class="form-control" value="@Model.ReasonExit" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Job Function</label>
+                <div class="">
+                    <input id="JobFunction" name="JobFunction" type="text" class="form-control" value="@Model.JobFunction" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal-footer">
+            <button type="submit" name="submitButton" class="btn btn-default">Add</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        </div>
+    </div>
+}
+
+
+
+

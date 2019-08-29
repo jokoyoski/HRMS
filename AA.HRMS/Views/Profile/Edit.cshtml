@@ -1,0 +1,197 @@
+﻿@model AA.HRMS.Interfaces.IProfileView
+@{
+    ViewBag.Title = "AA HRMS - Edit Profile";
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+<div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; width: 100%;">
+
+</div>
+@using (Html.BeginForm("Edit", "Profile", FormMethod.Post, new { id = "editForm", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="ProfileId" name="ProfileId" value="@Model.ProfileId" />
+    <input type="hidden" id="UserId" name="UserId" value="@Model.UserId" />
+    <input type="hidden" id="UserId" name="PictureDigitalFileId" value="@Model.PictureDigitalFileId" />
+    <input type="hidden" id="UserId" name="PictureDigitalFileId" value="@Model.CVDigitalFileId" />
+
+    <div class="modal-body">
+        <div class="validation-summary-errors">
+            @Html.ValidationSummary()
+            @Model.ProcessingMessage
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label class="bold">Upload Picture</label>
+                <div class="">
+                    <input type="file" id="profilePicture" name="profilePicture" class="form-control input-sm"
+                           accept="image/png,image/gif,imgae/tiff,image/bmp," title="Upload/Replace profile picture" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label class="bold">Date of Birth</label>
+                <div class="">
+                    <input id="DateOfBirth" name="DateOfBirth" class="form-control input-sm" type="text" value="@Model.DateOfBirth" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label class="bold">Nationality</label>
+                <div class="">
+                    @Html.DropDownList("CountryId", Model.CountryDropDown, new { id = "CountryId", @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label class="bold">State of Origin</label>
+                <div class="">
+                    <input id="StateOfOrigin" name="StateOfOrigin" class="form-control input-sm" type="text" value="@Model.StateOfOrigin" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label class="bold">Gender</label>
+                <div class="">
+                    @Html.DropDownList("genderId", Model.GenderDropDown, new { @class = "form-control", id = "genderId" })
+
+                </div>
+            </div>
+        </div>
+
+        <div id="genderOtherId" style="display: none;">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group ic-cmp-int">
+                    <div class="form-ic-cmp">
+                        <label class="bold">Other Gender</label>
+                        <input type="text" class="form-control" name="genderOther" id="genderOther" value="@Model.GenderOther" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label class="bold">Address</label>
+                <div class="">
+                    <textarea id="Address" name="Address" class="form-control input-sm" type="text"> @Model.Address</textarea>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label class="bold">Profile Summary</label>
+                <div class="">
+                    <textarea id="ProfileSummary" name="ProfileSummary" class="form-control input-sm" type="text"> @Model.ProfileSummary </textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label class="bold">Upload CV</label>
+                <div class="">
+                    <input type="file" id="profileCV" name="profileCV" class="form-control input-sm"
+                           accept="document/pdf,document/doc,document/docx,document/Text," title="Upload/Replace profile CV" />
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Modify</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+}
+
+
+<script src="~/Scripts/datepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+
+
+<script>
+    $('#DateOfBirth').datetimepicker({
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0,
+        format: 'dd/mm/yyyy '
+    });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('input:file').change(function (e) {
+            var files = e.originalEvent.target.files;
+            for (var i = 0, len = files.length; i < len; i++) {
+                var fileSize = files[i].size;
+                var filename = files[i].name;
+
+
+
+                if (fileSize > (20 * 1024 * 1024)) {
+                    alert('Please deselect this file : "' +
+                        filename +
+                        '."it is larger than maximum filesize allowed(20MB). Sorry!');
+                }
+            }
+        });
+
+
+    })
+</script>
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+        $('#genderId').change(function () {
+            $('#genderId').trigger("propertychange");
+        });
+
+        $('#genderId').bind('input propertychange', function () {
+
+            var aboutUsSourceId = $('#genderId').val() == 3;
+
+            if (aboutUsSourceId) {
+
+                document.getElementById("genderOtherId").style.display = "block";
+
+                genderOther.required = true;
+
+            } else {
+                document.getElementById("genderOtherId").style.display = "none";
+            }
+
+
+        });
+    });
+
+
+</script>
+
+
+
+<link href="~/Content/datepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />

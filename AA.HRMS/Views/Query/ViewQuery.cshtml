@@ -1,0 +1,44 @@
+﻿
+@model AA.HRMS.Interfaces.IQueryView
+
+
+@{
+    ViewBag.Title = "AA HRMS - View Query";
+}
+
+
+<div class="jumbotron">
+    <div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; width: 100%;">
+        <div class="validation-summary-errors">
+            @Html.ValidationSummary()
+            @Model.ProcessingMessage
+        </div>
+    </div>
+    @using (Html.BeginForm("ViewQuery", "Query", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <input id="queryId" name="queryId" hidden value="@Model.QueryId" />
+
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span>Query Name:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <input id="QueryName" name="QueryName" style="width: 250px;" disabled type="text" maxlength="50" value="@Model.QueryName" />
+            </div>
+        </div>
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span>Consequences:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <input id="Consequences" name="Consequences" style="width: 250px;" type="text" disabled maxlength="50" value="@Model.Consequences" />
+            </div>
+        </div>
+
+        <input name="companyId" value="@Model.CompanyId" hidden/>
+    }
+</div>

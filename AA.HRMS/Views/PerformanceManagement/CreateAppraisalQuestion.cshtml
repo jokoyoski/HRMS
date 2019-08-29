@@ -1,0 +1,40 @@
+﻿@model AA.HRMS.Interfaces.IAppraisalQuestionView
+@{ 
+    ViewBag.Title = "Add Appraisal Question";
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+@Html.ValidationSummary()
+@Model.ProcessingMessage
+
+@using (Html.BeginForm("CreateAppraisalQuestion", "PerformanceManagement", FormMethod.Post, new { id = "CreateAppraisalQuestion" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="modal-body">
+
+        <input name="companyId" value="@Model.CompanyId" hidden />
+        
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Appraisal Question</label>
+                <div class="">
+                    <input id="Question" type="text" name="Question" class="form-control" value="@Model.Question" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Create Appraisal Question</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+}
+

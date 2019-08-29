@@ -1,0 +1,270 @@
+﻿@using AA.HRMS.Interfaces.ValueTypes
+@model AA.HRMS.Interfaces.IAppraisalListView
+@{
+    ViewBag.Title = "Appraisal List";
+    var hasInfo = ((Model != null) && (Model.appraisal != null) && Model.appraisal.Any());
+
+    var roles = (String[])HttpContext.Current.Session[SessionKey.UserRoles];
+}
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                </div>
+                            </div>
+                        </div>
+                        @if (!roles.Contains("Employee"))
+                        {
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                                <div class="breadcomb-report">
+                                    <button class="btn" onclick="createModal('/PerformanceManagement/CreateAppraisal')" data-placement="left" title="Create Appraisal"><i class="notika-icon notika-plus-symbol"></i></button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+    {
+<div>
+    <div class="container">
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+        </div>
+
+    </div>
+</div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+<div>
+    <div class="container">
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+        </div>
+    </div>
+</div>
+    }
+
+
+<input hidden name="url" value="@Model.URL" />
+
+@if (hasInfo)
+{
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="table-responsive">
+                            <table id="data-table-basic" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Company</th>
+                                        <th>Period</th>
+                                        <th>Year</th>
+                                        <th>Initiation Date</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                        @if (!roles.Contains("Employee"))
+                                        {
+                                            <th>Action</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var d in Model.appraisal)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @d.CompanyName
+                                            </td>
+                                            <td>
+                                                @d.AppraisalPeriodName
+                                            </td>
+                                            <td>
+                                                @d.AppraisalYearName
+                                            </td>
+                                            <td>
+                                                @d.DateInitiated
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-primary btn-sm" href="/performancemanagement/AppraiseeList?appraisalId=@d.AppraisalId" data-placement="right" title="View Appraisals">View</a>
+                                            </td>
+                                            <td>
+                                                @if (d.IsOpened)
+                                                {
+                                                <button class="btn btn-success btn-sm" disabled>Appraisal Opened</button>
+                                                }
+                                                else
+                                                {
+                                                    <button class="btn btn-gray btn-sm" disabled>Appraisal Closed</button>
+                                                }
+                                            </td>
+                                            @if (!roles.Contains("Employee"))
+                                            {
+                                                <td>
+                                                    <button class="btn btn-danger btn-sm" onclick="deleteModal('/performancemanagement/deleteappraisal?appraisalId=@d.AppraisalId')" data-placement="right" title="Delete Appraisal">Delete</button>
+                                                </td>
+                                            }
+
+
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Company</th>
+                                        <th>Period</th>
+                                        <th>Year</th>
+                                        <th>Initiation Date</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                        @if (!roles.Contains("Employee"))
+                                        {
+                                            <th>Action</th>
+                                        }
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-info alert-mg-b-0" role="alert">
+                    <p>No Appraisal</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+
+<div class="modal fade" id="viewModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayView">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="createModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayCreate">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayEdit">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayDelete">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var URL = "";
+
+    function viewModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayView").html(data);
+            }
+        });
+
+
+        $("#viewModal").modal();
+    }
+
+    function createModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayCreate").html(data);
+            }
+        });
+
+
+        $("#createModal").modal();
+    }
+
+
+    function editModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayEdit").html(data);
+            }
+        });
+
+        $("#editModal").modal();
+
+    }
+
+    function deleteModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayDelete").html(data);
+            }
+        });
+
+        $("#deleteModal").modal();
+
+    }
+</script>
+
+

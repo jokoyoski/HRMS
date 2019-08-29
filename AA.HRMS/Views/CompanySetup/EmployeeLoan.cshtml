@@ -1,0 +1,244 @@
+﻿@using AA.HRMS.Interfaces.ValueTypes
+@using System.Web
+
+@model AA.HRMS.Interfaces.IEmployeeLoanListView
+
+@{
+    ViewBag.Title = "Employee Deduction";
+    var hasInfo = ((Model != null) && (Model.EmployeeLoanCollection != null) && Model.EmployeeLoanCollection.Any());
+
+    var role = (String[])HttpContext.Current.Session[SessionKey.UserRoles];
+}
+
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                @if (role.Contains("Supervisor") || role.Contains("CompanyAdmin"))
+                                {
+                                    <div class="breadcomb-ctn">
+                                        <h2>@Model.Employee.LastName Loans</h2>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="breadcomb-ctn">
+                                        <h2>My Loans</h2>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                            <div class="breadcomb-report">
+
+                                @if (role.Contains("CompanyAdmin"))
+                                {
+                                    <a class="btn" data-toggle="tooltip" href="/Employee/ViewEmployee?employeeId=@Model.Employee.EmployeeId" data-placement="left" title="Back to @Model.Employee.LastName"><i class="notika-icon notika-back"></i></a>
+                                }
+                                <button class="btn" data-toggle="tooltip" onclick="createModal('/companysetup/employeeApplyLoan?employeeId=@Model.Employee.EmployeeId&url=@Model.URL')" data-placement="left" title="Put @Model.Employee.LastName on Loan"><i class="notika-icon notika-plus-symbol"></i></button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+{
+    <div class="container">
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+        </div>
+    </div>
+
+    
+}
+
+@if (hasInfo)
+{
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="table-responsive">
+                            <table id="data-table-basic" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Loan Type</th>
+                                        <th>Amount</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var d in Model.EmployeeLoanCollection)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @d.LoanName
+                                            </td>
+
+                                            <td>
+                                                @d.Amount
+                                            </td>
+
+                                            <td>
+                                                <button class="btn btn-sm btn-primary" onclick="editModal('/CompanySetup/ViewEmployeeLoan?employeeLoanId=@d.EmployeeLoanId')" data-placement="left" title="Edit Loan">View</button>
+                                            </td>
+
+                                            <td>
+                                                @{ 
+                                                    if(role.Contains("CompanyAdmin") && d.IsApproved == null )
+                                                    {
+                                                        <button class="btn btn-sm btn-primary" onclick="editModal('/CompanySetup/EditEmployeeLoan?employeeLoanId=@d.EmployeeLoanId&url=@Model.URL')" data-placement="left" title="Edit Loan">Approve/Decline</button>
+                                                    }
+                                                    else if (d.IsApproved == true)
+                                                    {
+                                                        <button class="btn btn-sm btn-success">Approved</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="btn btn-sm btn-danger">Declined</button>
+                                                    }
+                                               
+                                                }
+                                            </td>
+
+                                            <td>
+                                                <button class="btn btn-sm btn-danger" onclick="deleteModal('/CompanySetup/DeleteEmployeeLoan?employeeLoanId=@d.EmployeeLoanId&url=@Model.URL')" data-placement="left" title="Delete Loan">Delete</button>
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Loan Type</th>
+                                        <th>Amount</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-info alert-mg-b-0" role="alert">
+                    <p>No Loans</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="createModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayCreate">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayEdit">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayDelete">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var URL = "";
+
+    function createModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayCreate").html(data);
+            }
+        });
+
+
+        $("#createModal").modal();
+    }
+
+    function editModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayEdit").html(data);
+            }
+        });
+
+        $("#editModal").modal();
+
+    }
+
+    function deleteModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayDelete").html(data);
+            }
+        });
+
+        $("#deleteModal").modal();
+
+    }
+
+</script>

@@ -1,0 +1,891 @@
+﻿@model AA.HRMS.Interfaces.IUserProfileView
+
+@{
+    ViewBag.Title = string.Format("  {0} {1} Profile", Model.User.FirstName, Model.User.LastName);
+
+
+    //Profile Photo
+    var hasImage = Model.ProfilePictureDetail != null;
+    var imgSrc = "/Images/avt.jpg";
+    if (hasImage)
+    {
+        var base64 = Convert.ToBase64String(Model.ProfilePictureDetail.TheDigitalFile);
+        imgSrc = string.Format("data:{0};base64,{1}", Model.ProfilePictureDetail.ContentType, base64);
+    }
+
+    //CV
+
+    var hasCV = Model.CVDocumentDetail != null;
+    var cvSrc = "#";
+    if (hasCV)
+    {
+        var nBase64 = Convert.ToBase64String(Model.CVDocumentDetail.TheDigitalFile);
+        cvSrc = string.Format("data:{0};base64,{1}", Model.CVDocumentDetail.ContentType, nBase64);
+    }
+
+    var URL = "/Profile/Index?message=";
+}
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-support"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@Model.User.LastName @Model.User.FirstName</h2>
+                                    <p><span class="bread-ntd"><strong>@Model.User.Username</strong></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+{
+    <div class="container">
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+        </div>
+    </div>
+
+
+}
+
+
+@if (Model.User.CompanyName == null)
+{
+    <div class="container">
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button>
+            You can click on the settings icon on the top menu to proceed to Manage Company and other actions.
+        </div>
+    </div>
+
+}
+
+<div class="contact-area">
+    <div class="container">
+        <!-- ******HEADER****** -->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="normal-table-list mg-t-30">
+                    <p style="float: right;">
+                        <button onclick="createModal('/profile/edit')" class="btn btn-primary">Edit Profile</button>
+                    </p>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-3">
+                            <!-- Image -->
+                            <a href="#">
+                                <img class="rounded-0 img-thumbnail" src="@imgSrc" alt="@Model.User.LastName" style="width: 150px; height: 150px">
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+
+                            <p>
+                                Gender:
+                                @if (!string.IsNullOrEmpty(Model.Profile.Gender))
+                                {
+                                    <strong>@Model.Profile.Gender</strong>
+                                }
+                                else
+                                {
+                                    <strong>N/A</strong>
+                                }
+                            </p>
+
+                            <p>
+                                Born: @if (Model.Profile.DateOfBirth.ToString().IsEmpty())
+                                {<strong>N/A</strong> }
+                                else
+                                { <strong>@Model.Profile.DateOfBirth.ToString("dd MMM, yyyy")</strong> }
+                            </p>
+                            <p>
+                                Nationality: @if (Model.Profile.Nationality.IsEmpty())
+                                {<strong>N/A</strong> }
+                                else
+                                { <strong>@Model.Profile.Nationality</strong> }
+                            </p>
+
+                            <p>
+                                Address: @if (Model.Profile.Address.IsEmpty() || Model.Profile.Address.IsEmpty() || Model.Profile.Address.IsEmpty())
+                                {<strong>N/A</strong> }
+                                else
+                                { <strong>@Model.Profile.Address</strong> }
+                            </p>
+
+                            <br />
+                            @if (!hasImage)
+                            {
+                                <p class="text-danger bold">You have no profile photo, Please update your profile</p>
+                            }
+
+                            @if (!hasCV)
+                            {
+                                <p class="text-danger bold">You have no resume uploaded, Please update your profile</p>
+                            }
+                            else
+                            {
+                                <a href="@cvSrc" class="btn btn-outline-primary">Download your CV</a>
+                            }
+                        </div>
+
+                        <div class="col-md-3">
+                            <p>
+                                Phone:@if (Model.User.PhoneNumber.IsEmpty())
+                                {<strong>N/A</strong> }
+                                else
+                                { <strong>@Model.User.PhoneNumber</strong>}
+                            </p>
+                            <p>
+                                Email:@if (Model.User.Email.IsEmpty())
+                                {<strong>N/A</strong> }
+                                else
+                                { <strong>@Model.User.Email</strong>}
+                            </p>
+                            <p>
+                                Religion:@if (Model.Profile.StateOfOrigin.IsEmpty())
+                                {<strong>N/A</strong> }
+                                else
+                                { <strong>@Model.Profile.StateOfOrigin</strong>}
+                            </p>
+                            <p>
+                                Nationality:@if (Model.Profile.Nationality.IsEmpty())
+                                {<strong>N/A</strong> }
+                                else
+                                { <strong>@Model.Profile.Nationality</strong>}
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="normal-table-list mg-t-30">
+                    <div class="invoice-wrap">
+                        <div class="basic-tb-hd">
+                            <h2 class="card-title" style="color: #006fb6"><i class="fa fa-cubes fa-fw"></i>Profile Summary</h2>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                    <div class="">
+                                        @Model.Profile.ProfileSummary
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Section:Skill Set -->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="normal-table-list mg-t-30">
+                    <div class="basic-tb-hd">
+                        <h2 class="card-title" style="color: #006fb6"><i class="fa fa-rocket fa-fw"></i>Skill Set</h2>
+                        <button class="btn pull-right" data-toggle="tooltip" onclick="createModal('/SkillSet/Create?URL=@URL')" data-placement="right" title="Add Skill Set"><i class="notika-icon notika-plus-symbol"></i></button>
+                    </div>
+
+                    @if (Model.SkillSet != null && Model.SkillSet.Any())
+                    {
+                        <div class="bsc-tbl-hvr">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Skill</th>
+                                        <th>Experience</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var skill in Model.SkillSet)
+                                    {
+
+
+                                        <tr>
+                                            <td>@skill.SkillName</td>
+                                            <td>@skill.ExperienceName</td>
+                                            <td>
+                                                <button class="btn btn-sm" data-toggle="tooltip" onclick="editModal('/SkillSet/Edit?skillSetId=@skill.SkillId&URL=@URL')" data-placement="right" title="Edit Skill Set">Modify</button>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-danger" data-toggle="tooltip" onclick="deleteModal('/SkillSet/Delete?skillId=@skill.SkillId&URL=@URL')" data-placement="right" title="Delete Skill Set">Delete</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-danger pl-2">No skills found</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Section:Education History -->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="normal-table-list mg-t-30">
+                    <div class="basic-tb-hd">
+                        <h2 class="card-title" style="color: #006fb6"><i class="fa fa-book fa-fw"></i>Educational History</h2>
+                        <button class="btn pull-right" data-toggle="tooltip" onclick="createModal('/EducationHistory/Create?URL=@URL')" data-placement="right" title="Add Education History"><i class="notika-icon notika-plus-symbol"></i></button>
+                    </div>
+
+                    @if (Model.EducationHistory != null && Model.EducationHistory.Any())
+                    {
+                        <div class="bsc-tbl-hvr">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Institute/University</th>
+                                        <th>Qualification</th>
+                                        <th>Year</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var educationnHistory in Model.EducationHistory)
+                                    {
+                                        <tr>
+                                            <td>@educationnHistory.SchoolName</td>
+                                            <td>@educationnHistory.Degree</td>
+                                            <td>@educationnHistory.GraduationYear</td>
+
+                                            <td>
+                                                <button class="btn btn-sm" data-toggle="tooltip" onclick="editModal('/EducationHistory/Edit?educationHistoryId=@educationnHistory.EducationHistoryId&URL=@URL')" data-placement="right" title="Edit Education History">Modify</button>
+                                            </td>
+
+                                            <td>
+                                                <button class="btn btn-sm btn-danger" data-toggle="tooltip" onclick="deleteModal('/EducationHistory/Delete?educationHistoryId=@educationnHistory.EducationHistoryId&URL=@URL')" data-placement="right" title="Delete Education History">Delete</button>
+                                            </td>
+                                        </tr>
+                                    }
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-danger pl-2"> No Eductional History found</p>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Section:Work History -->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="normal-table-list mg-t-30">
+                    <div class="basic-tb-hd">
+                        <h2 class="card-title" style="color: #006fb6"><i class="fa fa-cubes fa-fw"></i>Work History</h2>
+                        <button class="btn pull-right" data-toggle="tooltip" onclick="createModal('/EmploymentHistory/Create?URL=@URL')" data-placement="right" title="Add Work History"><i class="notika-icon notika-plus-symbol"></i></button>
+                    </div>
+
+
+
+                    @if (Model.EmploymentHistory != null && Model.EmploymentHistory.Any())
+                    {
+                        <div class="bsc-tbl-hvr">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Company</th>
+                                        <th>Job Title</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var employer in Model.EmploymentHistory)
+                                    {
+
+
+
+                                        <tr>
+                                            <td>@employer.CompanyName</td>
+                                            <td>@employer.JobFunction</td>
+                                            <td>@employer.StartDate.ToString("dd MMM, yyyy")</td>
+                                            <td>@employer.EndDate</td>
+                                            <td>
+                                                <button class="btn btn-sm" data-toggle="tooltip" onclick="editModal('/EmploymentHistory/Edit?employmentHistoryId=@employer.EmploymentHistoryId&URL=@URL')" data-placement="right" title="Edit Employment History">Modify</button>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-danger" data-toggle="tooltip" onclick="deleteModal('/EmploymentHistory/Delete?employmentHistoryId=@employer.EmploymentHistoryId&URL=@URL')" data-placement="right" title="Edit Employment History">Delete</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-danger pl-2"> No Employment History found</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Section:Spouse Information -->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="normal-table-list mg-t-30">
+                    <div class="basic-tb-hd">
+                        <h2 class="card-title" style="color: #006fb6"><i class="fa fa-cubes fa-fw"></i>Spouse Information</h2>
+                        <button class="btn pull-right" data-toggle="tooltip" onclick="createModal('/Employee/CreateSpouse?url=@URL')" data-placement="right" title="Add Spouse Information"><i class="notika-icon notika-plus-symbol"></i></button>
+                    </div>
+
+
+
+                    @if (Model.spouseModel != null && Model.spouseModel.Any())
+                    {
+                        <div class="bsc-tbl-hvr">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Spouse Name</th>
+                                        <th>Email</th>
+                                        <th>Phone Contact</th>
+                                        <th>Date of Birth</th>
+                                        <th>Address</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var spouse in Model.spouseModel)
+                                    {
+
+
+
+                                        <tr>
+                                            <td>@spouse.SpouseName</td>
+                                            <td>@spouse.Email</td>
+                                            <td>@spouse.Mobile</td>
+                                            <td>@spouse.DateOfBirth.ToString("dd MMM, yyyy")</td>
+                                            <td>@spouse.Address</td>
+
+
+                                            @{
+                                                if (spouse.IsActive == false)
+                                                {
+                                                    <td>Cannot Modify</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <button class="btn btn-sm" data-toggle="tooltip" onclick="editModal('/Employee/EditSpouse?spouseId=@spouse.SpouseId&url=@URL')" data-placement="right" title="Edit Spouse">Modify</button>
+                                                    </td>
+                                                }
+                                            }
+                                            @{
+                                                if (spouse.IsActive == false)
+                                                {
+                                                    <td>Information Disabled</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger" data-toggle="tooltip" onclick="deleteModal('/Employee/DeleteSpouse?spouseId=@spouse.SpouseId&url=@URL')" data-placement="right" title="Delete Spousey">Delete</button>
+                                                    </td>
+                                                }
+                                            }
+
+                                        </tr>
+                                    }
+                                </tbody>
+                                <thead>
+                                    <tr>
+                                        <th>Spouse Name</th>
+                                        <th>Email</th>
+                                        <th>Phone Contact</th>
+                                        <th>Date of Birth</th>
+                                        <th>Address</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-danger pl-2"> No Spouse Information Found</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Section:Emergency Information -->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="normal-table-list mg-t-30">
+                    <div class="basic-tb-hd">
+                        <h2 class="card-title" style="color: #006fb6"><i class="fa fa-cubes fa-fw"></i>Emergency Information</h2>
+                        <button class="btn pull-right" data-toggle="tooltip" onclick="createModal('/Employee/EmergencyContact?url=@URL')" data-placement="right" title="Add Emergency Contact"><i class="notika-icon notika-plus-symbol"></i></button>
+                    </div>
+
+
+
+                    @if (Model.emergencyModel != null && Model.emergencyModel.Any())
+                    {
+                        <div class="bsc-tbl-hvr">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Emergency Name</th>
+                                        <th> Emergency Contact Email</th>
+                                        <th>Phone Contact</th>
+                                        <th>Date of Birth</th>
+                                        <th>Address</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var emergency in Model.emergencyModel)
+                                    {
+
+                                        <tr>
+                                            <td>@emergency.EmergencyName</td>
+                                            <td>@emergency.Email</td>
+                                            <td>@emergency.Mobile</td>
+                                            <td>@emergency.DateOfBirth.ToString("dd MMM, yyyy")</td>
+                                            <td>@emergency.Address</td>
+
+                                            @{
+                                                if (emergency.IsActive == false)
+                                                {
+                                                    <td><button class="btn notika-btn-danger"> Modify</button></td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <button class="btn btn-sm" data-toggle="tooltip" onclick="editModal('/Employee/EditEmergencyContact?employeeId=@emergency.EmergencyId&url=@URL')" data-placement="right" title="Edit Emergency">Modify</button>
+                                                    </td>
+                                                }
+                                            }
+                                            @{
+                                                if (emergency.IsActive == false)
+                                                {
+                                                    <td>  <Button class="btn notika-btn-danger">Information Disabled</Button></td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger" data-toggle="tooltip" onclick="deleteModal('/Employee/DeleteEmergencyContact?employeeId=@emergency.EmergencyId&url=@URL')" data-placement="right" title="Delete Emergency">Delete</button>
+                                                    </td>
+                                                }
+                                            }
+
+                                        </tr>
+                                    }
+                                </tbody>
+                                <thead>
+                                    <tr>
+                                        <th>Emergency Name</th>
+                                        <th> Emergency Contact Email</th>
+                                        <th>Phone Contact</th>
+                                        <th>Date of Birth</th>
+                                        <th>Address</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-danger pl-2"> No Emergency Contact Found</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Section:NextOfKin Information -->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="normal-table-list mg-t-30">
+                    <div class="basic-tb-hd">
+                        <h2 class="card-title" style="color: #006fb6"><i class="fa fa-cubes fa-fw"></i>Next OF Kin's Contact</h2>
+                        <button class="btn pull-right" data-toggle="tooltip" onclick="createModal('/Employee/CreateNextOfKin?url=@URL')" data-placement="right" title="Add NextOfKin Information"><i class="notika-icon notika-plus-symbol"></i></button>
+                    </div>
+
+
+
+                    @if (Model.nextOfKinModel != null && Model.nextOfKinModel.Any())
+                    {
+                        <div class="bsc-tbl-hvr">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>NextOfKin's Name</th>
+                                        <th> NextOfKin's Email</th>
+                                        <th>Phone Contact</th>
+                                        <th>Date of Birth</th>
+                                        <th>Address</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var nextOfKin in Model.nextOfKinModel)
+                                    {
+
+                                        <tr>
+                                            <td>@nextOfKin.NextOfKinName</td>
+                                            <td>@nextOfKin.Emial</td>
+                                            <td>@nextOfKin.Mobile</td>
+                                            <td>@nextOfKin.DateOfBirth.ToString("dd MMM, yyyy")</td>
+                                            <td>@nextOfKin.Address</td>
+
+                                            @{
+                                                if (nextOfKin.IsActive == false)
+                                                {
+                                                    <td><button class="btn notika-btn-danger"> Modify</button></td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <button class="btn btn-sm" data-toggle="tooltip" onclick="editModal('/Employee/EditNextOfKin?employeeId=@nextOfKin.NextOfKinId&url=@URL')" data-placement="right" title="Edit NextOfKin">Modify</button>
+                                                    </td>
+                                                }
+                                            }
+                                            @{
+                                                if (nextOfKin.IsActive == false)
+                                                {
+                                                    <td>  <Button class="btn notika-btn-danger">Information Disabled</Button></td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger" data-toggle="tooltip" onclick="deleteModal('/Employee/DeleteNextOfKin?employeeId=@nextOfKin.NextOfKinId&url=@URL')" data-placement="right" title="Delete NextOfKin">Delete</button>
+                                                    </td>
+                                                }
+                                            }
+
+                                        </tr>
+                                    }
+                                </tbody>
+                                <thead>
+                                    <tr>
+                                        <th>NextOfKin's Name</th>
+                                        <th> NextOfKin's Email</th>
+                                        <th>Phone Contact</th>
+                                        <th>Date of Birth</th>
+                                        <th>Address</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-danger pl-2"> No NextOfKin Information Found</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Section:Beneficiary Information -->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="normal-table-list mg-t-30">
+                    <div class="basic-tb-hd">
+                        <h2 class="card-title" style="color: #006fb6"><i class="fa fa-cubes fa-fw"></i>Beneficiaries' Information</h2>
+                        <button class="btn pull-right" data-toggle="tooltip" onclick="createModal('/Employee/CreateBeneficiaries?url=@URL')" data-placement="right" title="Add Beneficiary Information"><i class="notika-icon notika-plus-symbol"></i></button>
+                    </div>
+
+
+
+                    @if (Model.beneficiaryModel != null && Model.beneficiaryModel.Any())
+                    {
+                        <div class="bsc-tbl-hvr">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Beneficiary Name</th>
+                                        <th> Beneficiary Contact Email</th>
+                                        <th>Phone Contact</th>
+                                        <th>Date of Birth</th>
+                                        <th>Address</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var beneficiary in Model.beneficiaryModel)
+                                    {
+
+                                        <tr>
+                                            <td>@beneficiary.BeneficiaryName</td>
+                                            <td>@beneficiary.Email</td>
+                                            <td>@beneficiary.Mobile</td>
+                                            <td>@beneficiary.DateOfBirth.ToString("dd MMM, yyyy")</td>
+                                            <td>@beneficiary.Address</td>
+
+                                            @{
+                                                if (beneficiary.IsActive == false)
+                                                {
+                                                    <td><button class="btn notika-btn-danger"> Modify</button></td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <button class="btn btn-sm" data-toggle="tooltip" onclick="editModal('/Employee/EditBeneficiaries?employeeId=@beneficiary.BeneficiaryId&url=@URL')" data-placement="right" title="Edit Beneficiary">Modify</button>
+                                                    </td>
+                                                }
+                                            }
+                                            @{
+                                                if (beneficiary.IsActive == false)
+                                                {
+                                                    <td>  <Button class="btn notika-btn-danger">Information Disabled</Button></td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger" data-toggle="tooltip" onclick="deleteModal('/Employee/DeleteBeneficiaries?employeeId=@beneficiary.BeneficiaryId&url=@URL')" data-placement="right" title="Delete Beneficiary">Delete</button>
+                                                    </td>
+                                                }
+                                            }
+
+                                        </tr>
+                                    }
+                                </tbody>
+                                <thead>
+                                    <tr>
+                                        <th>Beneficiary Name</th>
+                                        <th> Beneficiary Contact Email</th>
+                                        <th>Phone Contact</th>
+                                        <th>Date of Birth</th>
+                                        <th>Address</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-danger pl-2"> No Beneficiary Information Found</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Section:Children Information -->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="normal-table-list mg-t-30">
+                    <div class="basic-tb-hd">
+                        <h2 class="card-title" style="color: #006fb6"><i class="fa fa-cubes fa-fw"></i>Children's Contact</h2>
+                        <button class="btn pull-right" data-toggle="tooltip" onclick="createModal('/Employee/CreateChildrenInformation?url=@URL')" data-placement="right" title="Add Child Information"><i class="notika-icon notika-plus-symbol"></i></button>
+                    </div>
+
+
+
+                    @if (Model.childrenModel != null && Model.childrenModel.Any())
+                    {
+                        <div class="bsc-tbl-hvr">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Child Name</th>
+                                        <th>Child Contact Email</th>
+                                        <th>Phone Contact</th>
+                                        <th>Date of Birth</th>
+                                        <th>Address</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var child in Model.childrenModel)
+                                    {
+
+                                        <tr>
+                                            <td>@child.ChildName</td>
+                                            <td>@child.Email</td>
+                                            <td>@child.Mobile</td>
+                                            <td>@child.DateOfBirth.ToString("dd MMM, yyyy")</td>
+                                            <td>@child.Address</td>
+
+                                            @{
+                                                if (child.IsActive == false)
+                                                {
+                                                    <td><button class="btn notika-btn-danger"> Modify</button></td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <button class="btn btn-sm" data-toggle="tooltip" onclick="editModal('/Employee/EditChildrenInformation?employeeId=@child.ChildrenId&url=@URL')" data-placement="right" title="Edit Child">Modify</button>
+                                                    </td>
+                                                }
+                                            }
+                                            @{
+                                                if (child.IsActive == false)
+                                                {
+                                                    <td>  <Button class="btn notika-btn-danger">Information Disabled</Button></td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger" data-toggle="tooltip" onclick="deleteModal('/Employee/DeleteChildrenInformation?employeeId=@child.ChildrenId&url=@URL')" data-placement="right" title="Delete Child">Delete</button>
+                                                    </td>
+                                                }
+                                            }
+
+                                        </tr>
+                                    }
+                                </tbody>
+                                <thead>
+                                    <tr>
+                                        <th>Child Name</th>
+                                        <th>Child Contact Email</th>
+                                        <th>Phone Contact</th>
+                                        <th>Date of Birth</th>
+                                        <th>Address</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-danger pl-2"> No Children Information Found</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--End of Container-->
+
+
+
+
+<div class="modal fade" id="createModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayCreate">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayEdit">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayDelete">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var URL = "";
+
+    function createModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayCreate").html(data);
+            }
+        });
+
+
+        $("#createModal").modal();
+    }
+
+    function editModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayEdit").html(data);
+            }
+        });
+
+        $("#editModal").modal();
+
+    }
+
+    function deleteModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayDelete").html(data);
+            }
+        });
+
+        $("#deleteModal").modal();
+
+    }
+
+</script>
+

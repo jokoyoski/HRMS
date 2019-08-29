@@ -1,0 +1,213 @@
+﻿@model AA.HRMS.Interfaces.IMilestoneListView
+
+@{
+    ViewBag.Title = "Milestones";
+
+    var hasInfo = ((Model != null) && (Model.MilestoneCollection != null) && Model.MilestoneCollection.Any());
+
+
+    var arr = new string[Model.MilestoneCollection.Count];
+}
+
+<!-- Breadcomb area Start-->
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-edit"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                    <p>Manage you <span class="bread-ntd">Task</span> properly</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                            <div class="breadcomb-report">
+                                <button data-toggle="tooltip" data-placement="left" title="Download Report" class="btn"><i class="notika-icon notika-sent"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcomb area End-->
+<!--Display Messages Start-->
+@if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+{
+    <div>
+        <div class="container">
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+            </div>
+
+        </div>
+    </div>
+}
+<!--Display Messages End-->
+<!-- Wizard area Start-->
+@if (hasInfo)
+{
+    <div class="wizard-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="wizard-wrap-int">
+
+
+
+                        <div id="rootwizard">
+
+                            @{
+
+
+                                int count = 0;
+
+                                for (int i = 0; i < arr.Length; i++)
+                                {
+                                    arr[i] = "Milestone" + (++count);
+                                }
+                            }
+
+
+                            }
+
+                            <div class="navbar">
+                                <div class="navbar-inner">
+                                    <div class="container-pro wizard-cts-st">
+                                        <ul>
+                                            @{int tab = 1;}
+                                            @foreach (var item in arr)
+                                            {
+                                                <li><a href="#tab@(tab)" data-toggle="tab">@item</a></li>
+                                                tab++;
+                                            }
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @foreach (var d in Model.MilestoneCollection)
+                            {
+
+                                <div class="tab-content">
+                                    <div class="tab-pane wizard-ctn" id="tab1">
+                                        <div class="">
+                                            <div class="row">
+                                                <!--Milestone Names Starts-->
+                                                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 pull-left">
+                                                    <div class="btn btn-default" disabled>
+                                                        <div class="mg-t-10">
+                                                            <div class="">
+                                                                <label>Milestone:</label>
+                                                                <span>@d.MilestoneName</span>
+                                                            </div>
+                                                            <div class="">
+                                                                <label>Created At:</label>
+                                                                <span>@d.DateCreated</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--Milestone Names End-->
+                                                <!--Dates of the Milestone Start-->
+                                                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 pull-right">
+                                                    <div class="btn btn-default" disabled>
+                                                        <div class="mg-t-10">
+                                                            <div class="">
+                                                                <label>Start:</label>
+                                                                <span>@d.DateStarted</span>
+                                                            </div>
+                                                            <div class="">
+                                                                <label>End:</label>
+                                                                <span>@d.DateCompleted</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--Dates of the Milestone End-->
+                                            </div>
+
+                                            <div class="row">
+                                                <!--Milestone Description Start-->
+                                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="typography-list typography-mgn border-success">
+                                                        <h2>Milestone Description</h2>
+                                                        <div class="typography-bd">
+                                                            <p>@d.MilestoneDescription</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--Milestone Description End-->
+                                                <!--Milestone Approval Start-->
+                                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="contact-form sm-res-mg-t-30 tb-res-mg-t-30 tb-res-mg-t-0">
+                                                        <div class="contact-hd sm-form-hd">
+                                                            <h2>Approval Comment</h2>
+                                                        </div>
+                                                        <div class="contact-form-int">
+                                                            @using (Html.BeginForm("ApproveMilestone", "PerformanceManagement", FormMethod.Post))
+                                                            {
+                                                                <div class="form-group">
+                                                                    <div class="form-single nk-int-st widget-form">
+                                                                        <label>Supervisor:</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="form-single nk-int-st widget-form">
+                                                                        <textarea name="@d.ApprovalComment" class="form-control" placeholder="Message">@d.ApprovalComment</textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="contact-btn">
+                                                                    @if (d.IsApproved == true)
+                                                                    {
+                                                                        <button disabled class="button btn-sm btn-success">Approved</button>
+                                                                    }
+                                                                    else if (d.IsApproved == false)
+                                                                    {
+                                                                        <button disabled class="button btn-sm btn-danger">Declined</button>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <button type="submit" class="button btn-sm btn-default">Pending</button>
+                                                                    }
+
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--Milestone Approval End-->
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<!-- Wizard area End-->
+
+@section Scripts{
+    <!--  wizard JS
+        ============================================ -->
+    <script src="~/Scripts/js/wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="~/Scripts/js/wizard/wizard-active.js"></script>
+}

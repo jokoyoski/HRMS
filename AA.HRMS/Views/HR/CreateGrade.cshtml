@@ -1,0 +1,151 @@
+﻿@model AA.HRMS.Interfaces.IGradeView
+
+@{
+    /**/
+
+    ViewBag.Title = "Add Grade";
+    string compulsoryFields = "";
+}
+
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+
+
+@using (Html.BeginForm("CreateGrade", "HR", FormMethod.Post, new { enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    
+
+    if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+    {
+
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+        </div>
+    }
+
+    if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary(true, "", new { @clas = "text-danger" })
+
+        </div>
+    }
+
+    <div class="modal-body">
+
+
+        <input value="@Model.CompanyId" name="companyId" hidden />
+
+        
+
+        <div id="request">
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Grade Name</label>
+                    <div class="">
+                        <input id="gradeName" onchange="doThing()" min="2"  name="gradeName" type="text" class="form-control" value="@Model.GradeName" />
+                        @Html.ValidationMessageFor(model => model.GradeName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Grade Description</label>
+                    <div class="">
+                        <input id="GradeDescription"  name="GradeDescription" type="text" class="form-control" value="@Model.GradeDescription" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Duration of Annual Leave (in Days)</label>
+                    <div class="">
+                        <input id="annualLeaveDuration" name="annualLeaveDuration" type="number" min="0" class="form-control" value="@Model.AnnualLeaveDuration" />
+                    </div>
+                </div>
+               </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <div class="">
+                        <input type="checkbox" id="myCheck" onclick="myFunction()" name="rad" />
+                        <label>Upload an Excel Sheet Instead</label>
+                    </div>
+                </div>
+            </div>
+
+        <div id="text" class="modal-body" style="display:none">
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <div class="">
+                        <label>Upload File</label>
+                        <input data-toggle="tooltip" data-placement="left" title="Upload Level Excel Sheet" type="file" class="btn" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="gradeExcelFile" value="" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <div class="">
+                        <label>Excel Format</label>
+                        <img src="~/Images/Grade_Excel_Image.PNG" alt="Level Sample" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        </div>
+
+    <div class="modal-footer">
+        <button type="submit" id="btnSubmit" disabled="true" name="submitButton" value="Submit" class="btn btn-default">Add Grade</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+}
+
+
+
+<script type="text/javascript">
+
+    function doThing() {
+
+        var gradeName = $('#gradeName').val().length > 2;
+
+        if (gradeName) {
+            $('#btnSubmit').prop("disabled", false);
+        }
+    }
+
+    function myFunction() {
+        // Get the checkbox
+        var checkBox = document.getElementById("myCheck");
+        // Get the output textbox
+        var text = document.getElementById("text");
+        var request = document.getElementById("request");
+
+        // If the checkbox is checked, display the output textbox
+        if (checkBox.checked == true) {
+            text.style.display = "block";
+            request.style.display = "none"
+            @(compulsoryFields = "")
+            $('#btnSubmit').prop("disabled", false);
+
+        } else {
+            text.style.display = "none";
+            request.style.display = "block"
+            @(compulsoryFields = "required")
+            $('#btnSubmit').prop("disabled", true);
+        }
+    }
+</script>

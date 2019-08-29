@@ -1,0 +1,99 @@
+﻿@model AA.HRMS.Interfaces.INextOfKinView
+
+
+@{
+    ViewBag.Title = "Modify Employee Next Of Kin Details";
+}
+
+
+
+@Html.ValidationSummary()
+
+@*@Model.ProcessingMessage*@
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+@using (Html.BeginForm("EditNextOfKin", "Employee", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+<div class="modal-body">
+
+
+    <input name="EmployeeId" id="EmployeeId" value="@Model.EmployeeId" hidden />
+    <input name="NextOfKinId" id="NextOfKinId" value="@Model.NextOfKinId" hidden />
+    <input name="url" id="url" value="@Model.URL" hidden />
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Spouse Name</label>
+            <div class="">
+                <input id="NextOfKinName" required name="NextOfKinName" type="text" class="form-control" value="@Model.NextOfKinName" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Spouse Date Of Birth</label>
+            <div class="">
+                <input id="dateOfBirth" required name="dateOfBirth" type="date" class="form-control" value="@DisplayHelper.DisplayDate(Model.DateOfBirth)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Spouse Email</label>
+            <div class="">
+                <input id="Emial" required name="Emial" type="email" class="form-control" value="@Model.Emial" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Spose Mobile Contact</label>
+            <div class="">
+                <input id="Mobile" required name="Mobile" type="text" class="form-control" value="@Model.Mobile" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Spouse Address</label>
+            <div class="">
+                <textarea id="Address" required name="Address" wrap="soft" cols="3" type="text" class="form-control" value="@Model.Address">@Model.Address</textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label> Relationship</label>
+            <div class="">
+                <input id="relationship" required name="relationship" type="text" class="form-control" value="@Model.Relationship" />
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    <div class="modal-footer">
+        <button type="submit" name="submitButton" class="btn btn-default">Modify</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+    </div>
+}
+
+
+
+
+
+

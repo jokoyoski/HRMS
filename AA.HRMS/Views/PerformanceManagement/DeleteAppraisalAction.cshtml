@@ -1,0 +1,68 @@
+﻿@model AA.HRMS.Interfaces.IAppraisalActionView
+
+@{
+    ViewBag.Title = "AA HRMS - Performance Management | Appraisal Action";
+}
+
+<h2>Delete Appraisal Action</h2>
+
+<div class="jumbotron">
+    <div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; width: 100%;">
+        <div class="validation-summary-errors">
+            @Html.ValidationSummary()
+            @Model.ProcessingMessage
+        </div>
+    </div>
+    @using (Html.BeginForm("DeleteAppraisalAction", "PerformanceManagement", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <input type="hidden" name="AppraisalActionId" value="@Model.AppraisalActionId" />
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span>Appraisal Action Name
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <input id="AppraisalActionName" disabled name="AppraisalActionName" style="width: 250px;" maxlength="50" value="@Model.AppraisalActionName" />
+            </div>
+        </div>
+
+
+
+
+        <div class="columns" style="width: 100%; padding-top: 15px; padding-bottom: 5px;">
+            <div class="column" style="margin-left: 195px;">
+                <input class="blueButton" id="btnSubmit" name="submitButton" style="width: 80px;" type="submit" value="Delete" />
+            </div>
+            <div class="column" style="margin-left: 15px;">
+                <input id="btnCancel" class="blueButton" name="submitButton" style="width: 80px;"
+                       type="submit" value="Cancel" />
+            </div>
+            <div class="column" style="font-size: 9px; font-weight: bold; font-style: italic; padding-left: 5px; padding-top: 2px;">
+                Are you sure you want to delete this item?
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("span.ui-dialog-title").text('Delete This Appraisal? ' + $('#jobTitle').val());
+
+        $('#btnCancel').click(function () {
+            window.location.href = '/PerformanceManagement/AppraisalActionList?AppraisalActionId=' + @Model.AppraisalActionId ;
+            return false;
+        });
+    });
+</script>
+
+@section JavaScriptsExecution
+{
+
+}
+
+@section Stylesheets{
+    <link href="/Content/themes/base/all.css" rel="stylesheet" type="text/css" />
+}

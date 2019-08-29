@@ -1,0 +1,21 @@
+﻿@using AA.HRMS.Interfaces.ValueTypes
+@using System.Web
+
+@{
+
+
+    var companyLogo = (string)HttpContext.Current.Session[SessionKey.CompanyLogo];
+
+
+}
+
+
+<div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="logo-area">
+            <a href="/Home/AdminDashboard"><img src="@companyLogo" height="75" width="60"  alt="@companyLogo" /></a>
+        </div>
+    </div>
+    @Html.Partial("_LoginPartial")
+</div>
+

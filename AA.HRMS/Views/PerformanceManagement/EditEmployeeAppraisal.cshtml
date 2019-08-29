@@ -1,0 +1,399 @@
+﻿@using AA.HRMS.Interfaces.ValueTypes
+@using System.Web
+
+@model AA.HRMS.Interfaces.IAppraisalView
+
+@{
+    ViewBag.Title = "Edit Appraisal";
+
+
+    var hasInfo = ((Model != null) && (Model.EmployeeQuestionAppraisalCollection != null) && Model.EmployeeQuestionAppraisalCollection.Any());
+    var role = (String[])HttpContext.Current.Session[SessionKey.UserRoles];
+
+    int count = 1;
+
+    var editable = string.Empty;
+
+    if (role.Contains("CompanyAdmin"))
+    {
+        editable = "disabled";
+    }
+}
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                            <div class="breadcomb-report">
+                                <a class="btn" data-toggle="tooltip" href="/PerformanceManagement/EmployeeSpecificAppraisalList?employeeId=@Model.Appraisee.EmployeeId" data-placement="left" title="Back "><i class="notika-icon notika-back"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="form-element-area">
+    <div class="container">
+        <div class="row">
+            @using (Html.BeginForm("EditEmployeeAppraisal", "PerformanceManagement", FormMethod.Post, new { id = "AppraisalForm", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+
+            {
+                @Html.AntiForgeryToken();
+
+                <input hidden name="appraisalId" value="@Model.AppraisalId" />
+                <input hidden name="companyId" value="@Model.CompanyId" />
+                <input hidden name="employeeId" value="@Model.Appraisee.EmployeeId" />
+                <input hidden name="url" value="@Model.URL" />
+
+                if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+                {
+                    <div>
+                        <div class="container">
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+                            </div>
+
+                        </div>
+                    </div>
+                }
+
+                if (!ViewData.ModelState.IsValid)
+                {
+                    <div>
+                        <div class="container">
+                            <div class="alert alert-info alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-element-list mg-t-30">
+                        <div class="cmp-tb-hd">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Appraisee Name</label>
+                                            <input type="text" disabled value="@(Model.Appraisee.LastName + " " + Model.Appraisee.FirstName)" class="form-control" />
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Appraiser Name</label>
+                                            @if (Model.Appraiser != null)
+                                            {
+                                                <input type="text" disabled value="@(Model.Appraiser.LastName + " " + Model.Appraiser.FirstName)" class="form-control" />
+                                            }
+                                            else
+                                            {
+                                                <input type="text" disabled value="N/A" class="form-control" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Job Title</label>
+                                            @if (Model.Appraisee.JobTitle != null)
+                                            {
+                                                <input type="text" disabled value="@Model.Appraisee.JobTitle" class="form-control" />
+                                            }
+                                            else
+                                            {
+                                                <input type="text" disabled value="N/A" class="form-control" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Appraisal Period</label>
+                                            <input type="text" disabled value="@Model.AppraisalPeriodName" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Date Initiated</label>
+                                            <input type="text" disabled value="@DisplayHelper.DisplayDate(Model.DateInitiated)" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Date Approved</label>
+                                            <input type="date" name="dateApproved" id="dateApproved" value="@DisplayHelper.DisplayDate(Model.EmployeeAppraisal.DateApproved)" class="form-control" />
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Date Agreed</label>
+                                            <input type="date" name="dateAgreed" id="dateAgreed" value="@DisplayHelper.DisplayDate(Model.EmployeeAppraisal.DateAgreed)" class="form-control" />
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="normal-table-list mg-t-30">
+                                    <div class="bsc-tbl-hvr">
+                                        @foreach (var d in Model.AppraiseeRatingCollection)
+                                        {
+                                            <p class="col-md-6">
+                                                <strong>@count : </strong> @d.AppraisalRatingName
+                                            </p>
+
+                                            count++;
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if (hasInfo)
+                            {
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="normal-table-list mg-t-30">
+                                        <div class="bsc-tbl-hvr">
+                                            <table class="table table-responsive table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>S/NO</th>
+                                                        <th>Question</th>
+                                                        @if (role.Contains("Employee") || role.Contains("Supervisor"))
+                                                        {
+                                                            <td>
+                                                                Rating
+                                                            </td>
+                                                        }
+
+                                                        @if (role.Contains("CompanyAdmin"))
+                                                        {
+                                                            <td>
+                                                                Appraisee Rating
+                                                            </td>
+                                                            <td>
+                                                                Appraiser Rating
+                                                            </td>
+                                                        }
+                                                    </tr>
+                                                </thead>
+                                                @{ var i = 0; }
+                                                <tbody>
+                                                    @foreach (var d in Model.EmployeeQuestionAppraisalCollection)
+                                                    {
+
+                                                        var appraiseeDDL = Model.GetAppraiseeRatingDDL(d.AppraiseeRatingId);
+                                                        var appraiserDDL = Model.GetAppraiserRatingDDL(d.AppraiserRatingId);
+
+                                                        <tr>
+                                                            <td>
+                                                                @count
+                                                            </td>
+
+                                                            <td>@d.Question</td>
+
+                                                            @if (role.Contains("Employee") || role.Contains("Supervisor"))
+                                                            {
+                                                                <td>
+                                                                    @if (Model.EmployeeAppraisal.Status == "Appraisee")
+                                                                    {
+                                                                        @Html.DropDownList("employeeAppraisal[" + i + "].AppraiseeRatingId", Model.AppraisalRatingDropDown, new { @class = "form-control" })
+                                                                    }
+                                                                    else if (Model.EmployeeAppraisal.Status == "Appraiser")
+                                                                    {
+                                                                        @Html.DropDownList("employeeAppraisal[" + i + "].AppraiserRatingId", Model.AppraisalRatingDropDown, new { @class = "form-control" })
+
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <button class="btn btn-default">Appraisal in Transit</button>
+                                                                    }
+                                                                    <input hidden name="employeeAppraisal[@i].AppraisalQuestionId" value="@d.AppraisalQuestionId" />
+                                                                    <input hidden name="employeeAppraisal[@i].AppraisalId" value="@Model.AppraisalId" />
+                                                                    <input hidden name="employeeAppraisal[@i].EmployeeId" value="@Model.Appraisee.EmployeeId" />
+                                                                    @if (Model.Appraiser != null)
+                                                                    {
+                                                                        <input hidden name="employeeAppraisal[@i].SupervisorId" value="@Model.Appraiser.SupervisorId" />
+                                                                    }
+                                                                    <input hidden name="employeeAppraisal[@i].EmployeeAppraisalId" value="@Model.EmployeeAppraisal.EmployeeAppraisalId" />
+                                                                    <input hidden name="employeeAppraisal[@i].Status" value="@Model.EmployeeAppraisal.Status" />
+                                                                </td>
+                                                            }
+
+
+                                                            @if (role.Contains("CompanyAdmin"))
+                                                            {
+                                                                <td>
+                                                                    @{appraiseeDDL = Model.GetAppraiseeRatingDDL(d.AppraiseeRatingId);}
+
+
+                                                                    @Html.DropDownList("employeeAppraisal[" + i + "].AppraiseeRatingId", appraiseeDDL, new { @class = "form-control", @disabled = "disabled" })
+                                                                </td>
+                                                                <td>
+                                                                    @{appraiserDDL = Model.GetAppraiserRatingDDL(d.AppraiserRatingId);}
+
+
+                                                                    @Html.DropDownList("employeeAppraisal[" + i + "].AppraiserRatingId", appraiserDDL, new { @class = "form-control", @disabled = "disabled" })
+                                                                </td>
+                                                            }
+
+                                                        </tr>
+                                                        count++;
+                                                        i++;
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div class="">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="alert alert-info alert-mg-b-0" role="alert">
+                                                <p>@Model.Appraisee.LastName @Model.Appraisee.FirstName filled his/her appraisal form</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+
+
+                            @if ((role.Contains("Employee") && Model.EmployeeAppraisal.Status == "Appraisee") || role.Contains("CompanyAdmin"))
+                            {
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int float-lb floating-lb">
+                                            <div class="form-ic-cmp">
+                                                <i class="notika-icon notika-"></i>
+                                            </div>
+                                            <div class="">
+                                                <label>Appraisee Comment</label>
+                                                <textarea type="text" value="@Model.EmployeeAppraisal.AppraiseeComment" @editable maxlength="300" name="AppraiseeComment" id="AppraiseeComment" class="form-control">@Model.EmployeeAppraisal.AppraiseeComment</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            @if ((role.Contains("Supervisor") && Model.EmployeeAppraisal.Status == "Appraiser") || role.Contains("CompanyAdmin"))
+                            {
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int float-lb floating-lb">
+                                            <div class="form-ic-cmp">
+                                                <i class="notika-icon notika-"></i>
+                                            </div>
+                                            <div class="">
+                                                <label>Appraiser Comment</label>
+                                                <textarea type="text" value="@Model.EmployeeAppraisal.AppraiserComment" @editable maxlength="300" name="AppraiserComment" id="AppraiserComment" class="form-control">@Model.EmployeeAppraisal.AppraiserComment</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+
+                            @if (role.Contains("CompanyAdmin"))
+                            {
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int float-lb floating-lb">
+                                            <div class="form-ic-cmp">
+                                                <i class="notika-icon notika-"></i>
+                                            </div>
+                                            <div class="">
+                                                <label>Moderation Comment</label>
+                                                <textarea type="text" value="@Model.EmployeeAppraisal.HRComment" maxlength="300" name="HRComment" id="HRComment" class="form-control">@Model.EmployeeAppraisal.HRComment</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+
+
+                            <div class="modal-footer">
+                                <button type="submit" name="submitButton" class="btn btn-primary">Submit Appraisal</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,101 @@
+﻿
+@model AA.HRMS.Interfaces.IUserAppRoleView
+
+@{
+    ViewBag.Title = "AA HRMS - Add User To Role";
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+    <div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; width: 100%;">
+        <div class="validation-summary-errors">
+            @Html.ValidationSummary()
+            @Model.ProcessingMessage
+        </div>
+    </div>
+
+
+    @using (Html.BeginForm("EditUserRole", "UserRole", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+
+    <div class="modal-body">
+
+
+
+        <input type="hidden" id="userName" name="userName" value="@Model.Username" />
+        <input type="hidden" id="dateCreated" name="dateCreated" value="@Model.DateCreated" />
+        <input type="hidden" id="createByUsername" name="createByUsername" value="@Model.CreateByUsername" />
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                Roles:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                @Html.DropDownList("AppRoleId", Model.AppRoleCollection, new { style = "width:204px;height:20px;", id = "AppRoleId" })
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Add</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+      }
+
+
+        @section JavaScriptsIncludes
+{
+            <script src="/Scripts/jquery-ui-1.12.1.js" type="text/javascript"></script>
+        }
+
+
+        @section JavaScriptsExecution
+{
+            <script type="text/javascript">
+                $(document).ready(function () {
+
+                    $('#btnCancel').click(function () {
+                        window.location.href = '/Administration/User';
+                        return false;
+                    });
+
+
+                    $('#companyId').change(function () {
+                        $('#UserId').trigger("propertychange");
+                    });
+
+                    $('#roleId').change(function () {
+                        $('#UserId').trigger("propertychange");
+                    });
+
+
+                    $('#UserId').bind('input propertychange',
+                        function () {
+                            $('#btnSubmit').prop("class", "grayButton");
+                            $('#btnSubmit').prop("disabled", true);
+
+                            var companyIdOkay = $('#companyId').val().length > 0;
+
+                            var roleIDOkay = $('#roleId').val().length > 0;
+
+                            if ((companyIdOkay) && (jobDefinition)) {
+                                $('#btnSubmit').prop("class", "blueButton");
+                                $('#btnSubmit').prop("disabled", false);
+                            }
+                        });
+
+                });
+            </script>
+        }
+
+        @section Stylesheets{
+            <link href="/Content/themes/base/all.css" rel="stylesheet" type="text/css" />
+        }

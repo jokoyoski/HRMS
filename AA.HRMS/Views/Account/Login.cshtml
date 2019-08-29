@@ -1,0 +1,269 @@
+﻿@using AA.HRMS.Domain.Resources
+@model AA.HRMS.Interfaces.ILogOnView
+
+@{
+    ViewBag.Title = "Sign in";
+    Layout = null;
+}
+
+
+<!--favicon
+    ============================================-->
+<link rel="shortcut icon" type="~/image/x-icon" href="~/content/img/favicon.ico">
+<!-- Google Fonts
+============================================ -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
+<!-- Bootstrap CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/bootstrap.min.css">
+<!-- font awesome CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/font-awesome.min.css">
+<!-- owl.carousel CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/owl.carousel.css">
+<link rel="stylesheet" href="~/content/css/owl.theme.css">
+<link rel="stylesheet" href="~/content/css/owl.transitions.css">
+<!-- animate CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/animate.css">
+<!-- normalize CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/normalize.css">
+<!-- mCustomScrollbar CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/scrollbar/jquery.mCustomScrollbar.min.css">
+<!-- wave CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/wave/waves.min.css">
+<!-- Notika icon CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/notika-custom-icon.css">
+<!-- main CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/main.css">
+<!-- style CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/style.css">
+<!-- responsive CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/responsive.css">
+
+
+
+
+<div class="login-content" style="background-image: url('/Images/Remote-Work-More-Than-a-Perk-for-Pros-with-Chronic-Conditions.jpg');  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;">
+
+    
+
+    <div class="nk-block toggled" id="l-login">
+
+
+        <div class="nk-form">
+
+            <div class="nk-form">
+                <h1>Automata HRMS</h1>
+            </div>
+
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new
+            {
+                id = "loginForm"
+            }))
+            {
+
+                if (!string.IsNullOrEmpty(Model.InfoMessage))
+                {
+
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.InfoMessage
+                    </div>
+                }
+
+                if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+                    </div>
+                }
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" name="returnUrl" id="returnUrl" value="@Model.ReturnUrl" />
+
+                <div class="input-group">
+                    <span class="input-group-addon nk-ic-st-pro"><i class="notika-icon notika-support"></i></span>
+                    <div class="">
+                        <input required type="text" id="username" name="username" class="form-control" value="@Model.UserName" placeholder="Username">
+                    </div>
+                </div>
+                <div class="input-group mg-t-15">
+                    <span class="input-group-addon nk-ic-st-pro"><i class="notika-icon notika-edit"></i></span>
+                    <div class="">
+                        <input required type="password" id="password" name="password" class="form-control" value="@Model.Password" placeholder="Password">
+                    </div>
+                </div>
+                <div class="fm-checkbox">
+                    <label>@Html.CheckBoxFor(x => x.RememberMe, new { @class = "i-checks" }) Keep me signed in</label>
+                </div>
+                <div class="form-example-int mg-t-15">
+                    <button id="loginSubmit" name="loginSubmit" type="submit" class="btn btn-primary notika-btn-primary">Sign In</button>
+                </div>
+
+                <div class="form-example-int mg-t-15">
+                    <p>I don't have an account, <a href="~/Account/Register">Register</a></p>
+                    <p>I have forgotten my Password, <a href="~/Account/ChangePassword">Forgot Password</a></p>
+                </div>
+
+                <div class="form-example-int mg-t-10">
+                    <a id="home" name="home" href="~/Home/Index">Go back to Home</a>
+                </div>
+
+            }
+
+        </div>
+
+    </div>
+
+    </div>
+
+@section JavaScriptsIncludes
+{
+    <script src="/Scripts/jquery-ui-1.12.1.js" type="text/javascript"></script>
+}
+
+@section JavaScriptsExecution
+{
+    <script type="text/javascript">
+
+        var URL = "";
+
+
+        $(document).ready(function () {
+
+            $('#username').bind('input propertychange change keydown, keypress', function () {
+                $('#password').trigger("propertychange");
+            });
+
+            $('#password').bind('input propertychange', function () {
+                $('#loginSubmit').prop("class", "grayButton");
+                $('#loginSubmit').prop("disabled", true);
+
+                var usernameOkay = $('#username').val().length > 0;
+                var passwordOkay = $('#password').val().length > 7;
+
+                if ((usernameOkay) && (passwordOkay) && (validateEmail($('#username').val().trim()))) {
+                    $('#loginSubmit').prop("class", "blueButton");
+                    $('#loginSubmit').prop("disabled", false);
+                    $('#username').val($('#username').val().trim());
+                }
+            });
+
+            function validateEmail(sEmail) {
+                var filter = /^[\w\-\.\+]+\@@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+                return filter.test(sEmail);
+            }
+
+            $("#forgotUserName").click(function () {
+                forgotUserNameDialog();
+                return false;
+            });
+
+            function forgotUserNameDialog() {
+                var html = '<div><p>If you have forgotten your username please contact the System Administrator at 1-800-XXX-XXXXX ' +
+                    'or via email at support@omlkonsults.com</p></div>';
+                $(html).dialog({
+                    title: 'Forgotten your username?',
+                    resizable: false,
+                    height: 200,
+                    width: 510,
+                    modal: true,
+                    buttons: [{ text: 'Ok', click: function () { $(this).dialog("close"); } }]
+                });
+            }
+
+
+        });
+    </script>
+}
+@section Stylesheets{
+    <link href="/Content/themes/base/all.css" rel="stylesheet" type="text/css" />
+}
+
+<!-- modernizr JS
+============================================ -->
+<script src="~/scripts/js/vendor/modernizr-2.8.3.min.js"></script>
+
+<script src="~/scripts/js/vendor/jquery-1.12.4.min.js"></script>
+<!-- bootstrap JS
+    ============================================ -->
+<script src="~/scripts/js/bootstrap.min.js"></script>
+<!-- wow JS
+    ============================================ -->
+<script src="~/scripts/js/wow.min.js"></script>
+<!-- price-slider JS
+    ============================================ -->
+<script src="~/scripts/js/jquery-price-slider.js"></script>
+<!-- owl.carousel JS
+    ============================================ -->
+<script src="~/scripts/js/owl.carousel.min.js"></script>
+<!-- scrollUp JS
+    ============================================ -->
+<script src="~/scripts/js/jquery.scrollUp.min.js"></script>
+<!-- meanmenu JS
+    ============================================ -->
+<script src="~/scripts/js/meanmenu/jquery.meanmenu.js"></script>
+<!-- counterup JS
+    ============================================ -->
+<script src="~/scripts/js/counterup/jquery.counterup.min.js"></script>
+<script src="~/scripts/js/counterup/waypoints.min.js"></script>
+<script src="~/scripts/js/counterup/counterup-active.js"></script>
+<!-- mCustomScrollbar JS
+    ============================================ -->
+<script src="~/scripts/js/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<!-- sparkline JS
+    ============================================ -->
+<script src="~/scripts/js/sparkline/jquery.sparkline.min.js"></script>
+<script src="~/scripts/js/sparkline/sparkline-active.js"></script>
+<!-- flot JS
+    ============================================ -->
+<script src="~/scripts/js/flot/jquery.flot.js"></script>
+<script src="~/scripts/js/flot/jquery.flot.resize.js"></script>
+<script src="~/scripts/js/flot/flot-active.js"></script>
+<!-- knob JS
+    ============================================ -->
+<script src="~/scripts/js/knob/jquery.knob.js"></script>
+<script src="~/scripts/js/knob/jquery.appear.js"></script>
+<script src="~/scripts/js/knob/knob-active.js"></script>
+<!--  Chat JS
+    ============================================ -->
+<script src="~/scripts/js/chat/jquery.chat.js"></script>
+<!--  wave JS
+    ============================================ -->
+<script src="~/scripts/js/wave/waves.min.js"></script>
+<script src="~/scripts/js/wave/wave-active.js"></script>
+<!-- icheck JS
+    ============================================ -->
+<script src="~/scripts/js/icheck/icheck.min.js"></script>
+<script src="~/scripts/js/icheck/icheck-active.js"></script>
+<!--  todo JS
+    ============================================ -->
+<script src="~/scripts/js/todo/jquery.todo.js"></script>
+<!-- Login JS
+    ============================================ -->
+<script src="~/scripts/js/login/login-action.js"></script>
+<!-- plugins JS
+    ============================================ -->
+<script src="~/scripts/js/plugins.js"></script>
+<!-- main JS
+    ============================================ -->
+<script src="~/scripts/js/main.js"></script>
+
+
+<!--  notification JS
+    ============================================ -->
+<script src="~/script/js/notification/bootstrap-growl.min.js"></script>
+<script src="~/script/js/notification/notification-active.js"></script>
+

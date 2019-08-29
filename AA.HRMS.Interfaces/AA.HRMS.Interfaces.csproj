@@ -1,0 +1,488 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8AF6D3E4-25DD-43A6-BB25-8FF4C1B02A1A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AA.HRMS.Interfaces</RootNamespace>
+    <AssemblyName>AA.HRMS.Interfaces</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IAnnualAssesingPerformance.cs" />
+    <Compile Include="IAnnualAssessingPerformanceListView.cs" />
+    <Compile Include="IAnnualAssessingPerformanceView.cs" />
+    <Compile Include="IAppraisalGoalListView.cs" />
+    <Compile Include="IAppraisalMetric.cs" />
+    <Compile Include="IAppraisalQualitativeMetric.cs" />
+    <Compile Include="IAppraisalQualitativeMetricView.cs" />
+    <Compile Include="IAppraisalQuantitativeMetric.cs" />
+    <Compile Include="IAppraisalQuantitativeMetricView.cs" />
+    <Compile Include="IAppraisalQuestion.cs" />
+    <Compile Include="IAppraisalQuestionListView.cs" />
+    <Compile Include="IAccountRepository.cs" />
+    <Compile Include="IAccountService.cs" />
+    <Compile Include="IAccountViewsModelFactory.cs" />
+    <Compile Include="IActionTaken.cs" />
+    <Compile Include="IAdminService.cs" />
+    <Compile Include="IAdminViewModelFactory.cs" />
+    <Compile Include="IAdvertisement.cs" />
+    <Compile Include="IAdvertisementModelRepository.cs" />
+    <Compile Include="IAdvertisementModelView.cs" />
+    <Compile Include="IAdvertisementModelViewFactory.cs" />
+    <Compile Include="IAnswerFormat.cs" />
+    <Compile Include="IAppActivityLog.cs" />
+    <Compile Include="IApplicationModel.cs" />
+    <Compile Include="IApplicationsListInThrees.cs" />
+    <Compile Include="IApplicationsListView.cs" />
+    <Compile Include="IAppraisal.cs" />
+    <Compile Include="IAppraisalAction.cs" />
+    <Compile Include="IAppraisalActionListView.cs" />
+    <Compile Include="IAppraisalActionRepository.cs" />
+    <Compile Include="IAppraisalActionService.cs" />
+    <Compile Include="IAppraisalActionView.cs" />
+    <Compile Include="IAppraisalActionViewModelFactory.cs" />
+    <Compile Include="IAppraisalGoal.cs" />
+    <Compile Include="IAppraisalGoalRepository.cs" />
+    <Compile Include="IAppraisalGoalService.cs" />
+    <Compile Include="IAppraisalGoalView.cs" />
+    <Compile Include="IAppraisalGoalViewModelFactory.cs" />
+    <Compile Include="IAppraisalListView.cs" />
+    <Compile Include="IAppraisalPeriod.cs" />
+    <Compile Include="IAppraisalQuestionView.cs" />
+    <Compile Include="IAppraisalRating.cs" />
+    <Compile Include="IAppraisalRatingRepository.cs" />
+    <Compile Include="IAppraisalRatingService.cs" />
+    <Compile Include="IAppraisalRatingView.cs" />
+    <Compile Include="IAppraisalRatingViewModelFactory.cs" />
+    <Compile Include="IAppraisalRepository.cs" />
+    <Compile Include="IAppraisalService.cs" />
+    <Compile Include="IAppraisalView.cs" />
+    <Compile Include="IAppraisalViewModelFactory.cs" />
+    <Compile Include="IAppraiser.cs" />
+    <Compile Include="IAppraiserRepository.cs" />
+    <Compile Include="IAppraiserService.cs" />
+    <Compile Include="IAppraiserView.cs" />
+    <Compile Include="IAppraiserViewModelFactory.cs" />
+    <Compile Include="IAppRole.cs" />
+    <Compile Include="IAssessingPerformance.cs" />
+    <Compile Include="IAssessingPerformanceView.cs" />
+    <Compile Include="IAsset.cs" />
+    <Compile Include="IAssetListView.cs" />
+    <Compile Include="IAssetViewModelFactory.cs" />
+    <Compile Include="IAssetRepository.cs" />
+    <Compile Include="IAssetView.cs" />
+    <Compile Include="IAssetViewModel.cs" />
+    <Compile Include="IAward.cs" />
+    <Compile Include="IAwardRepository.cs" />
+    <Compile Include="IAwardService.cs" />
+    <Compile Include="IAwardView.cs" />
+    <Compile Include="IAwardViewModelFactory.cs" />
+    <Compile Include="IBeneficiariesModel.cs" />
+    <Compile Include="IBeneficiariesView.cs" />
+    <Compile Include="IBenefit.cs" />
+    <Compile Include="IBenefitListView.cs" />
+    <Compile Include="IBenefitModelView.cs" />
+    <Compile Include="IBenefitRepository.cs" />
+    <Compile Include="ICalendarEvent.cs" />
+    <Compile Include="ICertificateListView.cs" />
+    <Compile Include="ICertificateViewModel.cs" />
+    <Compile Include="ICertificateViewModelFactory.cs" />
+    <Compile Include="ICertificationModel.cs" />
+    <Compile Include="ICertificationRepository.cs" />
+    <Compile Include="ICertificationService.cs" />
+    <Compile Include="IChangePassword.cs" />
+    <Compile Include="IChangePasswordView.cs" />
+    <Compile Include="IChildrenInformationView.cs" />
+    <Compile Include="IChildrenModel.cs" />
+    <Compile Include="ICompanyDetail.cs" />
+    <Compile Include="ICompanyListView.cs" />
+    <Compile Include="ICompanyRegistrationView.cs" />
+    <Compile Include="ICompanySetupServices.cs" />
+    <Compile Include="ICompanySetupViewModelFactory.cs" />
+    <Compile Include="ICountry.cs" />
+    <Compile Include="ICurrency.cs" />
+    <Compile Include="IDay.cs" />
+    <Compile Include="IDeduction.cs" />
+    <Compile Include="IDeductionListView.cs" />
+    <Compile Include="IDeductionRepository.cs" />
+    <Compile Include="IDeductionViewModel.cs" />
+    <Compile Include="IDepartmentView.cs" />
+    <Compile Include="IDigitalFileRepository.cs" />
+    <Compile Include="IDigitalFileService.cs" />
+    <Compile Include="IDiscipline.cs" />
+    <Compile Include="IDisciplineListView.cs" />
+    <Compile Include="IDisciplineRepository.cs" />
+    <Compile Include="IDisciplineService.cs" />
+    <Compile Include="IDisciplineView.cs" />
+    <Compile Include="IDisciplineViewModelFactory.cs" />
+    <Compile Include="IEducationHistory.cs" />
+    <Compile Include="IEducationHistoryRepository.cs" />
+    <Compile Include="IEducationHistoryService.cs" />
+    <Compile Include="IEducationHistoryView.cs" />
+    <Compile Include="IEducationHistoryViewModelFactory.cs" />
+    <Compile Include="ICompanyAdministrator.cs" />
+    <Compile Include="ICompanyRepository.cs" />
+    <Compile Include="IDbContextFactory.cs" />
+    <Compile Include="IDepartment.cs" />
+    <Compile Include="IDepartmentListView.cs" />
+    <Compile Include="IDepartmentRepository.cs" />
+    <Compile Include="IDigitalFile.cs" />
+    <Compile Include="IDigitalType.cs" />
+    <Compile Include="IEmailDetail.cs" />
+    <Compile Include="IEmailFactory.cs" />
+    <Compile Include="IEmergency.cs" />
+    <Compile Include="IEmergencyContactView.cs" />
+    <Compile Include="IEmployee.cs" />
+    <Compile Include="IEmployeeAnnualAssessingPerformance.cs" />
+    <Compile Include="IEmployeeAnnualAssessingPerformanceListView.cs" />
+    <Compile Include="IEmployeeAnnualAssessingPerformanceView.cs" />
+    <Compile Include="IEmployeeAppraisal.cs" />
+    <Compile Include="IEmployeeAppraisalListView.cs" />
+    <Compile Include="IEmployeeAppraisalView.cs" />
+    <Compile Include="IEmployeeDeduction.cs" />
+    <Compile Include="IEmployeeDeductionListView.cs" />
+    <Compile Include="IEmployeeDeductionRepository.cs" />
+    <Compile Include="IEmployeeDeductionView.cs" />
+    <Compile Include="IEmployeeExit.cs" />
+    <Compile Include="IEmployeeExitListView.cs" />
+    <Compile Include="IEmployeeExitView.cs" />
+    <Compile Include="IEmployeeFeedbackModel.cs" />
+    <Compile Include="IEmployeeFeedbackView.cs" />
+    <Compile Include="IEmployeeFeedbackViewModel.cs" />
+    <Compile Include="IEmployeeLoan.cs" />
+    <Compile Include="IEmployeeLoanListView.cs" />
+    <Compile Include="IEmployeeLoanRepository.cs" />
+    <Compile Include="IEmployeeLoanView.cs" />
+    <Compile Include="IEmployeeOnBoard.cs" />
+    <Compile Include="IEmployeeOnBoardListView.cs" />
+    <Compile Include="IEmployeeOnBoardRepository.cs" />
+    <Compile Include="IEmployeeOnBoardService.cs" />
+    <Compile Include="IEmployeeOnBoardView.cs" />
+    <Compile Include="IEmployeeOnBoardViewModelFactory.cs" />
+    <Compile Include="IEmployeeProfileView.cs" />
+    <Compile Include="IEmployeeQuestionRating.cs" />
+    <Compile Include="IEmployeeRepository.cs" />
+    <Compile Include="IEmployeeReward.cs" />
+    <Compile Include="IEmployeeRewardListView.cs" />
+    <Compile Include="IEmployeeRewardRepository.cs" />
+    <Compile Include="IEmployeeRewardViewModel.cs" />
+    <Compile Include="IEmployeeService.cs" />
+    <Compile Include="IEmployeeTaskListView.cs" />
+    <Compile Include="IEmployeeTaskView.cs" />
+    <Compile Include="IEmployeeTrainingFactory.cs" />
+    <Compile Include="IEmployeeTrainingListView.cs" />
+    <Compile Include="IEmployeeTrainingModel.cs" />
+    <Compile Include="IEmployeeTrainingRepository.cs" />
+    <Compile Include="IEmployeeTrainingService.cs" />
+    <Compile Include="IEmployeeTrainingView.cs" />
+    <Compile Include="IEmployeeView.cs" />
+    <Compile Include="IEmployeeViewModelFactory.cs" />
+    <Compile Include="IEmploymentHistory.cs" />
+    <Compile Include="IEmploymentHistoryRepository.cs" />
+    <Compile Include="IEmploymentHistoryService.cs" />
+    <Compile Include="IEmploymentHistoryView.cs" />
+    <Compile Include="IEmploymentHistoryViewModelFactory.cs" />
+    <Compile Include="IEmploymentType.cs" />
+    <Compile Include="IExitManagementRepository.cs" />
+    <Compile Include="IExitManagementService.cs" />
+    <Compile Include="IExitManagementViewModelFactory.cs" />
+    <Compile Include="IExperience.cs" />
+    <Compile Include="IFeedbackListview.cs" />
+    <Compile Include="IFeedbackModel.cs" />
+    <Compile Include="IFeedbackViewModel.cs" />
+    <Compile Include="IFrequencyOfDeliveryModel.cs" />
+    <Compile Include="IFrequencyOfDeliveryRepository.cs" />
+    <Compile Include="IFrequencyOfDeliveryViewModel.cs" />
+    <Compile Include="IGenerateDocumentService.cs" />
+    <Compile Include="IGrade.cs" />
+    <Compile Include="IGradeListView.cs" />
+    <Compile Include="IGradeRepository.cs" />
+    <Compile Include="IGradeService.cs" />
+    <Compile Include="IGradeView.cs" />
+    <Compile Include="IGradeViewModelFactory.cs" />
+    <Compile Include="IHeaderViewModel.cs" />
+    <Compile Include="IHomeView.cs" />
+    <Compile Include="IHomeViewModelFactory.cs" />
+    <Compile Include="IHowSource.cs" />
+    <Compile Include="IIndustry.cs" />
+    <Compile Include="IIndustryDetail.cs" />
+    <Compile Include="IIndustryListView.cs" />
+    <Compile Include="IIndustryRepository.cs" />
+    <Compile Include="IIndustryServices.cs" />
+    <Compile Include="IIndustryView.cs" />
+    <Compile Include="IIndustryViewModelFactory.cs" />
+    <Compile Include="IInfraction.cs" />
+    <Compile Include="IJobApplication.cs" />
+    <Compile Include="IJobApplicationVacancy.cs" />
+    <Compile Include="IJobApplicationVacancyRepository.cs" />
+    <Compile Include="IJobApplicationVacancyView.cs" />
+    <Compile Include="IJobTitle.cs" />
+    <Compile Include="IJobTitleListView.cs" />
+    <Compile Include="IJobTitleRepository.cs" />
+    <Compile Include="IJobTitleView.cs" />
+    <Compile Include="ILeaveHrUpdateView.cs" />
+    <Compile Include="ILeaveRepository.cs" />
+    <Compile Include="ILeaveModelViewFactory.cs" />
+    <Compile Include="ILeaveRequest.cs" />
+    <Compile Include="ILeaveRequestListView.cs" />
+    <Compile Include="ILeaveRequestModel.cs" />
+    <Compile Include="ILeaveRequestViewModel.cs" />
+    <Compile Include="ILeaveRequestService.cs" />
+    <Compile Include="ILeaveRequestViewModelFactory.cs" />
+    <Compile Include="ILeaveService.cs" />
+    <Compile Include="ILeaveStatus.cs" />
+    <Compile Include="ILeaveSupervisorUpdateView.cs" />
+    <Compile Include="ILeaveType.cs" />
+    <Compile Include="ILeaveTypeModel.cs" />
+    <Compile Include="ILeaveTypeModelView.cs" />
+    <Compile Include="ILevel.cs" />
+    <Compile Include="IMilestone.cs" />
+    <Compile Include="IMilestoneListView.cs" />
+    <Compile Include="IMilestoneView.cs" />
+    <Compile Include="INextOfKin.cs" />
+    <Compile Include="IMinimumAgeAttribute.cs" />
+    <Compile Include="INextOfKinView.cs" />
+    <Compile Include="IPayrollEmployeeDeduction.cs" />
+    <Compile Include="IPayrollEmployeeLoan.cs" />
+    <Compile Include="IPayrollEmployeeReward.cs" />
+    <Compile Include="IPayrollHistory.cs" />
+    <Compile Include="IPayrollHistoryListView.cs" />
+    <Compile Include="IPayrollHistoryView.cs" />
+    <Compile Include="IPayScale.cs" />
+    <Compile Include="ILevelGradeListView.cs" />
+    <Compile Include="ILevelGradeRepository.cs" />
+    <Compile Include="IPayScaleBenefitListView.cs" />
+    <Compile Include="IPayScaleBenefitView.cs" />
+    <Compile Include="IPayScaleUIView.cs" />
+    <Compile Include="IPayScaleView.cs" />
+    <Compile Include="ILevelListView.cs" />
+    <Compile Include="ILevelRepository.cs" />
+    <Compile Include="ILevelView.cs" />
+    <Compile Include="ILevelViewModelFactory.cs" />
+    <Compile Include="ILoan.cs" />
+    <Compile Include="ILoanListView.cs" />
+    <Compile Include="ILoanRepository.cs" />
+    <Compile Include="ILoanView.cs" />
+    <Compile Include="ILoanViewModelFactory.cs" />
+    <Compile Include="ILogOnView.cs" />
+    <Compile Include="ILookupRepository.cs" />
+    <Compile Include="IMaritalStatus.cs" />
+    <Compile Include="IMethodOfDelivery.cs" />
+    <Compile Include="IMonth.cs" />
+    <Compile Include="IOverTimesheet.cs" />
+    <Compile Include="IOverTimesheetListView.cs" />
+    <Compile Include="IOverTimesheetRepository.cs" />
+    <Compile Include="IOverTimesheetView.cs" />
+    <Compile Include="IPayroll.cs" />
+    <Compile Include="IPayrollListView.cs" />
+    <Compile Include="IPayrollRepository.cs" />
+    <Compile Include="IPayrollServices.cs" />
+    <Compile Include="IPayrollView.cs" />
+    <Compile Include="IPayrollViewModelFactory.cs" />
+    <Compile Include="IPayScaleBenefit.cs" />
+    <Compile Include="IPaySlipViewModel.cs" />
+    <Compile Include="IPdfBuilder.cs" />
+    <Compile Include="IPerformanceManagementRepository.cs" />
+    <Compile Include="IPerformanceManagementService.cs" />
+    <Compile Include="IPerformanceManagementViewModelFactory.cs" />
+    <Compile Include="IProfile.cs" />
+    <Compile Include="IProfileRepository.cs" />
+    <Compile Include="IProfileService.cs" />
+    <Compile Include="IProfileView.cs" />
+    <Compile Include="IProfileViewModelFactory.cs" />
+    <Compile Include="IPromotion.cs" />
+    <Compile Include="IPromotionListView.cs" />
+    <Compile Include="IPromotionView.cs" />
+    <Compile Include="IQuery.cs" />
+    <Compile Include="IQueryListView.cs" />
+    <Compile Include="IQueryRepository.cs" />
+    <Compile Include="IQueryService.cs" />
+    <Compile Include="IQueryStatus.cs" />
+    <Compile Include="IQueryView.cs" />
+    <Compile Include="IQueryViewModelFactory.cs" />
+    <Compile Include="IRegistration.cs" />
+    <Compile Include="IRegistrationView.cs" />
+    <Compile Include="IReligion.cs" />
+    <Compile Include="IResult.cs" />
+    <Compile Include="IReward.cs" />
+    <Compile Include="IRewardListView.cs" />
+    <Compile Include="IRewardRepository.cs" />
+    <Compile Include="IRewardView.cs" />
+    <Compile Include="ISchedule.cs" />
+    <Compile Include="ISchedulerService.cs" />
+    <Compile Include="ISkillSetModel.cs" />
+    <Compile Include="ISkillSetModelView.cs" />
+    <Compile Include="ISkillSetRepository.cs" />
+    <Compile Include="ISkillSetServices.cs" />
+    <Compile Include="ISkillSetViewModelFactory.cs" />
+    <Compile Include="ISpouseModel.cs" />
+    <Compile Include="ISpouseViewModel.cs" />
+    <Compile Include="IState.cs" />
+    <Compile Include="ISuspension.cs" />
+    <Compile Include="ISuspensionListView.cs" />
+    <Compile Include="ISuspensionRepository.cs" />
+    <Compile Include="ISuspensionService.cs" />
+    <Compile Include="ISuspensionView.cs" />
+    <Compile Include="ISuspensionViewModelFactory.cs" />
+    <Compile Include="IEmployeeTask.cs" />
+    <Compile Include="ITax.cs" />
+    <Compile Include="ITaxListView.cs" />
+    <Compile Include="ITaxRepository.cs" />
+    <Compile Include="ITraining.cs" />
+    <Compile Include="ITrainingAnalysisModel.cs" />
+    <Compile Include="ITrainingAnalysisServices.cs" />
+    <Compile Include="ITrainingAnalysisViewModel.cs" />
+    <Compile Include="ITrainingCalendar.cs" />
+    <Compile Include="ITrainingCalendarListView.cs" />
+    <Compile Include="ITrainingEvaluationRating.cs" />
+    <Compile Include="ITrainingHistoryListView.cs" />
+    <Compile Include="ITrainingHistoryModel.cs" />
+    <Compile Include="ITrainingEvaluationRatingViewModel.cs" />
+    <Compile Include="ITrainingHistoryViewModel.cs" />
+    <Compile Include="ITrainingListView.cs" />
+    <Compile Include="ITrainingNeedAnalysis.cs" />
+    <Compile Include="ITrainingNeedAnalysisListView.cs" />
+    <Compile Include="ITrainingNeedAnalysisRepository.cs" />
+    <Compile Include="ITrainingNeedAnalysisService.cs" />
+    <Compile Include="ITrainingNeedAnalysisView.cs" />
+    <Compile Include="ITrainingNeedAnalysisViewModelFactory.cs" />
+    <Compile Include="ITrainingReportListView.cs" />
+    <Compile Include="ITrainingReport.cs" />
+    <Compile Include="ITrainingReportViewModel.cs" />
+    <Compile Include="ITrainingRepository.cs" />
+    <Compile Include="ITrainingService.cs" />
+    <Compile Include="ITrainingStatus.cs" />
+    <Compile Include="ITrainingView.cs" />
+    <Compile Include="ITrainingViewModelFactory.cs" />
+    <Compile Include="ITraininingCalendarView.cs" />
+    <Compile Include="ITypeOfExit.cs" />
+    <Compile Include="ITypeOfExitListView.cs" />
+    <Compile Include="ITypeOfExitRepository.cs" />
+    <Compile Include="ITypeOfExitService.cs" />
+    <Compile Include="ITypeOfExitView.cs" />
+    <Compile Include="ITypeOfExitViewModelFactory.cs" />
+    <Compile Include="IUserActivationCode.cs" />
+    <Compile Include="IUserAppRole.cs" />
+    <Compile Include="IUserAppRoleView.cs" />
+    <Compile Include="IUserDetail.cs" />
+    <Compile Include="IUserListView.cs" />
+    <Compile Include="IUserProfileModelFactory.cs" />
+    <Compile Include="IUserProfileView.cs" />
+    <Compile Include="IUserRegistrationView.cs" />
+    <Compile Include="IUserRepository.cs" />
+    <Compile Include="IUsers.cs" />
+    <Compile Include="IUserService.cs" />
+    <Compile Include="IUsersRepository.cs" />
+    <Compile Include="IUsersView.cs" />
+    <Compile Include="IUsersViewsModelFactory.cs" />
+    <Compile Include="IJobApplicationVacancyAnswer.cs" />
+    <Compile Include="IUserViewModel.cs" />
+    <Compile Include="IVacancyDetail.cs" />
+    <Compile Include="IVacancyInThreeCoulumns.cs" />
+    <Compile Include="IVacancyListAdminView.cs" />
+    <Compile Include="IVacancyListFilter.cs" />
+    <Compile Include="IVacancyListView.cs" />
+    <Compile Include="IVacancyQuestion.cs" />
+    <Compile Include="IVacancyRepository.cs" />
+    <Compile Include="IVacancyView.cs" />
+    <Compile Include="IVacancyViewModelFactory.cs" />
+    <Compile Include="IWeek.cs" />
+    <Compile Include="IYear.cs" />
+    <Compile Include="IYourGender.cs" />
+    <Compile Include="ILeaveTypeListView.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="IVacancyService.cs" />
+    <Compile Include="SeletedListItem.cs" />
+    <Compile Include="ValueTypes\AppAction.cs" />
+    <Compile Include="ValueTypes\EnvironmentValues.cs" />
+    <Compile Include="ValueTypes\FileType.cs" />
+    <Compile Include="ValueTypes\ObjectContextType.cs" />
+    <Compile Include="ValueTypes\RegularExpressions.cs" />
+    <Compile Include="ValueTypes\SessionKey.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\PagedList.css" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

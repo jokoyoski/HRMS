@@ -1,0 +1,60 @@
+﻿
+@model AA.HRMS.Interfaces.IQueryView
+
+@{
+    ViewBag.Title = "Delete Query";
+}
+
+
+<div class="jumbotron">
+    <div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; width: 100%;">
+        <div class="validation-summary-errors">
+            @Html.ValidationSummary()
+            @Model.ProcessingMessage
+        </div>
+    </div>
+    @using (Html.BeginForm("DeleteQuery", "Query", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" name="queryId" id="queryId" value="@Model.QueryId" />
+        <input type="hidden" name="queryName" id="queryName" value="@Model.QueryName" />
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                Query Name:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <label id="QueryName" name="QueryName" style="width: 250px;" type="text" maxlength="50">@Model.QueryName</label>
+            </div>
+        </div>
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                Consequences:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <label id="Consequences" name="Consequences" style="width: 250px;" type="text" maxlength="50">@Model.Consequences</label>
+            </div>
+        </div>
+
+        <div class="columns" style="width: 100%; padding-top: 15px; padding-bottom: 5px;">
+            <div class="modal-footer">
+                <button type="button" name="submitButton" class="btn btn-default" data-dismiss="modal">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("span.ui-dialog-title").text('Delete Query ' + $('#queryName').val());
+
+        $('#btnCancel').click(function () {
+            window.location.href = '/Administration/QueryList?CompanyId=' + @Model.CompanyId ;
+            return false;
+        });
+    });
+</script>
+
+
+

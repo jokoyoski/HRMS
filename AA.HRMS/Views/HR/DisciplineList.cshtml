@@ -1,0 +1,192 @@
+﻿@model AA.HRMS.Interfaces.IDisciplineListView
+
+@{
+    ViewBag.Title = "AA HRMS - Discipline ReportList";
+    var hasInfo = ((Model != null) && (Model.DisciplineCollection != null) && Model.DisciplineCollection.Any());
+}
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>Discipline List</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                            <div class="breadcomb-report">
+                                <button class="btn" data-toggle="tooltip" onclick="createModal('/hr/addDiscipline')" data-placement="left" title="Add Job Title"><i class="notika-icon notika-plus-symbol"></i></button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (hasInfo)
+{
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="table-responsive">
+                            <table id="data-table-basic" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Company Name</th>
+                                        <th>Employee Name</th>
+                                        <th>Offence</th>
+                                        <th>Query Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var d in Model.DisciplineCollection)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @d.CompanyName
+                                            </td>
+                                            <td>
+                                                @d.EmployeeName
+                                            </td>
+                                            <td>
+                                                @d.Offence
+                                            </td>
+                                            <td>
+                                                @d.QueryStatusName
+                                            </td>
+
+                                            <td>
+                                                <button class="btn btn-primary" onclick="editModal('/HR/EditDiscipline?disciplineId=@d.DisciplineId')" data-placement="left" title="Edit Discipline">Edit</button>
+                                            </td>
+
+                                            <td>
+                                                <button class="btn btn-primary" onclick="deleteModal('/HR/DeleteDiscipline?disciplineId=@d.DisciplineId')" data-placement="left" title="Delete Discipline">Delete</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Company Name</th>
+                                        <th>Employee Name</th>
+                                        <th>Offence</th>
+                                        <th>Query Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-info alert-mg-b-0" role="alert">
+                    <p>No Discipline</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="modal fade" id="createModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayCreate">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayEdit">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displaydelete">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var URL = "";
+
+    function createModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayCreate").html(data);
+            }
+        });
+
+        $("#createModal").modal();
+    }
+
+    function editModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayEdit").html(data);
+            }
+        });
+
+        $("#editModal").modal();
+
+
+
+    }
+
+
+    function deleteModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displaydelete").html(data);
+            }
+        });
+
+        $("#deleteModal").modal();
+
+
+
+    }
+
+</script>

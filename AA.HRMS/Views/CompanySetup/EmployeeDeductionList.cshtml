@@ -1,0 +1,186 @@
+﻿@using AA.HRMS.Interfaces.ValueTypes
+@model AA.HRMS.Interfaces.IDeductionListView
+
+@{
+                /**/
+
+                ViewBag.Title = "Deductions";
+                var hasInfo = ((Model != null) && (Model.DeductionCollection != null) && Model.DeductionCollection.Any());
+
+                var roles = (String[])HttpContext.Current.Session[SessionKey.UserRoles];
+
+                var URL = "/EmployeeDeduction/EmployeeDeductionList";
+
+}
+
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                @if (roles.Contains("CompanyAdmin"))
+                                {
+                                    <div class="breadcomb-ctn">
+                                        <h2>@ViewBag.Title</h2>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="breadcomb-ctn">
+                                        <h2>My Deductions</h2>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+{
+    <div>
+        <div class="container">
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+            </div>
+
+        </div>
+    </div>
+}
+
+
+@if (hasInfo)
+{
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="table-responsive">
+                            <table id="data-table-basic" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Deduction</th>
+                                        <th>Amount</th>
+                                        <th>Date Started</th>
+                                        <th>Terminated Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var d in Model.DeductionCollection)
+                                    {
+                                    <tr>
+                                        <td>
+                                            @d.DeductionName
+                                        </td>
+                                        <td>
+                                            @d.DeductionAmount
+                                        </td>
+                                        <td>
+                                            @d.DateStarted.ToString("yyyy-MM-dd")
+                                        </td>
+
+                                        @if (d.DateTerminated != null)
+                                        {
+
+                                            <td>
+                                                @DisplayHelper.DisplayDate(d.DateTerminated)
+                                            </td>
+
+                                        }
+                                        else
+                                        {
+                                            <td><button disabled class="btn btn-sm btn-default">No Date Terminated</button></td>
+                                        }
+
+                                        @if (d.IsTerminated)
+                                        {
+                                            <td>
+                                                <button disabled class="btn btn-sm btm-success"> Deduction Deactivated</button>
+                                            </td>
+
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <button disabled class="btn btn-sm btn-danger"> Deduction Deactivated</button>
+                                            </td>
+                                        }
+
+
+                                    </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Deduction</th>
+                                        <th>Amount</th>
+                                        <th>Date Started</th>
+                                        <th>Terminated Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-info alert-mg-b-0" role="alert">
+                    <p>No Employee with Deductions</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayEdit">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+
+    function editModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayEdit").html(data);
+            }
+        });
+
+        $("#editModal").modal();
+
+    }
+</script>
+

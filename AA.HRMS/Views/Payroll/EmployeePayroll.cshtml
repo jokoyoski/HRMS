@@ -1,0 +1,135 @@
+﻿@using AA.HRMS.Interfaces.ValueTypes
+@using System.Web
+@model AA.HRMS.Interfaces.IPayrollListView
+@{
+    ViewBag.Title = "Payroll List";
+    var hasInfo = (Model != null) && (Model.PayrollList.Any());
+    var role = (String[])HttpContext.Current.Session[SessionKey.UserRoles];
+}
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                @if (role.Contains("CompanyAdmin"))
+                                {
+                                    <div class="breadcomb-ctn">
+                                        <h2>@Model.Employee.LastName Payroll</h2>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="breadcomb-ctn">
+                                        <h2>My Payroll</h2>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        @if (role.Contains("CompanyAdmin"))
+                        {
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                                <div class="breadcomb-report">
+                                    <a class="btn" href="/employee/viewemployee?employeeid=@Model.Employee.EmployeeId" data-placement="left" title="Back to @Model.Employee.LastName"><i class="notika-icon notika-back"></i></a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (hasInfo)
+{
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="table-responsive">
+                            <table id="data-table-basic" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Baic Salary</th>
+                                        <th>Net Pay</th>
+                                        <th>Month</th>
+                                        <th>Year</th>
+                                        <th>Is Active?</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var d in Model.PayrollList)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @d.BasicSalary
+                                            </td>
+                                            <td>
+                                                @d.NetSalary
+                                            </td>
+                                            <td>
+                                                @d.Month
+                                            </td>
+                                            <td>
+                                                @d.Year
+                                            </td>
+                                            <td>
+                                                @DisplayHelper.YesOrNo(d.IsActive)
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-primary" href="~/Payroll/GetPaySlip?payrollId=@d.PayrollId" data-placement="left" title="@d.Month @d.Year Payslip">View Pay Slip</a>
+
+                                            </td>
+
+
+
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Baic Salary</th>
+                                        <th>Net Pay</th>
+                                        <th>Month</th>
+                                        <th>Year</th>
+                                        <th>Is Active?</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-info alert-mg-b-0" role="alert">
+                    <p>No Payroll</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+

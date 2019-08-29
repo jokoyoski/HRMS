@@ -1,0 +1,83 @@
+﻿@model AA.HRMS.Interfaces.IEmployeeLoanView
+
+@{
+    ViewBag.Title = "Add Employee Loan";
+}
+
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+
+
+
+@using (Html.BeginForm("ApplyLoan", "CompanySetup", FormMethod.Post, new { id = "addDeptForm" }))
+{
+
+
+<div class="modal-body">
+
+    <input hidden name="url" value="@Model.URL" />
+
+    @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+    {
+
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+        </div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+        </div>
+    }
+
+    @Html.AntiForgeryToken()
+    <div class="columns" style="width: 100%; padding-top: 5px;">
+        <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+            Company Name:
+        </div>
+        <div class="data column" style="overflow: hidden;">
+            @Html.DropDownList("companyId", Model.CompanyDropDown, new { style = "width:204px;height:20px;", id = "companyId" })
+        </div>
+    </div>
+    <div class="columns" style="width: 100%; padding-top: 5px;">
+        <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+            <span class="required">*</span>Reason:
+        </div>
+        <div class="data column" style="overflow: hidden;">
+            <input id="reason" name="reason" style="width: 250px;" type="text" maxlength="50" value="@Model.Reason" />
+        </div>
+    </div>
+    <div class="columns" style="width: 100%; padding-top: 5px;">
+        <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+            <span class="required">*</span>Parent Department:
+        </div>
+        <div class="data column" style="overflow: hidden;">
+            @Html.DropDownList("employeeId", Model.EmployeeDropDown, new { style = "width:204px;height:20px;", id = "employeeId" })
+        </div>
+    </div>
+
+    <div class="columns" style="width: 100%; padding-top: 5px;">
+        <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+            <span class="required">*</span>Loan Name:
+        </div>
+        <div class="data column" style="overflow: hidden;">
+            @Html.DropDownList("loanId", Model.LoanDropDown, new { style = "width:204px;height:20px;", id = "loanId" })
+        </div>
+    </div>
+
+</div>
+
+        <div class="modal-footer">
+            <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Add</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    
+}

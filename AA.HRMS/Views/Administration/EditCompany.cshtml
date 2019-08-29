@@ -1,0 +1,231 @@
+﻿@model AA.HRMS.Interfaces.ICompanyRegistrationView
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+@using (Html.BeginForm("EditCompany", "Administration", FormMethod.Post, new { enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+{
+
+
+<div class="modal-body">
+
+
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" id="companyId" name="companyId" value="@Model.CompanyId" />
+
+    @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+    {
+
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+        </div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+        </div>
+    }
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <div class="">
+                    <img hidden src="" id="idimg" style="width: 100px; height: 100px;" />
+
+                </div>
+            </div>
+        </div>
+
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <div class="">
+                <label>Company Logo</label>
+                <input type="file" accept="image/png,image/gif,imgae/tiff,image/bmp,image/jpg" onchange="readURL(this)" id="compLogo" alt="compLogo" name="compLogo" value="" class="form-control-file" />
+                <shadow></shadow>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Company Name</label>
+            <div class="">
+                <input id="companyName" name="companyName" class="form-control input-sm" type="text" maxlength="50" value="@Model.CompanyName" />
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Company CAC</label>
+            <div class="">
+                <input id="cacRegistrationNumber" name="cacRegistrationNumber" class="form-control input-sm" type="text" maxlength="50" value="@Model.CACRegistrationNumber" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Company Alias</label>
+            <div class="">
+                <input id="companyAlias" name="companyAlias" class="form-control input-sm" type="text" maxlength="50" value="@Model.CompanyAlias" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Parent Company</label>
+            <div class="">
+                @Html.DropDownList("parentCompanyId", Model.ParentCompanyDropDownList, new { @class = "form-control input-sm", id = "parentCompanyId" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Industry Name</label>
+            <div class="">
+                @Html.DropDownList("industryId", Model.IndustryDropDownList, new { @class = "form-control input-sm", id = "industryId" })
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Company Address</label>
+            <div class="">
+                <input id="companyAddressLine1" name="companyAddressLine1" class="form-control input-sm" type="text" maxlength="50" value="@Model.CompanyAddressLine1" />
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Company Address 2</label>
+            <div class="">
+                <input id="companyAddressLine2" name="companyAddressLine2" class="form-control input-sm" type="text" maxlength="50" value="@Model.CompanyAddressLine2" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Company City</label>
+            <div class="">
+                <input id="companyCity" name="companyCity" class="form-control input-sm" type="text" maxlength="50" value="@Model.CompanyCity" />
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Company State</label>
+            <div class="">
+                <input id="companyState" name="companyState" class="form-control input-sm" type="text" maxlength="50" value="@Model.CompanyState" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Company Country</label>
+            <div class="">
+                @Html.DropDownList("companyCountryId", Model.CountryDropDownList, new { @class = "form-control", id = "companyCountry" })
+
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Company ZipCode</label>
+            <div class="">
+                <input id="companyZipCode" name="companyZipCode" class="form-control input-sm" type="text" maxlength="50" value="@Model.CompanyZipCode" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Company Email</label>
+            <div class="">
+                <input id="companyEmail" name="companyEmail" class="form-control input-sm" type="text" maxlength="50" value="@Model.CompanyEmail" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Company Phone</label>
+            <div class="">
+                <input id="companyPhone" name="companyPhone" class="form-control input-sm" type="text" maxlength="50" value="@Model.CompanyPhone" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Company Website</label>
+            <div class="">
+                <input id="companyWebsite" name="companyWebsite" class="form-control input-sm" type="text" maxlength="50" value="@Model.CompanyWebsite" />
+            </div>
+        </div>
+    </div>
+
+
+</div>
+    
+
+
+    <div class="modal-footer">
+        <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Save changes</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+
+}
+
+<script>
+    function myFunction() {
+        // Get the checkbox
+        var checkBox = document.getElementById("myCheck");
+        // Get the output textbox
+        var text = document.getElementById("text");
+
+        // If the checkbox is checked, display the output textbox
+        if (checkBox.checked == true) {
+            text.style.display = "block";
+        } else {
+            text.style.display = "none";
+        }
+    }
+
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+
+                $('#idimg')
+                    .removeAttr('hidden');
+                $('#idimg')
+                    .attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

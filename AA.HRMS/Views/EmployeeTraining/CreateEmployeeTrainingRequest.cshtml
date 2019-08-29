@@ -1,0 +1,145 @@
+﻿@model AA.HRMS.Interfaces.IEmployeeTrainingView
+@{
+    ViewBag.Title = "Employee Training Request";
+}
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+    <div>
+        <div class="validation-summary-errors">
+            @Html.ValidationSummary()
+            @Model.ProcessingMessage
+        </div>
+    </div>
+
+    @using (Html.BeginForm("CreateEmployeeTrainingRequest", "EmployeeTraining", FormMethod.Post, new { id = "CreateEmployeeTrainingRequest" }))
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+
+        <div id="request">
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Training:</label>
+                    <div class="">
+                        @Html.DropDownList("TrainingId", Model.TrainingDropDownList, new { @class = "form-control", id = "TrainingId" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <input type="hidden" id=" employeeId" name="employeeId" value="@Model.EmployeeId" />
+        <input type="hidden" id=" companyId" name="companyId" value="@Model.CompanyId" />
+
+        <input type="hidden" id="supervisorId" name="supervisorId" value="@Model.SupervisorId" />
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <div class="">
+                    <input type="checkbox" id="myCheck" onclick="myFunction()" name="rad" />
+                    <label>Do you want a custom training?</label>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div id="text" class="modal-body" style="display:none">
+
+                <div class="form-example-int">
+                    <div class="form-group">
+                        <label>Training Name</label>
+                        <div class="">
+                            <input id="TrainingName" name="TrainingName" class="form-control" value="" />
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="form-example-int">
+                    <div class="form-group">
+                        <label>Training Description</label>
+                        <div class="">
+                            <textarea id="TrainingDescription" name="TrainingDescription" class="form-control" value=""></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        
+            <div class="modal-footer">
+                <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Request</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+    }
+
+
+<script type="text/javascript">
+
+    function myFunction() {
+        // Get the checkbox
+        var checkBox = document.getElementById("myCheck");
+        // Get the output textbox
+        var text = document.getElementById("text");
+        var request = document.getElementById("request");
+
+        // If the checkbox is checked, display the output textbox
+        if (checkBox.checked == true) {
+            text.style.display = "block";
+            request.style.display = "none"
+
+        } else {
+            text.style.display = "none";
+            request.style.display = "block"
+        }
+    } 
+
+
+    $(document).ready(function () {
+
+        $("span.ui-dialog-title").text(' Add New Employee Training-Request');
+
+        $('#btnCancel').click(function () {
+            window.location.href = '/EmployeeTraining/EmployeeSpecificTrainingList';
+            return false;
+        });
+
+        $('#TrainingId').change(function () {
+            $('#TrainingId').trigger("propertychange");
+        });
+
+        $('#TrainingId').change(function () {
+            $('#TrainingId').trigger("propertychange");
+        });
+
+        $('#TrainingId').bind('input propertychange', function () {
+            $('#btnSubmit').prop("class", "grayButton");
+            $('#btnSubmit').prop("disabled", true);
+
+            var EmployeeOkay = $('#TrainingId').val() > 0;
+
+            if (EmployeeOkay) {
+                $('#btnSubmit').prop("class", "blueButton");
+                $('#btnSubmit').prop("disabled", false);
+            }
+        });
+
+        $('#addDeptForm').submit(function () {
+            window.open('', 'formpopup', 'width=400,height=400,resizeable,scrollbars');
+            this.target = '$popupDialog';
+        });
+
+    });
+</script>
+

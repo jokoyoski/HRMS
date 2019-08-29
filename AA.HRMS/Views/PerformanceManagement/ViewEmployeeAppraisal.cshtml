@@ -1,0 +1,390 @@
+﻿@using AA.HRMS.Interfaces.ValueTypes
+@using System.Web
+
+@model AA.HRMS.Interfaces.IAppraisalView
+
+@{
+    ViewBag.Title = "View Employee Appraisal";
+
+
+    var hasInfo = ((Model != null) && (Model.AppraisalGoalCollection != null) && Model.AppraisalGoalCollection.Any());
+    var role = (String[])HttpContext.Current.Session[SessionKey.UserRoles];
+
+
+    var editable = string.Empty;
+
+    if (role.Contains("CompanyAdmin"))
+    {
+        editable = "disabled";
+    }
+}
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                </div>
+                            </div>
+                        </div>
+                        @if (role.Contains("CompanyAdmin"))
+                        {
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                                <div class="breadcomb-report">
+                                    <a class="btn" data-toggle="tooltip" href="/PerformanceManagement/AppraiseeList?appraisalId=@Model.AppraisalId" data-placement="left" title="Back "><i class="notika-icon notika-back"></i></a>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                                <div class="breadcomb-report">
+                                    <a class="btn" data-toggle="tooltip" href="/PerformanceManagement/EmployeeAppraisalList" data-placement="left" title="Back "><i class="notika-icon notika-back"></i></a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-element-area">
+    <div class="container">
+        <div class="row">
+            @using (Html.BeginForm("EditAppraisal", "PerformanceManagement", FormMethod.Post, new { id = "AppraisalForm", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+
+            {
+                @Html.AntiForgeryToken();
+
+                <input hidden name="appraisalId" value="@Model.AppraisalId" />
+                <input hidden name="companyId" value="@Model.CompanyId" />
+                <input hidden name="url" value="@Model.URL" />
+                <input hidden name="employeeAppraisalId" value="@Model.EmployeeAppraisal.EmployeeAppraisalId" />
+
+
+                if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+                {
+                    <div>
+                        <div class="container">
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+                            </div>
+
+                        </div>
+                    </div>
+                }
+
+                if (!ViewData.ModelState.IsValid)
+                {
+                    <div>
+                        <div class="container">
+                            <div class="alert alert-info alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-element-list mg-t-30">
+                        <div class="cmp-tb-hd">
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Appraisee Name</label>
+                                            <input type="text" disabled value="@(Model.Appraisee.LastName + " " + Model.Appraisee.FirstName)" class="form-control" />
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Appraiser Name</label>
+                                            @if (Model.Appraiser != null)
+                                            {
+                                                <input type="text" disabled value="@(Model.Appraiser.LastName + " " + Model.Appraiser.FirstName)" class="form-control" />
+                                            }
+                                            else
+                                            {
+                                                <input type="text" disabled value="N/A" class="form-control" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Job Title</label>
+                                            @if (Model.Appraisee.JobTitle != null)
+                                            {
+                                                <input type="text" disabled value="@Model.Appraisee.JobTitle" class="form-control" />
+                                            }
+                                            else
+                                            {
+                                                <input type="text" disabled value="N/A" class="form-control" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Appraisal Period</label>
+                                            <input type="text" disabled value="@Model.AppraisalPeriodName" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Date Initiated</label>
+                                            <input type="date" disabled value="@DisplayHelper.DisplayDate(Model.DateInitiated)" class="form-control" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="normal-table-list mg-t-30">
+                                        <label>Qualitative Metrics</label>
+                                        <div class="bsc-tbl-hvr">
+                                            @if (hasInfo)
+                                            {
+                                                <table class="table table-responsive table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S/NO</th>
+                                                            <th>Goal</th>
+                                                            <th>Target</th>
+                                                            <th>Result</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    @{ var i = 0;
+                                                        var count = 1; }
+                                                    <tbody>
+                                                        @foreach (var d in Model.AppraisalQualitativeMetric)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @count
+                                                                </td>
+
+                                                                <td>
+                                                                    @d.Goal
+                                                                </td>
+
+                                                                <td>
+                                                                    <textarea disabled class="form-control" name="appraisalQualitativeMetric[@i].Target" value="@d.Target">@d.Target</textarea>
+                                                                    <input hidden name="appraisalQualitativeMetric[@i].EmployeeAppraisalId" value="@d.EmployeeAppraisalId" />
+                                                                    <input hidden name="appraisalQualitativeMetric[@i].CompanyId" value="@Model.CompanyId" />
+                                                                </td>
+
+                                                                    <td>
+                                                                        @Html.DropDownList("" + d.ResultId + "", d.ResultDropDown, new { @class = "form-control", @disabled = "disabled" })
+
+                                                                    </td>
+                                                               
+
+                                                            </tr>
+                                                            i++;
+                                                            count++;
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            }
+                                            else
+                                            {
+                                                <div class="row">
+                                                    <div class="alert alert-info alert-mg-b-0" role="alert">
+                                                        <p>No Appraisal Goal(s)</p>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="normal-table-list mg-t-30">
+                                        <label>Quantitative Metrics</label>
+                                        <div class="bsc-tbl-hvr">
+                                            @if (hasInfo)
+                                            {
+
+                                                <table class="table table-responsive table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S/NO</th>
+                                                            <th> Goal</th>
+                                                            <th>Primary </th>
+                                                            <th>Secondary </th>
+                                                            <th>Result</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    @{ var j = 0;
+                                                        var rant = 1;
+                                                    }
+                                                    <tbody>
+                                                        @foreach (var d in Model.AppraisalQuantitativeMetric)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @rant
+                                                                </td>
+
+                                                                <td>@d.Goal</td>
+
+                                                                <td>
+                                                                    <div>
+                                                                        <p>Target</p>
+                                                                        <textarea disabled class="form-control" name="appraisalQuantitativeMetric[@j].PrimaryTarget" value="@d.PrimaryTarget">@d.PrimaryTarget</textarea>
+                                                                        <p>Actual</p>
+                                                                        <textarea disabled class="form-control" name="appraisalQuantitativeMetric[@j].PrimaryActual" value="@d.PrimaryActual">@d.PrimaryActual</textarea>
+
+                                                                        <input hidden name="appraisalQuantitativeMetric[@j].EmployeeAppraisalId" value="@d.EmployeeAppraisalId" />
+                                                                        <input hidden name="appraisalQuantitativeMetric[@j].CompanyId" value="@Model.CompanyId" />
+                                                                    </div>
+
+                                                                </td>
+
+                                                                <td>
+                                                                    <div>
+                                                                        <p>Target</p>
+                                                                        <textarea disabled class="form-control" name="appraisalQuantitativeMetric[@j].SecondaryTarget" value="@d.SecondaryTarget">@d.SecondaryTarget</textarea>
+                                                                        <p>Actual</p>
+                                                                        <textarea disabled class="form-control" name="appraisalQuantitativeMetric[@j].SecondaryActual" value="@d.SecondaryTarget">@d.SecondaryTarget</textarea>
+
+                                                                    </div>
+                                                                </td>
+
+                                                                    <td>
+                                                                        @Html.DropDownList("" + d.ResultId + "", d.ResultDropDown, new { @class = "form-control", @disabled = "disabled" })
+
+                                                                    </td>
+
+                                                            </tr>
+                                                            j++;
+                                                            rant++;
+                                                        }
+                                                    </tbody>
+                                                </table>
+
+                                            }
+                                            else
+                                            {
+                                                <div class="row">
+                                                    <div class="alert alert-info alert-mg-b-0" role="alert">
+                                                        <p>No Appraisal Goal(s)</p>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+
+                                <div class="col-lg-6 col-md-4 col-sm-4 col-xs-6">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Things I Did Well</label>
+                                            <textarea type="text" disabled value="@Model.EmployeeAppraisal.Things_I_Did_Well" maxlength="300" name="Things_I_Did_Well" id="Things_I_Did_Well" class="form-control">@Model.EmployeeAppraisal.Things_I_Did_Well</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-6 col-md-4 col-sm-4 col-xs-6">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Things I Did Not Do So Well</label>
+                                            <textarea type="text" disabled value="@Model.EmployeeAppraisal.Things_I_Did_Not_Do_So_Well" maxlength="300" name="Things_I_Did_Not_Do_So_Well" id="Things_I_Did_Not_Do_So_Well" class="form-control">@Model.EmployeeAppraisal.Things_I_Did_Not_Do_So_Well</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-12 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>My Development Plan</label>
+                                            <textarea type="text" disabled value="@Model.EmployeeAppraisal.My_Development_Plan" maxlength="300" name="My_Development_Plan" id="My_Development_Plan" class="form-control">@Model.EmployeeAppraisal.My_Development_Plan</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="modal-footer">
+                                <a href="@Model.URL" class="btn btn-sm btn-default">Back</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+

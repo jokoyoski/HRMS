@@ -1,0 +1,125 @@
+﻿
+@model AA.HRMS.Interfaces.IEmployeeLoanView
+
+@{
+    ViewBag.Title = "View Loan Details";
+}
+
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+
+
+<div class="modal-body">
+
+    @Html.AntiForgeryToken()
+
+    <input name="employeeId" hidden value="@Model.EmployeeId" />
+    <input name="companyId" hidden value="@Model.CompanyId" />
+    <input type="hidden" id="employeeLoanId" name="employeeLoanId" value="@Model.EmployeeLoanId" />
+
+    @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+    {
+
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+        </div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+        </div>
+    }
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Loan Type</label>
+            <div class="">
+                @Html.DropDownList("LoanId", Model.LoanDropDown, new { @class = "form-control", id = "LoanId", @disabled = "disabled" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Loan Amount</label>
+            <div class="">
+                <input type="number" disabled id="LoanAmount" name="LoanAmount" class="form-control" value="@Model.LoanAmount" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Expected Date</label>
+            <div class="">
+                <input type="date" disabled id="ExpectedDate" name="ExpectedDate" class="form-control" value="@DisplayHelper.DisplayDate(Model.ExpectedDate)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Reason</label>
+            <div class="">
+                <textarea id="reason" disabled name="reason" class="form-control" type="text" maxlength="50" value="@Model.Reason">@Model.Reason</textarea>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Tenure</label>
+            <div class="">
+                <input type="number" disabled id="Tenure" name="Tenure " class="form-control" value="@Model.Tenure" />
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Disburst Date</label>
+            <div class="">
+                <input type="date" disabled id="DisburstDate" name="DisburstDate" class="form-control" value="@DisplayHelper.DisplayDate(Model.DisburstDate)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>HR Comment</label>
+            <div class="">
+                <textarea type="text" disabled id="HRComment" name="HRComment" class="form-control" maxlength="100" value="@Model.HRComment">@Model.HRComment</textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Agreed Date</label>
+            <div class="">
+                <input type="date" disabled id="AgreedDate" name="AgreedDate" class="form-control" value="@DisplayHelper.DisplayDate(Model.AgreedDate)" />
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <div class="modal-footer">
+        <button type="button"  class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+
+
+
+

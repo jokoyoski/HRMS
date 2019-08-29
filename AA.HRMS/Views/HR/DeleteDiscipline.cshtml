@@ -1,0 +1,128 @@
+﻿@model AA.HRMS.Interfaces.IDisciplineView
+
+@{
+    ViewBag.Title = "AA HRMS - Delete Discipline";
+}
+
+<
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+@using (Html.BeginForm("DeleteDiscipline", "HR", FormMethod.Post, new { id = "deleteDeptForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <input id="disciplineId" name="disciplineId" type="hidden" value="@Model.DisciplineId" />
+        <input id="companyId" name="companyId" value="@Model.CompanyId" hidden />
+
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Employee</label>
+                <div class="nk-int-st">
+                    @Html.DropDownList("EmployeeId", Model.EmployeeDropDown, new { @class = "form-control input-sm", id = "EmployeeId", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Query Status</label>
+                <div class="nk-int-st">
+                    @Html.DropDownList("queryStatusId", Model.QueryDropDown, new { @class = "form-control input-sm", id = "queryStatusId", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Action Taken</label>
+                <div class="nk-int-st">
+                    @Html.DropDownList("actionTakenId", Model.ActionTakenDropDown, new { @class = "form-control input-sm", id = "actionTakenId", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Offence Committed</label>
+                <div class="nk-int-st">
+                    <input id="offence" name="offence" disabled class="form-control input-sm" type="text" maxlength="50" value="@Model.Offence" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Query Date</label>
+                <div class="nk-int-st">
+                    <input id="queryDate" name="queryDate" disabled class="form-control input-sm" type="date" maxlength="50" value="@Model.QueryDate" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Investigator</label>
+                <div class="nk-int-st">
+                    <input id="investigator" name="investigator" disabled class="form-control input-sm" type="text" maxlength="50" value="@Model.Investigator" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Query Initiator</label>
+                <div class="nk-int-st">
+                    <input id="queryInitiator" name="queryInitiator" disabled class="form-control input-sm" type="text" maxlength="50" value="@Model.QueryInitiator" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Investigator Report</label>
+                <div class="nk-int-st">
+                    <textarea id="investigatorReport" disabled name="investigatorReport" class="form-control input-sm" type="text" maxlength="50" value="@Model.InvestigatorReport">@Model.InvestigatorReport</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Response</label>
+                <div class="nk-int-st">
+                    <textarea id="response" name="response" disabled class="form-control input-sm" type="text" maxlength="50" value="@Model.Response">@Model.Response</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Recommeded Sanction</label>
+                <div class="nk-int-st">
+                    <input id="recommendedSanction" disabled name="recommendedSanction" class="form-control input-sm" type="text" maxlength="50" value="@Model.RecommendedSanction" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Committee Recommended Discipline</label>
+                <div class="nk-int-st">
+                    <input id="disciplineCommitteeRecommendation" disabled name="disciplineCommitteeRecommendation" class="form-control input-sm" type="text" maxlength="50" value="@Model.DisciplineCommitteeRecommendation" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal-footer">
+            <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Delete</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+
+    </div>
+}

@@ -1,0 +1,66 @@
+﻿@model AA.HRMS.Interfaces.ITrainingView
+
+@{
+    ViewBag.Title = "Delete Training";
+}
+
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+
+@Html.ValidationSummary()
+@Model.ProcessingMessage
+
+
+@using (Html.BeginForm("DeleteTraining", "Training", FormMethod.Post))
+
+{
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" id="TrainingId" name="TrainingId" value="@Model.TrainingID" />
+
+    <input type="hidden" id="TrainingName" name="TrainingName" value="@Model.TrainingName" />
+
+    <input type="hidden" id="TrainingDescription" name="TrainingDescription" value="@Model.TrainingDescription" />
+
+
+    <div class="modal-body">
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>TrainingName</label>
+                <div class="">
+                    <input id="TrainingName" disabled name="TrainingName" class="form-control" value="@Model.TrainingName" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>TrainingDescription</label>
+                <div class="">
+                    <input id="TrainingDescription" disabled name="TrainingDescription" class="form-control" value="@Model.TrainingDescription" />
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" name="submitButton" class="btn btn-default">Delete</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+    </div>
+
+}
+
+
+
+
+
+

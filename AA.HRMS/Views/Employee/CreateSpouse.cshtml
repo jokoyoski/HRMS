@@ -1,0 +1,89 @@
+﻿@model AA.HRMS.Interfaces.ISpouseViewModel
+
+
+@{
+    ViewBag.Title = "Add Employee Spouse Details";
+}
+
+
+
+@Html.ValidationSummary()
+
+@Model.ProcessingMessage
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+@using (Html.BeginForm("CreateSpouse", "Employee", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+<div class="modal-body">
+
+
+    <input name="EmployeeId" id="EmployeeId" value="@Model.EmployeeId" hidden />
+    <input name="url" id="url" value="@Model.URL" hidden />
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Spouse Name</label>
+            <div class="">
+                <input id="spouseName" required name="spouseName" type="text" class="form-control" value="@Model.SpouseName" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Spouse Date Of Birth</label>
+            <div class="">
+                <input id="dateOfBirth" required name="dateOfBirth" min="01/01/1930" max="01/01/2002" type="date" class="form-control" value="@Model.DateOfBirth.AddYears(2002)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Spouse Email</label>
+            <div class="">
+                <input id="Email" required name="Email" type="text" class="form-control" value="@Model.Email" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Spose Mobile Contact</label>
+            <div class="">
+                <input id="Mobile" required name="Mobile" type="text" class="form-control" value="@Model.Mobile" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Spouse Address</label>
+            <div class="">
+                <textarea id="Address" required name="Address" wrap="soft" cols="3" type="text" class="form-control" value="@Model.Address">@Model.Address</textarea>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    <div class="modal-footer">
+        <button type="submit" name="submitButton" class="btn btn-default">Add</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+    </div>
+}
+
+
+
+
+
+

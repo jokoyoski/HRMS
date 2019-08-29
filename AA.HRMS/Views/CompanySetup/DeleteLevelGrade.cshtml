@@ -1,0 +1,253 @@
+﻿@model AA.HRMS.Interfaces.IPayScaleUIView
+@{
+                /**/
+
+                ViewBag.Title = "Delete Salary Scale";
+                var hasInfo = ((Model != null) && (Model.BenefitList != null) && Model.BenefitList.Any());
+}
+
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                            <div class="breadcomb-report">
+                                <a class="btn" href="/companysetup/payscalelist" data-placement="left" title="Back to Salary Scale "><i class="notika-icon notika-back"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+        {
+
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+            </div>
+        }
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+            </div>
+        }
+    </div>
+</div>
+
+
+
+<div class="form-element-area">
+    <div class="container">
+        <div class="row">
+
+
+            @using (Html.BeginForm("DeleteLevelGrade", "CompanySetup", FormMethod.Post, new { id = "addDeptForm" }))
+            {
+
+
+
+                @Html.AntiForgeryToken()
+
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-element-list mg-t-30">
+                        <div class="cmp-tb-hd">
+
+                            <p></p>
+                        </div>
+
+                        <input hidden name="levelGradeId" value="@Model.PayScaleId" />
+
+                        <div class="form-example-int">
+                            <div class="form-group">
+                                <label>Company Name</label>
+                                <div class="">
+                                    @Html.DropDownList("companyId", Model.CompanyDropDown, new { @class = "form-control", id = "companyId", @disabled = "disabled" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-example-int">
+                            <div class="form-group">
+                                <label>Grade</label>
+                                <div class="">
+                                    @Html.DropDownList("gradeId", Model.GradeDropDown, new { @class = "form-control", id = "gradeId", @disabled = "disabled" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-example-int">
+                            <div class="form-group">
+                                <label>Level</label>
+                                <div class="">
+                                    @Html.DropDownList("levelId", Model.LevelDropDown, new { @class = "form-control", id = "levelId", @disabled = "disabled" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-example-int">
+                            <div class="form-group">
+                                <label>Base Pay</label>
+                                <div class="">
+                                    <input id="BasePay" disabled name="BasePay" min="1" type="number" class="form-control" value="@Model.BasePay" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-example-int">
+                            <div class="form-group">
+                                <label>Tax</label>
+                                <div class="">
+                                    @Html.DropDownList("taxId", Model.TaxDropDown, new { @class = "form-control", id = "taxId", @disabled = "disabled" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-example-int">
+                            <div class="form-group">
+                                <label>Benefits</label>
+                                <div class="">
+                                    @if (hasInfo)
+                                    {
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="normal-table-list mg-t-30">
+                                                <div class="bsc-tbl-hvr">
+                                                    <table class="table table-responsive table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Select Benefit</th>
+                                                                <th>Name</th>
+                                                                <th>Is Monetized</th>
+                                                                <th>Is Taxable</th>
+                                                                <th>Percentage of BasePay</th>
+                                                                <th>Cash Value</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @{ var i = 0; }
+
+                                                            @foreach (var d in Model.BenefitList)
+                                                            {
+
+                                                                var checkBoxId = "checkBox_" + d.BenefitId;
+                                                                var disabledStr = d.IsSelected ? "false" : "disabled";
+
+                                                                <tr>
+                                                                    <td>
+                                                                        <input class="form-control" id="@checkBoxId" type="checkbox" name="selectedBenefits" disabled value="@d.BenefitId"
+                                                                               @DisplayHelper.Checked(Model.PayScalebenefits[i].isSelected) />
+
+                                                                        <input type="hidden" id="payScalebenefits[@i].BenefitId" name="payScalebenefits[@i].BenefitId" value="@d.BenefitId " />
+                                                                    </td>
+
+                                                                    <td>@d.BenefitName</td>
+                                                                    <td>@d.IsMonetized</td>
+                                                                    <td>@d.IsTaxable</td>
+
+                                                                    <td>
+                                                                        <input disabled id="payScalebenefits[@i].PercentageofBase" name="payScalebenefits[@i].PercentageofBase" value="@Model.PayScalebenefits[i].PercentageofBase" class="form-control" type="number" min="0" step="0.01" placeholder="Enter Percentage of Base" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <input disabled id="payScalebenefits[@i].CashValue" name="payScalebenefits[@i].CashValue" value="@Model.PayScalebenefits[i].CashValue" class="form-control" type="number" min="0" step="1" placeholder="Enter Cash Value" />
+                                                                    </td>
+                                                                </tr>
+                                                                i++;
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    else
+                                    {
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="alert alert-info alert-mg-b-0" role="alert">
+                                                <p>No Benefit Exist</p>
+                                            </div>
+                                        </div>
+
+                                    }
+
+
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="modal-footer">
+                            <button type="submit" name="submitButton" class="btn btn-danger">Delete Salary Scale</button>
+                        </div>
+
+                        </div>
+                    </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        $("span.ui-dialog-title").text('Add Level Grade');
+
+        $('#btnCancel').click(function () {
+            window.location.href = '/ComputerSetup/LevelGradeList';
+            return false;
+        });
+
+        $('#levelId').change(function () {
+            $('#companyId').trigger("propertychange");
+        });
+
+        $('#gradeId').change(function () {
+            $('#companyId').trigger("propertychange");
+        });
+
+        $('#taxId').change(function () {
+            $('#companyId').trigger("propertychange");
+        });
+
+        $('#companyId').bind('input propertychange', function () {
+            $('#btnSubmit').prop("class", "grayButton");
+            $('#btnSubmit').prop("disabled", true);
+
+            var levelOkay = $('#levelId').val().length > 0;
+            var gradeOkay = $('#gradeId').val().length > 0;
+            var taxOkay = $('#taxId').val() > 0;
+
+            if ((levelOkay) && (gradeOkay) && (taxOkay)) {
+                $('#btnSubmit').prop("class", "blueButton");
+                $('#btnSubmit').prop("disabled", false);
+            }
+        });
+
+
+
+    });
+</script>

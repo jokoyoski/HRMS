@@ -1,0 +1,399 @@
+﻿@using System.Globalization
+@using AA.HRMS.Interfaces.ValueTypes
+@model AA.HRMS.Interfaces.IPaySlipViewModel
+@{
+    ViewBag.Title = "PaySlip";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var role = (String[])HttpContext.Current.Session[SessionKey.UserRoles];
+
+    //Company Logo
+    var hasImage = Model.CompanyLogo != null;
+    var imgSrc = "/Images/avt.jpg";
+    if (hasImage)
+    {
+        var base64 = Convert.ToBase64String(Model.CompanyLogo.TheDigitalFile);
+        imgSrc = string.Format("data:{0};base64,{1}", Model.CompanyLogo.ContentType, base64);
+    }
+
+    decimal taxableIncome = 0;
+
+
+}
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-support"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+
+                                </div>
+                            </div>
+                        </div>
+                        @if (role.Contains("CompanyAdmin"))
+                        {
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                                <div class="breadcomb-report">
+                                    <a data-toggle="tooltip" data-placement="left" title="Back" class="btn" href="/Payroll/PayrollList?payrollHistoryId=@Model.Payroll.PayrollHistoryId"><i class="notika-icon notika-back"></i></a>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main content -->
+
+<div class="container">
+    <div class="breadcomb-area">
+        <div class="breadcomb-list">
+
+            <section class="invoice" id="PrintPDF">
+                <!-- title row -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h2 class="page-header">
+                            @if (hasImage)
+                            {<img src="@imgSrc" alt="@Model.CompanyDetail.CompanyName" style="width: 100px; height: 70px;" /> }
+                            else
+                            { <i class="fa fa-globe"></i>} @Model.CompanyDetail.CompanyName
+                        </h2>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- info row -->
+                <div class="row invoice-info">
+                    <div class="col-md-12">
+                        <h1 class="text-center">
+                            Payslip for the Period of @Model.Payroll.Month , @Model.Payroll.Year
+                        </h1>
+                        <hr />
+                    </div>
+
+                    <div class="col-sm-6 invoice-col">
+
+                        <address>
+                            <strong> Name : </strong>@Model.Employee.LastName @Model.Employee.FirstName<br>
+                            <strong>Email :</strong> @Model.Employee.Email <br>
+                            <strong>Phone Number :</strong>  @Model.Employee.MobileNumber <br>
+                            <strong>Account Number :</strong> ###########<br>
+                            <strong>Address :</strong> @if (!string.IsNullOrEmpty(Model.Employee.PermanentAddress))
+                            {<span>@Model.Employee.PermanentAddress, @Model.Employee.PermanentAddressCity</span>}
+                        else
+                        { <spaa>N/A</spaa>}<br>
+
+                        </address>
+                    </div>
+                    <!-- /.col -->
+                    <!-- /.col -->
+                    <div class="col-sm-6 invoice-col">
+                        <strong>Staff Number : </strong> @Model.Employee.StaffNumber <br>
+                        <strong>Department :</strong> @Model.Employee.Department  <br>
+                        <strong>Level :</strong> @Model.Level.LevelName <br>
+                        <strong>Grade :</strong> @Model.Grade.GradeName<br>
+                        <strong>Date Employed :</strong> @Model.Employee.DateEmployed<br>
+                    </div>
+                    <!-- /.col -->
+
+                    @{ var basicSalary = Model.Payroll.BasicSalary;
+                        var pensionContribution = ((Model.PensionContribution) / 12);
+                    }
+
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-xs-6 table-responsive">
+                        <!-- this row will not appear when printing -->
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tax Relief</th>
+                                    <th>Amount/Month</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                <tr>
+                                    <td>Children Tax Relief</td>
+                                    <td>@($"{Model.Children / 12:#,##0.00}")</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Dependant Tax Relief</td>
+                                    <td>@($"{Model.Dependant / 12:#,##0.00}")</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Consolidation Tax Relief</td>
+                                    <td>@($"{Model.TaxCollation / 12:#,##0.00}")</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Pension Relief</td>
+                                    <td>@($"{pensionContribution:#,##0.00}")</td>
+                                </tr>
+                                @{ taxableIncome += Model.Children / 12 + Model.Dependant / 12 + Model.TaxCollation / 12 + pensionContribution; }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Total Tax Relief</th>
+                                    <th>@($"{taxableIncome:#,##0.00}")</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <!-- Table row -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 table-responsive pull-right">
+                        <table class="table table-striped">
+                            <thead></thead>
+                            <tbody></tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Taxable Income</th>
+                                    <th>@($"{Model.TaxationAmount:#,##0.00}")</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <hr />
+
+                    <div class="col-xs-6 table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Earnings</th>
+                                    <th>Amount(NGN)</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                <tr>
+                                    <td>Basic Salary</td>
+                                    <td>@($"{basicSalary:#,##0.00}")</td>
+
+                                </tr>
+
+
+                                @{
+                                    var benefitTotal = basicSalary;
+
+                                    foreach (var reward in Model.Reward)
+                                    {
+                                        decimal benefit = reward.Amount;
+
+                                        <tr>
+                                            <td>@reward.RewardName</td>
+                                            <td>@($"{reward.Amount:#,##0.00}")</td>
+                                        </tr>
+                                        benefitTotal += (decimal)benefit;
+                                    }
+
+                                    foreach (var benefits in Model.PayScaleCollection)
+                                    {
+                                        var IsTaxable = (benefits.IsTaxable) ? "*" : "";
+
+                                        if (benefits.CashValue > 0)
+                                        {
+                                            decimal benefit = (decimal)benefits.CashValue / 12;
+
+
+
+                                            benefitTotal += (decimal)benefit;
+
+                                            //if (benefits.IsTaxable) { taxableIncome = benefit; }
+
+                                            <tr>
+                                                <td>@benefits.BenefitName <small style="color:red" ;>@IsTaxable</small></td>
+                                                <td>@($"{benefit:#,##0.00}") </td>
+                                            </tr>
+                                        }
+
+                                        if (benefits.PercentageofBase > 0)
+                                        {
+                                            decimal benefit = (decimal)((Model.PayScale.BasePay * benefits.PercentageofBase) / 100) / 12;
+
+
+
+                                            benefitTotal += (decimal)benefit;
+
+                                            //if (benefits.IsTaxable) { taxableIncome = benefit; }
+
+                                            <tr>
+                                                <td>@benefits.BenefitName <small style="color:red" ;>@IsTaxable</small></td>
+                                                <td>@($"{benefit:#,##0.00}") </td>
+                                            </tr>
+
+                                        }
+                                    }
+
+
+
+                                }
+
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-xs-6 table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+
+                                    <th>Deductions</th>
+                                    <th>Amount(NGN)</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+
+
+
+
+                                @{
+                                    decimal deductionTotal = 0;
+
+
+                                    var taxValue = ((Model.TaxRate) / 12);
+
+                                    <tr>
+                                        <td>Tax</td>
+                                        <td>@($"{taxValue:#,##0.00}")</td>
+                                    </tr>
+
+                                    deductionTotal += taxValue;
+
+
+
+                                    <tr>
+                                        <td>Pension</td>
+                                        <td>@($"{pensionContribution:#,##0.00}")</td>
+                                    </tr>
+
+                                    deductionTotal += pensionContribution;
+
+                                    foreach (var dedcution in Model.EmployeeDeduction)
+                                    {
+
+                                        deductionTotal += dedcution.Amount;
+
+                                        <tr>
+                                            <td>@dedcution.DeductionName</td>
+                                            <td>@($"{dedcution.Amount:#,##0.00}")</td>
+                                        </tr>
+                                    }
+
+                                    foreach (var loan in
+                                        Model.Loan)
+                                    {
+
+                                        <tr>
+                                            <td>@loan.LoanTypeName </td>
+                                            <td>@($"{loan.MonthlyDeduction:#,##0.00}")</td>
+                                        </tr>
+
+                                        deductionTotal += loan.MonthlyDeduction;
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!-- /.col -->
+
+
+                    <div class="col-xs-12 table-responsive">
+                        <hr />
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Total Earnings</th>
+                                    <th>@($"{benefitTotal:#,##0.00}")</th>
+                                    <th>Total Deductions</th>
+                                    <th>@($"{deductionTotal:#,##0.00}")</th>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td><strong>Net Pay</strong> </td>
+                                    <td><strong>@($"{Model.Payroll.NetSalary:#,##0.00}")</strong></td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+
+
+
+                </div>
+                <!-- /.row -->
+                <!-- /.row -->
+
+            </section>
+
+            <div class="row no-print">
+                <div class="col-xs-12">
+                    @using (Html.BeginForm("Export", "Payroll", FormMethod.Post))
+                    {
+                        <input hidden name="ExportData" />
+                        <input hidden name="PdfName" value="@Model.Employee.LastName @Model.Employee.FirstName @ViewBag.Title" />
+                        <button type="submit" id="btnSubmit" value="Export" class="btn btn-primary pull-right" style="margin-right: 5px;">
+                            <i class="fa fa-download"></i> Generate PDF
+                        </button>
+                    }
+                </div>
+            </div>
+
+            <div style="padding-top: 2em;">
+                <p><span style="color:red;"> *  </span> <small><strong>Indicates Taxable</strong></small></p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {
+            $("input[name='ExportData']").val($("#PrintPDF").html());
+        });
+    });
+</script>
+
+<!-- /.content -->
+<!--New PaySlip View-->
+<!--End-->
+
+@*@section Stylesheets
+{
+    <link href="/Content/themes/base/all.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/tablesorter/theme.blue.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/tablesorter/jquery.tablesorter.pager.css" rel="stylesheet" type="text/css" />
+}*@

@@ -1,0 +1,172 @@
+﻿@model AA.HRMS.Interfaces.IDisciplineView
+@{
+    ViewBag.Title = "AA HRMS - Add Discipline";
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+@using (Html.BeginForm("AddDiscipline", "HR", FormMethod.Post, new { id = "addDeptForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <input type="hidden" name="employeeId" value="@Model.EmployeeId" id="employeeId" />
+
+        <input type="hidden" name="companyId" value="@Model.CompanyId" id="companyId" />
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Query Status</label>
+                <div class="">
+                    @Html.DropDownList("queryStatusId", Model.QueryDropDown, new { @class = "form-control", id = "queryStatusId" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Action Taken</label>
+                <div class="">
+                    @Html.DropDownList("actionTakenId", Model.ActionTakenDropDown, new { @class = "form-control", id = "actionTakenId" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Offence Committed</label>
+                <div class="">
+                    <input required id="offence" name="offence" class="form-control" type="text" maxlength="50" value="@Model.Offence" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Query Date</label>
+                <div class="">
+                    <input required id="queryDate" name="queryDate" class="form-control" type="date" maxlength="50" value="@Model.QueryDate" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Investigator</label>
+                <div class="">
+                    <input required id="investigator" name="investigator" class="form-control" type="text" maxlength="50" value="@Model.Investigator" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Query Initiator</label>
+                <div class="">
+                    <input required id="queryInitiator" name="queryInitiator" class="form-control" type="text" maxlength="50" value="@Model.QueryInitiator" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Investigator Report</label>
+                <div class="">
+                    <textarea id="investigatorReport" name="investigatorReport" required class ="form-control" type="text" maxlength="50" value="@Model.InvestigatorReport">@Model.InvestigatorReport</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Response</label>
+                <div class="">
+                    <textarea id="response" name="response" required class="form-control" type="text" maxlength="50" value="@Model.Response">@Model.Response</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Recommeded Sanction</label>
+                <div class="">
+                    <input required id="recommendedSanction" name="recommendedSanction"  class="form-control" type="text" maxlength="50" value="@Model.RecommendedSanction" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Committee Recommended Discipline</label>
+                <div class="">
+                    <input required id="disciplineCommitteeRecommendation" name="disciplineCommitteeRecommendation" class="form-control" type="text" maxlength="50" value="@Model.DisciplineCommitteeRecommendation" />
+                </div>
+            </div>
+        </div>
+
+        <div class="columns" style="width: 100%; padding-top: 15px; padding-bottom: 5px;">
+
+            <div class="modal-footer">
+                <button type="submit" name="submitButton" class="btn btn-default" >Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+            <div class="column" style="font-size: 9px; font-weight: bold; font-style: italic; padding-left: 5px; padding-top: 2px;">
+                You must enter all information above correctly to enable submission.
+            </div>
+        </div>
+    </div>
+        }
+
+<script>
+
+    var URL = "";
+
+    function createModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayCreate").html(data);
+            }
+        });
+
+        $("#createModal").modal();
+    }
+
+    function editModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayEdit").html(data);
+            }
+        });
+
+        $("#editModal").modal();
+
+
+
+    }
+
+
+    function deleteModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displaydelete").html(data);
+            }
+        });
+
+        $("#deleteModal").modal();
+
+
+
+    }
+
+</script>

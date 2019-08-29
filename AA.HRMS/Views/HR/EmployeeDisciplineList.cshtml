@@ -1,0 +1,253 @@
+﻿@using AA.HRMS.Interfaces.ValueTypes
+@using System.Web
+
+@model AA.HRMS.Interfaces.IDisciplineListView
+
+@{
+    ViewBag.Title = "AA HRMS - My Discipline ReportList";
+    var hasInfo = ((Model != null) && (Model.DisciplineCollection != null) && Model.DisciplineCollection.Any());
+}
+
+
+
+@{ var role = (String[])HttpContext.Current.Session[SessionKey.UserRoles];}
+
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                @if (role.Contains("CompanyAdmin") @*|| role.Contains("Administration")*@)
+                                {
+                                    <div class="breadcomb-ctn">
+                                        <h2>@Model.Employee.LastName Disciplines</h2>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="breadcomb-ctn">
+                                        <h2>My Discipline</h2>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                            @if (role.Contains("CompanyAdmin") || role.Contains("Administration"))
+                            {
+                               
+                            <div class="breadcomb-report">
+                                <a class="btn" data-toggle="tooltip" href="/employee/viewemployee?employeeId=@Model.Employee.EmployeeId" data-placement="left" title="Back to @Model.Employee.LastName"><i class="notika-icon notika-back"></i></a>
+                                <button class="btn" data-toggle="tooltip" onclick="createModal('/HR/AddDiscipline?employeeId=@Model.Employee.EmployeeId')" data-placement="left" title="Add Employee Discipline"><i class="notika-icon notika-plus-symbol"></i></button>
+                            </div>
+                                   
+                                }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (hasInfo)
+{
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="table-responsive">
+                            <table id="data-table-basic" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Offence</th>
+                                        <th>Query Status</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var d in Model.DisciplineCollection)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @d.Offence
+                                            </td>
+                                            <td>
+                                                @d.QueryStatusName
+                                            </td>
+
+                                            <td>
+                                                <button class="btn btn-primary" onclick="viewModal('/HR/ViewDiscipline?disciplineId=@d.DisciplineId')" data-placement="left" title="View Employee Discipline">View</button>
+                                            </td>
+
+                                            <td>
+                                                <button class="btn btn-primary" onclick="editModal('/HR/EditDiscipline?disciplineId=@d.DisciplineId')" data-placement="left" title="Respond to Discipline">Respond</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Offence</th>
+                                        <th>Query Status</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-info alert-mg-b-0" role="alert">
+                    <p>No Discipline</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+
+<div class="modal fade" id="createModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayCreate">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayEdit">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="viewModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayView">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    var URL = "";
+
+    function createModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayCreate").html(data);
+            }
+        });
+
+        $("#createModal").modal();
+    }
+
+    function editModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayEdit").html(data);
+            }
+        });
+
+        $("#editModal").modal();
+
+    }
+
+    function viewModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayView").html(data);
+            }
+        });
+
+        $("#viewModal").modal();
+
+    }
+
+</script>
+
+<!-- Input Mask JS
+        ============================================ -->
+<script src="js/jasny-bootstrap.min.js"></script>
+
+<!-- icheck JS
+        ============================================ -->
+<script src="js/icheck/icheck.min.js"></script>
+<script src="js/icheck/icheck-active.js"></script>
+<!-- rangle-slider JS
+    ============================================ -->
+<script src="js/rangle-slider/jquery-ui-1.10.4.custom.min.js"></script>
+<script src="js/rangle-slider/jquery-ui-touch-punch.min.js"></script>
+<script src="js/rangle-slider/rangle-active.js"></script>
+<!-- datapicker JS
+    ============================================ -->
+<script src="js/datapicker/bootstrap-datepicker.js"></script>
+<script src="js/datapicker/datepicker-active.js"></script>
+<!-- bootstrap select JS
+    ============================================ -->
+<script src="js/bootstrap-select/bootstrap-select.js"></script>
+<!--  color-picker JS
+    ============================================ -->
+<script src="js/color-picker/farbtastic.min.js"></script>
+<script src="js/color-picker/color-picker.js"></script>
+<!--  notification JS
+    ============================================ -->
+<script src="js/notification/bootstrap-growl.min.js"></script>
+<script src="js/notification/notification-active.js"></script>
+<!--  summernote JS
+    ============================================ -->
+<script src="js/summernote/summernote-updated.min.js"></script>
+<script src="js/summernote/summernote-active.js"></script>
+<!-- dropzone JS
+    ============================================ -->
+<script src="js/dropzone/dropzone.js"></script>
+@section Stylesheets
+{
+    <link href="/Content/themes/base/all.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/tablesorter/theme.blue.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/tablesorter/jquery.tablesorter.pager.css" rel="stylesheet" type="text/css" />
+}
+
+
+

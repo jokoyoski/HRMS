@@ -1,0 +1,312 @@
+﻿@model AA.HRMS.Interfaces.ICompanyRegistrationView
+@{
+    ViewBag.Title = "Company Registration";
+    Layout = null;
+}
+
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                            <div class="breadcomb-report">
+                                <a data-toggle="tooltip" class="btn notika-btn-danger" href="/account/mycompanies" data-placement="left" title="Back"><i class="notika-icon notika-back"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+{
+    <div class="container">
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+        </div>
+    </div>
+
+    
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+
+    <div class="container">
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+        </div>
+    </div>
+
+    
+}
+
+<div class="form-element-area">
+    <div class="container">
+        <div class="row">
+
+            @using (Html.BeginForm("RegisterCompany", "Administration", FormMethod.Post, new { enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-element-list mg-t-30">
+                        <div class="cmp-tb-hd">
+
+                            <p></p>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group ic-cmp-int float-lb floating-lb">
+                                    <div class="form-ic-cmp">
+                                        <i class="notika-icon notika-"></i>
+                                    </div>
+                                    <div class="">
+                                        <img hidden src="" id="idimg" style="width: 100px; height: 100px;" />
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group ic-cmp-int float-lb floating-lb">
+                                    <div class="form-ic-cmp">
+                                        <i class="notika-icon notika-"></i>
+                                    </div>
+                                    <div class="">
+                                        <label>Company Logo</label>
+                                        <input type="file" accept="image/png,image/gif,imgae/tiff,image/bmp,image/jpg" onchange="readURL(this)" id="compLogo" alt="compLogo" name="compLogo" value="" class="sm form-control-file" />
+                                        <shadow></shadow>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+
+
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group ic-cmp-int float-lb floating-lb">
+                                    <div class="form-ic-cmp">
+                                        <i class="notika-icon notika-"></i>
+                                    </div>
+                                    <div class="">
+                                        <label>Company Name</label>
+                                        <input required type="text" id="companyName" name="companyName" value="@Model.CompanyName" class="form-control">
+                                        <shadow></shadow>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group ic-cmp-int float-lb floating-lb">
+                                    <div class="form-ic-cmp">
+                                        <i class="notika-icon notika-"></i>
+                                    </div>
+                                    <div class="">
+                                        <label>Company CAC</label>
+                                        <input required type="text" id="cacRegistrationNumber" name="cacRegistrationNumber" value="@Model.CACRegistrationNumber" class="form-control">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group ic-cmp-int float-lb floating-lb">
+                                    <div class="form-ic-cmp">
+                                        <i class="notika-icon notika-"></i>
+                                    </div>
+                                    <div class="">
+                                        <label>Company Alias</label>
+                                        <input required type="text" id="companyAlias" name="companyAlias" value="@Model.CompanyAlias" class="form-control">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group ic-cmp-int float-lb floating-lb">
+                                    <div class="form-ic-cmp">
+                                        <i class="notika-icon notika-"></i>
+                                    </div>
+                                    <div class="">
+                                        <label>Industry</label>
+                                        @Html.DropDownList("industryId", Model.IndustryDropDownList, new { @class = "form-control", id = "industryId" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group ic-cmp-int float-lb floating-lb">
+                                    <div class="form-ic-cmp">
+                                        <i class="notika-icon notika-"></i>
+                                    </div>
+                                    <div class="">
+                                        <label>Company Address Line 1</label>
+                                        <textarea type="text" id="companyAddressLine1" name="companyAddressLine1" value="@Model.CompanyAddressLine1" class="form-control">@Model.CompanyAddressLine1</textarea>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group ic-cmp-int float-lb floating-lb">
+                                    <div class="form-ic-cmp">
+                                        <i class="notika-icon notika-"></i>
+                                    </div>
+                                    <div class="">
+                                        <label>Company Address Line 2</label>
+                                        <textarea type="text" id="companyAddressLine2" name="companyAddressLine2" value="@Model.CompanyAddressLine2" class="form-control">@Model.CompanyAddressLine2</textarea>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group ic-cmp-int float-lb floating-lb">
+                                    <div class="form-ic-cmp">
+                                        <i class="notika-icon notika-"></i>
+                                    </div>
+                                    <div class="">
+                                        <label>Company City</label>
+                                        <input required type="text" id="companyCity" name="companyCity" value="@Model.CompanyCity" class="form-control">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group ic-cmp-int float-lb floating-lb">
+                                    <div class="form-ic-cmp">
+                                        <i class="notika-icon notika-"></i>
+                                    </div>
+                                    <div class="">
+                                        <label>Company State</label>
+                                        <input required type="text" id="companyState" name="companyState" value="@Model.CompanyState" class="form-control">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group ic-cmp-int float-lb floating-lb">
+                                    <div class="form-ic-cmp">
+                                        <i class="notika-icon notika-"></i>
+                                    </div>
+                                    <div class="">
+                                        <label>Company Country</label>
+                                        @Html.DropDownList("companyCountryId", Model.CountryDropDownList, new { @class = "form-control", id = "companyCountry" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group ic-cmp-int float-lb floating-lb">
+                                    <div class="form-ic-cmp">
+                                        <i class="notika-icon notika-"></i>
+                                    </div>
+                                    <div class="">
+                                        <label>Company Zip Code</label>
+                                        <input required type="text" id="companyZipCode" name="companyZipCode" value="@Model.CompanyZipCode" class="form-control">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group ic-cmp-int float-lb floating-lb">
+                                    <div class="form-ic-cmp">
+                                        <i class="notika-icon notika-"></i>
+                                    </div>
+                                    <div class="">
+                                        <label>Company Email</label>
+                                        <input required type="text" id="companyEmail" name="companyEmail" value="@Model.CompanyEmail" class="form-control">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group ic-cmp-int float-lb floating-lb">
+                                    <div class="form-ic-cmp">
+                                        <i class="notika-icon notika-"></i>
+                                    </div>
+                                    <div class="">
+                                        <label>Company Phone</label>
+                                        <input required type="text" id="companyPhone" name="companyPhone" value="@Model.CompanyPhone" class="form-control">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group ic-cmp-int float-lb floating-lb">
+                                    <div class="form-ic-cmp">
+                                        <i class="notika-icon notika-"></i>
+                                    </div>
+                                    <div class="">
+                                        <label>Company Website</label>
+                                        <input required type="text" id="companyWebsite" name="companyWebsite" value="@Model.CompanyWebsite" class="form-control">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="container row">
+                            <div class="form-inline">
+                                <div class="form-group ml-3">
+                                    <div class="form-example-int mg-t-15">
+                                        <button id="btnSubmit" name="btnSubmit" type="submit" class="btn btn-primary notika-btn-primary pull-right">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+
+                $('#idimg')
+                    .removeAttr('hidden');
+                $('#idimg')
+                    .attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+</script>
+

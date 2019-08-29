@@ -1,0 +1,81 @@
+﻿@using PagedList.Mvc;
+@model AA.HRMS.Interfaces.IEmployeeOnBoardListView
+
+@{
+    ViewBag.Title = "ViewReport";
+    var hasInfo = ((Model != null) && (Model.EmployeeList != null) && Model.EmployeeList.Any());
+}
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div> 
+                <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="normal-table-list mg-t-30">
+                                                <div class="bsc-tbl-st">
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Name</th>
+                                                                <th>Department</th>
+                                                                <th>Level</th>
+                                                                <th>Grade</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @{ 
+                                                                //string[] lastname = new string [Model.EmployeeList.Count];
+
+                                                                //string[] firstname = new string [Model.EmployeeList.Count];
+
+                                                                //string[] department = new string [Model.EmployeeList.Count];
+                                                                //string[] levelname = new string [Model.EmployeeList.Count];
+                                                                //string[] gradename = new string [Model.EmployeeList.Count];
+                                                                //int count = 0;
+
+                                                                foreach (var item in Model.employee)
+                                                                {
+                                                                    //lastname[count] = @item.LastName;
+                                                                    //firstname[count] = @item.FirstName;
+                                                                    //department[count] = @item.Department;
+                                                                    //levelname[count] = @item.LevelName;
+                                                                    //gradename[count] = @item.GradeName;
+                                                                    //count = count + 1;
+                                                        <tr>
+
+                                                            <td>@item.LastName @item.FirstName</td>
+                                                            <td>@item.Department</td>
+                                                            <td>@item.LevelName</td>
+                                                            <td>@item.GradeName</td>
+                                                            <td></td>
+                                                        </tr>
+                                                                    }
+                                                                }
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                @*<div class="btn-group ib-btn-gp active-hook nk-act nk-email-inbox">
+                                                    @Html.PagedListPager(Model.EmployeeList, page => Url.Action("EmployeeList",
+                                                    new { page }))
+                                                </div>*@
+                                                <div class="modal-footer">
+                                                    <a @*type="button" id="btnExport" value="Get PDF" onclick="Export()"*@ class="btn btn-sm btn-default" href="~/Employee/ViewReport  @*javascript: Export()*@">Get PDF</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+    </div>
+</body>
+</html>

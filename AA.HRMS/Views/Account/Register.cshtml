@@ -1,0 +1,307 @@
+﻿@model AA.HRMS.Interfaces.IRegistrationView
+@{
+    ViewBag.Title = "Registration";
+    Layout = null;
+}
+
+
+
+
+<!--favicon
+    ============================================-->
+<link rel="shortcut icon" type="~/image/x-icon" href="~/content/img/favicon.ico">
+<!-- Google Fonts
+============================================ -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
+<!-- Bootstrap CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/bootstrap.min.css">
+<!-- font awesome CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/font-awesome.min.css">
+<!-- owl.carousel CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/owl.carousel.css">
+<link rel="stylesheet" href="~/content/css/owl.theme.css">
+<link rel="stylesheet" href="~/content/css/owl.transitions.css">
+<!-- animate CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/animate.css">
+<!-- normalize CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/normalize.css">
+<!-- mCustomScrollbar CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/scrollbar/jquery.mCustomScrollbar.min.css">
+<!-- wave CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/wave/waves.min.css">
+<!-- Notika icon CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/notika-custom-icon.css">
+<!-- main CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/main.css">
+<!-- style CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/style.css">
+<!-- responsive CSS
+============================================ -->
+<link rel="stylesheet" href="~/content/css/responsive.css">
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+
+
+<div class="login-content" style="background-image: url('/Images/Remote-Work-More-Than-a-Perk-for-Pros-with-Chronic-Conditions.jpg'); -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;">
+    <div class="nk-block toggled" id="l-register">
+
+        <div class="nk-form">
+
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new
+            {
+                id = "requestForm"
+            }))
+            {
+
+
+                if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+                {
+
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+                    </div>
+                }
+
+                if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+                    </div>
+                }
+
+
+                <input id="selectedRole" name="selectedRole" value="@Model.SelectedRole" hidden />
+
+                @Html.AntiForgeryToken()
+
+                <div class="input-group mg-t-15">
+                    <span class="input-group-addon nk-ic-st-pro"><i class="notika-icon notika-support"></i></span>
+                    <div class="">
+                        <input required type="text" class="form-control" placeholder="First Name" name="firstName" id="firstName" value="@Model.FirstName" />
+                    </div>
+                </div>
+                <div class="input-group mg-t-15">
+                    <span class="input-group-addon nk-ic-st-pro"><i class="notika-icon notika-support"></i></span>
+                    <div class="">
+                        <input required type="text" class="form-control" placeholder="Last Name" name="lastname" id="lastname" value="@Model.LastName" />
+                    </div>
+                </div>
+                <div class="input-group mg-t-15">
+                    <span class="input-group-addon nk-ic-st-pro"><i class="notika-icon notika-app"></i></span>
+                    <div class="">
+                        <input required type="text" class="form-control" placeholder="Username" name="username" id="username" value="@Model.Username" />
+                    </div>
+                </div>
+                <div class="input-group mg-t-15">
+                    <span class="input-group-addon nk-ic-st-pro"><i class="notika-icon notika-phone"></i></span>
+                    <div class="">
+                        <input required type="text" class="form-control" placeholder="Phone" name="phonenumber" id="phonenumber" value="@Model.PhoneNumber" />
+                    </div>
+                </div>
+                <div class="input-group mg-t-15">
+                    <span class="input-group-addon nk-ic-st-pro"><i class="notika-icon notika-mail"></i></span>
+                    <div class="">
+                        <input required type="text" class="form-control" placeholder="Email Address" name="email" id="email" value="@Model.Email">
+                    </div>
+                </div>
+
+                <div class="input-group mg-t-15">
+                    <span class="input-group-addon nk-ic-st-pro"><i class="notika-icon notika-edit"></i></span>
+                    <div class="">
+                        <input required type="password" class="form-control" placeholder="Password" name="password" id="password" value="@Model.Password">
+                    </div>
+                </div>
+
+                <div class="input-group mg-t-15">
+                    <span class="input-group-addon nk-ic-st-pro"><i class="notika-icon notika-edit"></i></span>
+                    <div class="">
+                        <input required type="password" class="form-control" placeholder="Confirm Password" name="confirmPassword" id="confirmPassword" value="@Model.ConfirmPassword">
+                    </div>
+                </div>
+
+                <div class="input-group mg-t-15">
+                    <span class="input-group-addon nk-ic-st-pro"><i class="notika-icon notika-chat"></i></span>
+                    <div class="">
+                        @Html.DropDownList("aboutUsSourceId", Model.AboutUsSourceDropDown, new { @class = "form-control", id = "aboutUsSourceId" })
+                    </div>
+                </div>
+
+
+                <div id="aboutUsDivId" style="display: none;">
+
+                    <div class="input-group mg-t-15">
+                        <span class="input-group-addon nk-ic-st-pro"><i class="notika-icon notika-chat"></i></span>
+                        <div class="">
+                            <input type="text" class="form-control" placeholder="About Us" name="aboutUsOthers" id="aboutUsOthers" value="@Model.AboutUsOthers">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="fm-checkbox">
+                    <label>
+                        <input class="i-checks" type="checkbox" id="myCheck" required onclick="myFunction()" name="rad" />
+                        I agree to terms and conditions <a data-toggle="modal" data-target="#myModalone"> (terms and conditions)</a>                        
+                    </label>
+                </div>
+
+                <div class="form-example-int mg-t-15">
+                    <button id="loginSubmit" name="loginSubmit" type="submit" class="btn btn-primary notika-btn-primary">Register</button>
+                </div>
+
+                <div class="form-example-int mg-t-15">
+                    I already have an account, <a href="~/account/login">Sign in</a>
+                </div>
+
+                <div class="form-example-int mg-t-15">
+                    I have forgotten my Password, <a href="~/account/changepassword">Forgot Password</a>
+                </div>
+
+                <div class="form-example-int mg-t-10">
+                    <a id="home" name="home" href="~/Home/Index">Go back to Home</a>
+                </div>
+
+            }
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModalone" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Terms and Conditions</h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+        $('#aboutUsSourceId').change(function () {
+            $('#aboutUsSourceId').trigger("propertychange");
+        });
+
+        $('#aboutUsSourceId').bind('input propertychange', function () {
+
+            var aboutUsSourceId = $('#aboutUsSourceId').val() == 1;
+
+            if (aboutUsSourceId) {
+
+                document.getElementById("aboutUsDivId").style.display = "block";
+
+                aboutUsOthers.required = true;
+
+            } else {
+                document.getElementById("aboutUsDivId").style.display = "none";
+            }
+
+
+        });
+    });
+
+
+</script>
+
+<!-- modernizr JS
+============================================ -->
+<script src="~/scripts/js/vendor/modernizr-2.8.3.min.js"></script>
+
+<script src="~/scripts/js/vendor/jquery-1.12.4.min.js"></script>
+<!-- bootstrap JS
+    ============================================ -->
+<script src="~/scripts/js/bootstrap.min.js"></script>
+<!-- wow JS
+    ============================================ -->
+<script src="~/scripts/js/wow.min.js"></script>
+<!-- price-slider JS
+    ============================================ -->
+<script src="~/scripts/js/jquery-price-slider.js"></script>
+<!-- owl.carousel JS
+    ============================================ -->
+<script src="~/scripts/js/owl.carousel.min.js"></script>
+<!-- scrollUp JS
+    ============================================ -->
+<script src="~/scripts/js/jquery.scrollUp.min.js"></script>
+<!-- meanmenu JS
+    ============================================ -->
+<script src="~/scripts/js/meanmenu/jquery.meanmenu.js"></script>
+<!-- counterup JS
+    ============================================ -->
+<script src="~/scripts/js/counterup/jquery.counterup.min.js"></script>
+<script src="~/scripts/js/counterup/waypoints.min.js"></script>
+<script src="~/scripts/js/counterup/counterup-active.js"></script>
+<!-- mCustomScrollbar JS
+    ============================================ -->
+<script src="~/scripts/js/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<!-- sparkline JS
+    ============================================ -->
+<script src="~/scripts/js/sparkline/jquery.sparkline.min.js"></script>
+<script src="~/scripts/js/sparkline/sparkline-active.js"></script>
+<!-- flot JS
+    ============================================ -->
+<script src="~/scripts/js/flot/jquery.flot.js"></script>
+<script src="~/scripts/js/flot/jquery.flot.resize.js"></script>
+<script src="~/scripts/js/flot/flot-active.js"></script>
+<!-- knob JS
+    ============================================ -->
+<script src="~/scripts/js/knob/jquery.knob.js"></script>
+<script src="~/scripts/js/knob/jquery.appear.js"></script>
+<script src="~/scripts/js/knob/knob-active.js"></script>
+<!--  Chat JS
+    ============================================ -->
+<script src="~/scripts/js/chat/jquery.chat.js"></script>
+<!--  wave JS
+    ============================================ -->
+<script src="~/scripts/js/wave/waves.min.js"></script>
+<script src="~/scripts/js/wave/wave-active.js"></script>
+<!-- icheck JS
+    ============================================ -->
+<script src="~/scripts/js/icheck/icheck.min.js"></script>
+<script src="~/scripts/js/icheck/icheck-active.js"></script>
+<!--  todo JS
+    ============================================ -->
+<script src="~/scripts/js/todo/jquery.todo.js"></script>
+<!-- Login JS
+    ============================================ -->
+<script src="~/scripts/js/login/login-action.js"></script>
+<!-- plugins JS
+    ============================================ -->
+<script src="~/scripts/js/plugins.js"></script>
+<!-- main JS
+    ============================================ -->
+<script src="~/scripts/js/main.js"></script>
+
+
+<!--  notification JS
+    ============================================ -->
+<script src="~/script/js/notification/bootstrap-growl.min.js"></script>
+<script src="~/script/js/notification/notification-active.js"></script>
+
+

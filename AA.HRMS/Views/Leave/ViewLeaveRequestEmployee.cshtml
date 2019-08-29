@@ -1,0 +1,133 @@
+﻿@model AA.HRMS.Interfaces.ILeaveRequestViewModel
+
+@{
+    ViewBag.Title = "View Employee Leave Request";
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+
+<div class="modal-body">
+
+    <input type="hidden" value="@Model.EmployeeID" id="EmployeeID" name="EmployeeID" />
+
+    @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+    {
+
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+        </div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+        </div>
+    }
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Leave Type</label>
+            <div class="">
+                @Html.DropDownList("LeaveTypeID", Model.LeaveTypeDropDown, new { @class = "form-control", id = "LeaveTypeID", @disabled = "disabled" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Date Leave Starts</label>
+            <div class="">
+                <input id="DateLeaveStart" disabled name="DateLeaveStart" type="text" class="form-control" value="@Model.DateLeaveStart" />
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Date Leave ends</label>
+            <div class="">
+                <input id="DateLeaveEnds" disabled name="DateLeaveEnds" type="text" class="form-control" value="@Model.DateLeaveEnds" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Comment</label>
+            <div class="">
+                <textarea id="Comment" disabled name="Comment" type="text" class="form-control" value="@Model.Comment">@Model.Comment</textarea>
+            </div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.HRApproverComment))
+    {
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>HR Approver Comment</label>
+                <div class="">
+                    <textarea id="HRApproverComment" disabled name="HRApproverComment" type="text" class="form-control" value="@Model.HRApproverComment">@Model.HRApproverComment</textarea>
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Status:</label>
+        </div>
+        <div class="">
+            @{
+                if (Model.LeaveStatusName.Equals("Approved"))
+                {
+                    <button class="btn notika-btn-green">Approved</button>
+                }
+                else if (Model.LeaveStatusName.Equals("Disapproved"))
+                {
+                    <button class="btn notika-btn-red">Declined</button>
+                }
+                else
+                {
+                    <button class="btn notika-btn-orange">@Model.LeaveStatusName</button>
+                }
+
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("span.ui-dialog-title").text('Create a Leave Request');
+
+        $('#btnCancel').click(function () {
+            window.location.href = '/Leave/ListOfLeaveRequestsForEmployee?employeeId='+@Model.EmployeeID;
+            return false;
+        });
+
+        $('#LeaveTypeID').prop("disabled", true);
+    });
+</script>
+
+
+
+
+

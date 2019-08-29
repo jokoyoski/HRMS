@@ -1,0 +1,62 @@
+﻿@model AA.HRMS.Interfaces.IEducationHistoryView
+
+@{
+    ViewBag.Title = "Delete Education History";
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+@Html.ValidationSummary()
+@Model.ProcessingMessage
+
+@using (Html.BeginForm("Delete", "EducationHistory", FormMethod.Post, new { id = "EducationHistoryForm", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    <input type="hidden" id="educationHistoryId" name="educationHistoryId" value="@Model.EducationHistoryId" />
+
+    <input name="url" id="url" value="@Model.URL" hidden />
+    <input name="employeeId" id="employeeId" value="@Model.EmployeeId" hidden />
+
+    <div class="modal-body">
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>School Name: </label>
+                <div class="">
+                    <label><strong>@Model.SchoolName</strong></label>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Duration: </label>
+                <div class="">
+                    <label><strong>@Model.GraduationYear</strong></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <label>Degree: </label>
+            <div class="form-group">
+                <label><strong>@Model.Degree</strong></label> 
+            </div>
+        </div>
+    </div>
+
+        <div class="modal-footer">
+            <button type="submit" name="submitButton" class="btn btn-default">Delete</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        </div>
+}
+
+
+

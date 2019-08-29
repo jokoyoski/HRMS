@@ -1,0 +1,71 @@
+﻿@model AA.HRMS.Interfaces.IEducationHistoryView
+
+@{
+    ViewBag.Title = "Edit Education Hisitory";
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+@Html.ValidationSummary()
+@Model.ProcessingMessage
+
+@using (Html.BeginForm("Edit", "EducationHistory", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="modal-body">
+
+    <input type="hidden" id="EducationHistoryId" name="EducationHistoryId" value="@Model.EducationHistoryId" />
+
+    <input name="url" id="url" value="@Model.URL" hidden />
+    <input name="employeeId" id="employeeId" value="@Model.EmployeeId" hidden />
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>School Name</label>
+            <div class="">
+                <input id="SchoolName" name="SchoolName" type="text" class="form-control input-sm" value="@Model.SchoolName" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Degree</label>
+            <div class="">
+                <input id="Degree" name="Degree" type="text" class="form-control input-sm" value="@Model.Degree" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Duration</label>
+            <div class="">
+                <input id="GraduationYear" name="GraduationYear" type="text" class="form-control input-sm" value="@Model.GraduationYear" />
+            </div>
+        </div>
+    </div>
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Note</label>
+            <div class="">
+                <input id="Note" name="Note" type="text" class="form-control input-sm" value="@Model.Note" />
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="modal-footer">
+            <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Modify</button>
+            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+        </div>
+   
+}
+   
+
+   

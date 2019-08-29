@@ -1,0 +1,160 @@
+﻿@model AA.HRMS.Interfaces.IUsersView
+
+@{
+    ViewBag.Title = Model.LastName + " Role(s)";
+    var hasInfo = (Model != null) && (Model.AppRoleCollection.Any());
+}
+
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-social"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                            <div class="breadcomb-report">
+
+                                <a class="btn" data-toggle="tooltip" href="/Administration/User" data-placement="left" title="Back"><i class="notika-icon notika-back"></i></a>
+
+                                <button class="btn" data-toggle="tooltip" onclick="deleteModal('/UserRole/AddUserRole?userId=@Model.UserId')" data-placement="left" title="Add User for Role"><i class="notika-icon notika-plus-symbol"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Html.AntiForgeryToken()
+
+@if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+{
+    <div>
+        <div class="container">
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+            </div>
+
+        </div>
+    </div>
+}
+
+
+@if (hasInfo)
+{
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="table-responsive">
+                            <table id="data-table-basic" class="table table-striped">
+
+                                <thead>
+                                    <tr>
+
+                                        <th>Role</th>
+                                        <th>Created By</th>
+                                        <th>Date Created</th>
+
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var d in Model.AppRoleCollection)
+                                    {
+                                        <tr style="width: 100%;">
+
+                                            <td>
+                                                @d.RoleName
+                                            </td>
+                                            <td>
+                                                @d.CreateByUsername
+                                            </td>
+                                            <td>
+                                                @d.DateCreated
+                                            </td>
+
+                                            <td>
+                                                <button class="btn btn-sm btn-danger" onclick="deleteModal('/UserRole/DeleteUserRole?userAppRoleId=@d.UserAppRoleId')" data-placement="left" title="Delete @d.Username from @d.RoleName Role">Delete</button>
+                                            </td>
+
+
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+
+                                        <th>Role</th>
+                                        <th>Created By</th>
+                                        <th>Date Created</th>
+
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div>
+        <div>
+            No User with Roles Exist
+        </div>
+    </div>
+}
+
+
+
+
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayDelete">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var URL = "";
+
+    function deleteModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayDelete").html(data);
+            }
+        });
+
+        $("#deleteModal").modal();
+
+    }
+
+</script>

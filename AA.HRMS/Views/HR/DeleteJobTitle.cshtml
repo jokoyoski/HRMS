@@ -1,0 +1,66 @@
+﻿@model AA.HRMS.Interfaces.IJobTitleView
+
+@{
+    ViewBag.Title = "Delete Job Title";
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+    @using (Html.BeginForm("DeleteJobTitle", "HR", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" name="CompanyId" value="@Model.CompanyId" />
+        <input type="hidden" name="jobTitleId" value="@Model.JobTitleId" />
+
+
+        <div class="modal-body">
+            @Html.ValidationSummary()
+            @Model.ProcessingMessage
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Job Title Name</label>
+                    <div class="">
+                        <input id="jobTitleName" disabled name="jobTitleName" class="form-control ", type="text" value="@Model.JobTitleName" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Job Definition</label>
+
+                    <div class="">
+                        <textarea id="jobDefinition" disabled name="jobDefinition" class="form-control",>@Model.JobDefinition</textarea>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Job Function</label>
+
+                    <div class="">
+                        <textarea id="jobFunction" disabled name="jobFunction" class="form-control ",>@Model.JobFunction</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Delete</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    }
+
+
+
+
+ 
+
+
+

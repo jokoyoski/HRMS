@@ -1,0 +1,184 @@
+﻿@using AA.HRMS.Interfaces.ValueTypes
+@model AA.HRMS.Interfaces.IEmployeeLoanView
+
+@{
+    ViewBag.Title = "Edit Employee Loan";
+    var role = (String[])HttpContext.Current.Session[SessionKey.UserRoles];
+}
+
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+
+
+@using (Html.BeginForm("EditEmployeeLoan", "CompanySetup", FormMethod.Post))
+{
+
+<div class="modal-body">
+
+    @Html.AntiForgeryToken()
+
+    <input name="employeeId" hidden value="@Model.EmployeeId" />
+    <input name="url" hidden value="@Model.URL" />
+    <input name="companyId" id="companyId" hidden value="@Model.CompanyId" />
+    <input type="hidden" id="employeeLoanId" name="employeeLoanId" value="@Model.EmployeeLoanId" />
+
+    @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+    {
+
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+        </div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+        </div>
+    }
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Reason</label>
+            <div class="">
+                @Html.DropDownList("LoanId", Model.LoanDropDown, new { @class = "form-control", id = "LoanId" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Loan Amount</label>
+            <div class="">
+                <input type="number" required id="LoanAmount" name="LoanAmount" class="form-control" maxlength="50" value="@Model.LoanAmount" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Expected Date</label>
+            <div class="">
+                <input type="date" required id="ExpectedDate" name="ExpectedDate" class="form-control" value="@DisplayHelper.DisplayDate(Model.ExpectedDate)" />
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Reason</label>
+            <div class="">
+                <textarea id="reason" required name="reason" class="form-control" type="text" maxlength="50" value="@Model.Reason">@Model.Reason</textarea>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Tenure</label>
+            <div class="">
+                <input type="number" required id="Tenure" name="Tenure" class="form-control" value="@Model.Tenure" />
+            </div>
+        </div>
+    </div>
+
+    @if (role.Contains("CompanyAdmin"))
+    {
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Interest Rate</label>
+                <div class="">
+                    <input step="0.0001" type="number" id="interestRate" name="InterestRate" class="form-control" value="@Model.InterestRate" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>HR Comment</label>
+            <div class="">
+                <textarea type="text" id="hRComment" name="HRComment" class="form-control" maxlength="100" value="@Model.HRComment">@Model.HRComment</textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Agreed Date</label>
+            <div class="">
+                <input type="date" id="agreedDate" name="AgreedDate" class="form-control" maxlength="100" value="@DisplayHelper.DisplayDate(Model.AgreedDate)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Disburst Date</label>
+            <div class="">
+                <input type="date" id="disburstDate" name="DisburstDate" class="form-control" maxlength="50" value="@DisplayHelper.DisplayDate(Model.DisburstDate)" />
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <button type="submit" disabled="true" id="btnSubmit" name="IsApproved" value="true" class="btn btn-primary">Approve</button>
+    <button type="submit" id="btnCancel" name="IsApproved" value="false" class="btn btn-danger">Decline</button>
+</div>
+
+}
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var today = new Date();
+        
+        $('#interestRate').change(function () {
+            $('#companyId').trigger("propertychange");
+        });
+
+        $('#hRComment').change(function () {
+            $('#companyId').trigger("propertychange");
+        });
+
+        $('#agreedDate').change(function () {
+            $('#companyId').trigger("propertychange");
+        });
+
+        $('#disburstDate').change(function () {
+            $('#companyId').trigger("propertychange");
+        });
+
+        
+        $('#companyId').bind('input propertychange',
+            function () {
+                
+                var interestRate = $('#interestRate').val() > 0;
+                var hRComment = $('#hRComment').val().length > 0;
+                var agreedDate = new Date($('#agreedDate').val()) > today;
+                var disburstDate = new Date($('#disburstDate').val()) > today;
+
+                if (interestRate && hRComment && agreedDate && disburstDate)
+                {
+                    $('#btnSubmit').prop("disabled", false);
+                }
+            });
+
+    });
+
+</script>

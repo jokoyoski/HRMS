@@ -1,0 +1,564 @@
+﻿@using AA.HRMS.Interfaces.ValueTypes
+@model AA.HRMS.Interfaces.IEmployeeProfileView
+
+@{
+    ViewBag.Title = Model.Company.CompanyName+" - Dash board";
+    var roles = (String[])HttpContext.Current.Session[SessionKey.UserRoles];
+
+    var isCompanyExist = (Model.User.CompanyId == 0) ? true : false;
+    var isCompanyAdmin = (roles.Contains("CompanyAdmin")) ? true : false;
+}
+
+@if (isCompanyExist)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-danger alert-mg-b-0" role="alert">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <a href="~/Administration/CompanyList">You have to create a company.</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <br />
+}
+
+@if (Model.Profile == null)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-danger alert-mg-b-0" role="alert">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <a href="~/Profile/Index">You have not created a profile. Please click here to create a profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <br />
+}
+
+
+@using (Html.BeginForm("DashBoard", "Home", FormMethod.Post))
+{
+
+
+    <div class="breadcomb-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="breadcomb-list">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-form"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>@ViewBag.Title</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+<!-- Start Status area -->
+<div class="notika-status-area">
+    <div class="container">
+
+
+
+        <div class="row">
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>
+                            @{
+                                var employees = Model.EmployeeCollection?.Count ?? 0;
+                            }
+
+                            @employees
+                        </h3>
+
+                        <p> Employees</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-users"></i>
+                    </div>
+                    <a href="/Employee/EmployeeList" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>
+                            @{ var companies = Model.CompanyCollection?.Count ?? 0; }
+                            @companies
+                        </h3>
+
+                        <p>Companies</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-building"></i>
+                    </div>
+                    <a href="/Administration/CompanyList" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                @{ var pendingApprovals = Model.PendingLeaveRquest.Count + Model.PendingTrainingRequest.Count + Model.PendingLoanRequest.Count; }
+                <!-- small box -->
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3>@pendingApprovals</h3>
+
+                        <p>Pending Approvals</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-exclamation-triangle"></i>
+                    </div>
+                    <a href="#" class="small-box-footer btn triger-fadeIn" data-toggle="dropdown"> More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <ul class="dropdown-menu triger-fadeIn-dp" role="menu">
+                        <li><a href="/Leave/ListOfLeaveRequestsForHRAdmin">(@Model.PendingLeaveRquest.Count) Pending Leaves Request</a></li>
+                        <li><a href="/EmployeeTraining/EmployeeRequestTraining">(@Model.PendingTrainingRequest.Count) Pending Training Request</a></li>
+                        <li><a href="/CompanySetup/EmployeeLoanList">(@Model.PendingLoanRequest.Count) Pending Loan Request</a></li>
+                    </ul>
+                </div>
+            </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-blue">
+                        <div class="inner">
+                            <h3>0</h3>
+
+                            <p>Employee on Leave</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-users"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+
+    </div>
+</div>
+<!-- End Status area-->
+<!-- Start Sale Statistic area-->
+<div class="sale-statistic-area">
+    <div class="container">
+        <div class="row">
+
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="col-md-12">
+                    <div class="sale-statistic-inner notika-shadow mg-tb-30">
+                        <div class="curved-inner-pro">
+                            <div class="curved-ctn">
+                                <h2>Employee Gender Split</h2>
+                                <p>Employee percentage by gender</p>
+                            </div>
+                        </div>
+
+
+                        <div id="" class="" style="width: 50%">
+
+                            <canvas id="employee-split-pie" width="400" height="400"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-12">
+
+                    <div class="sale-statistic-inner notika-shadow mg-tb-30">
+                        <div style="width: 100%">
+                            <canvas id="employee-by-age-bar"></canvas>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                <!-- Basic Information-->
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="statistic-right-area notika-shadow mg-tb-30 sm-res-mg-t-0">
+                        <div class="past-day-statis">
+                            <h2>Basic Information</h2>
+                            <p></p>
+                        </div>
+
+                        <div class="past-statistic-an">
+                            <div class="past-statistic-ctn">
+                                <h3>
+                                    <span class="counter">
+                                        @{
+                                            var departments = Model.DepartmentCollection?.Count ?? 0;
+
+                                            @departments
+                                        }
+                                    </span>
+                                </h3>
+                                <p>Departments</p>
+                            </div>
+
+                            <div class="past-statistic-graph">
+                                <a href="/hr/departmentlist"><span class="fa fa-building"></span></a>
+                            </div>
+                        </div>
+                        <div class="past-statistic-an">
+                            <div class="past-statistic-ctn">
+                                <h3>
+                                    <span class="counter">
+                                        @{ var grades = Model.GradeCollection?.Count ?? 0; }
+                                        @grades
+                                    </span>
+                                </h3>
+                                <p>Grades</p>
+                            </div>
+                            <div class="past-statistic-graph">
+                                <a href="/hr/gradelist"><span class="fa fa-line-chart"></span></a>
+                            </div>
+                        </div>
+                        <div class="past-statistic-an">
+                            <div class="past-statistic-ctn">
+                                <h3>
+                                    <span class="counter">
+                                        @{ var levels = Model.LevelCollection?.Count ?? 0; }
+                                        @levels
+                                    </span>
+                                </h3>
+                                <p>Levels</p>
+                            </div>
+                            <div class="past-statistic-graph">
+                                <a href="/companysetup/levellist"><span class="fa fa-pie-chart"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @{
+                    var fullTime = 0;
+                    var partTime = 0;
+                    var contract = 0;
+                    int age16To25 = 0;
+                    var age26To35 = 0;
+                    var age36To45 = 0;
+                    var age46To55 = 0;
+                    var age56To66 = 0;
+                    var age66Above = 0;
+
+                    if (Model.EmployeeCollection != null && Model.EmployeeCollection.Count != 0)
+                    {
+                        foreach (var item in Model.EmployeeCollection)
+                        {
+
+                            if (item.EmploymentTypeId > 0)
+                            {
+                                if (item.EmploymentTypeId == 1)
+                                {
+                                    fullTime++;
+                                }
+
+                                if (item.EmploymentTypeId == 2)
+                                {
+                                    partTime++;
+                                }
+
+                                if (item.EmploymentTypeId == 3)
+                                {
+                                    contract++;
+                                }
+                            }
+
+
+                            if (item.Birthday != null)
+                            {
+                                var age = (int)(DateTime.Now - (DateTime)item.Birthday).TotalDays / 365.25;
+
+
+                                if (age >= 16 && age <= 25)
+                                {
+                                    age16To25++;
+                                }
+                                if (age >= 26 && age <= 35)
+                                {
+                                    age26To35++;
+                                }
+                                if (age >= 36 && age <= 45)
+                                {
+                                    age36To45++;
+                                }
+                                if (age >= 46 && age <= 55)
+                                {
+                                    age46To55++;
+                                }
+                                if (age >= 56 && age <= 66)
+                                {
+                                    age56To66++;
+                                }
+                                if (age >= 60)
+                                {
+                                    age66Above++;
+                                }
+                            }
+
+
+
+                        }
+
+                    }
+
+                    }
+
+                <!-- Employee Type Chart Infomration-->
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="statistic-right-area notika-shadow mg-tb-30 sm-res-mg-t-0">
+                        <div class="past-day-statis">
+                            <h2>Employee Types Split</h2>
+                            <p></p>
+                        </div>
+
+                        <div style="width: 100%">
+                            <canvas width="100" height="100" id="employee-type-chart"></canvas>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <!-- Employee Department Chart Infomration-->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="statistic-right-area notika-shadow mg-tb-30 sm-res-mg-t-0">
+                        <div class="past-day-statis">
+                            <h2>Employee Department Split</h2>
+                            <p></p>
+                        </div>
+
+                        <div class="100%">
+                            @{var rand = new Random();}
+
+                            @foreach (var item in Model.DepartmentCollection)
+                            {
+                                var packet = rand.Next(0, 3);
+                                var count = 0;
+                                string[] arr = { "bar-aqua", "bar-red", "bar-green", "bar-yellow" };
+
+                                foreach (var cell in Model.EmployeeCollection)
+                                {
+
+
+                                    if (item.DepartmentId == cell.DepartmentId)
+                                    {
+                                        count++;
+
+                                    }
+
+
+
+
+
+                                }
+                                 <!-- /.progress-group -->
+                                    <div class="progress-group">
+                                        <span class="progress-text">@item.DepartmentName </span>
+                                        <span class="progress-number">
+                                            <b>@(count)</b>
+                                        </span>
+
+                                        <div class="progress sm">
+                                            <div class="progress-bar progress-@arr[packet]" style="width: 80%"></div>
+                                        </div>
+                                    </div>
+
+
+                            }
+
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Stylesheets
+{
+    <link rel="stylesheet" href="~/Content/css/dashbard.css">
+    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css">
+}
+
+@section JavaScriptsIncludes
+{
+    <script src="~/Scripts/js/flot/jquery.flot.tooltip.min.js"></script>
+
+    <script src="~/Scripts/js/charts/Chart.js"></script>
+}
+
+@section JavaScriptsExecution
+{
+
+
+
+    <script>
+        @{
+            //Getting Emplyee Gender
+            var maleSplit = Model.EmployeeCollection.Count(p => p.GenderId.Equals(1));
+            var femaleSplit = Model.EmployeeCollection.Count(p => p.GenderId.Equals(2));
+            var otherSplit = Model.EmployeeCollection.Count(p => p.GenderId.Equals(3));
+        }
+        var ctx = document.getElementById('employee-split-pie').getContext('2d');
+        var myChart = new Chart(ctx,
+            {
+                type: 'doughnut',
+                data: {
+                    labels: ['Female', 'Male', 'Others'],
+                    datasets: [
+                        {
+                            label: 'Employee Gender Split',
+                            data: [@femaleSplit, @maleSplit, @otherSplit],
+                            backgroundColor: [
+                                '#ff6384',
+                                '#36a2eb',
+                                '#cc65fe',
+                            ],
+
+                            borderColor: [
+                                '#ff6384',
+                                '#36a2eb',
+                                '#cc65fe',
+                            ],
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+
+    </script>
+
+    <script>
+        var ctx = document.getElementById('employee-type-chart').getContext('2d');
+        var myChart = new Chart(ctx,
+            {
+                type: 'doughnut',
+                data: {
+                    labels: ['Full Time', 'Part Time', 'Contract'],
+                    datasets: [
+                        {
+                            label: 'Employee Type Split',
+                            data: [@fullTime, @partTime, @contract],
+                            backgroundColor: [
+                                '#ff6384',
+                                '#36a2eb',
+                                '#cc65fe',
+                            ],
+
+                            borderColor: [
+                                '#ff6384',
+                                '#36a2eb',
+                                '#cc65fe',
+                            ],
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+
+    </script>
+
+
+    <script>
+        var ctx = document.getElementById('employee-by-age-bar').getContext('2d');
+        var myChart = new Chart(ctx,
+            {
+                type: 'line',
+                data: {
+                    labels: ['16-25', '26-35', '36-45', '46-55', '56-65', '66 and Above'],
+                    datasets: [
+                        {
+                            label: 'Employee Age Split',
+                            data: [@age16To25, @age26To35, @age36To45, @age46To55, @age56To66, @age66Above],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                            ],
+                            fill: false,
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                            ],
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'Employee Age Split'
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                    scales: {
+                        xAxes: [
+                            {
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Age Range'
+                                }
+                            }
+                        ],
+                        yAxes: [
+                            {
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Value'
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+
+    </script>
+
+}

@@ -1,0 +1,90 @@
+﻿@model AA.HRMS.Interfaces.IEmploymentHistoryView
+
+@{
+    ViewBag.Title = "Edit Employment Hisitory";
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+@Html.ValidationSummary()
+@Model.ProcessingMessage
+
+@using (Html.BeginForm("Edit", "EmploymentHistory", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+   
+
+<div class="modal-body">
+
+    <input value="@Model.URL" name="url" id="url" hidden />
+    <input value="@Model.EmployeeId" name="employeeId" id="employeeId" hidden />
+    <input value="@Model.EmploymentHistoryId" name="employmenthistoryId" id="employmenthistoryId" hidden />
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Company Name</label>
+            <div class="">
+                <input id="CompanyName" name="CompanyName" type="text" class="form-control" value="@Model.CompanyName" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Start Date</label>
+            <div class="">
+                <input id="StartDate" name="StartDate" type="text" class="form-control" value="@Model.StartDate.ToString("d")" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>End Date</label>
+            <div class="">
+                <input id="EndDate" name="EndDate" type="text" class="form-control" value="@if (Model.EndDate != null)
+                                                                                                           {
+                                                                                                               @Model.EndDate.Value.ToString("d")
+                                                                                                           }" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Level On Exit</label>
+            <div class="">
+                <input id="LevelOnExit" name="LevelOnExit" type="text" class="form-control" value="@Model.LevelOnExit" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Job Function</label>
+            <div class="">
+                <textarea id="JobFunction" name="JobFunction" class="form-control" maxlength="500">@Model.JobFunction</textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Reason for Exit</label>
+            <div class="">
+                <textarea id="ReasonExit" name="ReasonExit" class="form-control" maxlength="500">@Model.ReasonExit</textarea>
+            </div>
+        </div>
+    </div>
+
+</div>
+            <div class="modal-footer">
+                <button type="submit" name="submitButton" class="btn btn-default">Modify</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+    }

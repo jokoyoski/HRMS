@@ -1,0 +1,84 @@
+﻿@model AA.HRMS.Interfaces.IOverTimesheetView
+
+
+<script src="~/Scripts/jquery.validate.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js" type="text/javascript"></script>
+
+@{
+    ViewBag.Title = "AA HRMS - Industry Registration";
+}
+
+@section PageTitle{
+    Create Industry
+}
+
+
+<div class="jumbotron">
+    <div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; width: 100%;">
+        <div class="validation-summary-errors">
+            @Html.ValidationSummary()
+
+        </div>
+    </div>
+    @using (Html.BeginForm("CreateOverTimesheetView", "OverTimesheet", FormMethod.Post))
+    {
+
+
+
+        @Html.AntiForgeryToken()
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span> Number of Hours
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <input id="numberofHours" name="numberofHours" style="width: 250px;" type="number" maxlength="50" value="@Model.NumberofHours" />
+            </div>
+        </div>
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span>Over Time Date:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <input id="overTimeDate" name="overTimeDate" type="date" style="width: 250px;" value="@Model.OverTimeDate" />
+            </div>
+        </div>
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                Employee:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                @Html.DropDownList("employeeId", Model.EmployeeDropDownList, new { style = "width:204px;height:20px;", id = "employeeId" })
+            </div>
+        </div>
+        
+
+        <input name="companyId" value="@Model.CompanyId" hidden /> 
+
+       
+
+
+        <div class="columns" style="width: 100%; padding-top: 15px; padding-bottom: 5px;">
+
+            <div class="column" style="margin-left: 195px;">
+                <input class="blueButton" id="btnSubmit" name="submitButton" style="width: 80px;" type="submit" value="Add" />
+            </div>
+
+            <div class="column" style="margin-left: 15px;">
+                <input id="btnCancel" class="blueButton" name="submitButton" style="width: 80px;" type="submit" value="Cancel" />
+            </div>
+
+            <div class="column" style="font-size: 9px; font-weight: bold; font-style: italic; padding-left: 5px; padding-top: 2px;">
+                You must enter all information above correctly to enable submission.
+            </div>
+        </div>
+
+
+
+
+
+    }
+</div>

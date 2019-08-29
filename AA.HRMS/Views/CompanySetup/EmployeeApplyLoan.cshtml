@@ -1,0 +1,102 @@
+﻿@model AA.HRMS.Interfaces.IEmployeeLoanView
+
+@{
+                /**/
+
+                ViewBag.Title = "Apply for Loan";
+}
+
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+
+
+@using (Html.BeginForm("ApplyLoan", "CompanySetup", FormMethod.Post))
+{
+
+    <div class="modal-body">
+
+        @Html.AntiForgeryToken()
+
+        <input name="employeeId" hidden value="@Model.EmployeeId" />
+        <input name="companyId" hidden value="@Model.CompanyId" />
+        <input name="url" hidden value="@Model.URL" />
+
+        @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+        {
+
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+            </div>
+        }
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+            </div>
+        }
+
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Type Of Loan</label>
+                <div class="">
+                    @Html.DropDownList("LoanId", Model.LoanDropDown, new { @class = "form-control", id = "LoanId" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Loan Amount</label>
+                <div class="">
+                    <input type="text" id="LoanAmount" required name="LoanAmount" class="form-control" maxlength="50" value="@Model.LoanAmount" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Expected Date</label>
+                <div class="">
+                    <input type="date" id="ExpectedDate" required name="ExpectedDate" class="form-control" value="@DisplayHelper.DisplayDate(Model.ExpectedDate)" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Tenure (Months)</label>
+                <div class="">
+
+                    <input type="number" id="tenure" required name="tenure" class="form-control" maxlength="50" value="@Model.Tenure" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Reason</label>
+                <div class="">
+                    <textarea id="reason" name="reason" class="form-control" type="text" maxlength="50" value="@Model.Reason">@Model.Reason</textarea>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Apply</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+
+}

@@ -1,0 +1,367 @@
+﻿@using AA.HRMS.Interfaces.ValueTypes
+@using System.Web
+
+@model AA.HRMS.Interfaces.IEmployeeAnnualAssessingPerformanceView
+
+@{
+    ViewBag.Title = "Fill Annual Assessing Performance";
+
+    var role = (String[])HttpContext.Current.Session[SessionKey.UserRoles];
+
+    int count = 1;
+
+    var editable = string.Empty;
+
+    if (role.Contains("CompanyAdmin"))
+    {
+        editable = "disabled";
+    }
+}
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                            <div class="breadcomb-report">
+                                <a class="btn" data-toggle="tooltip" href="/PerformanceManagement/EmployeeAppraisalList" data-placement="left" title="Back "><i class="notika-icon notika-back"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-element-area">
+    <div class="container">
+        <div class="row">
+            @using (Html.BeginForm("ReviewerEmployeeAnnualAssessmentForm", "PerformanceManagement", FormMethod.Post, new { id = "AppraisalForm", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+
+            {
+                @Html.AntiForgeryToken();
+
+
+
+                <input hidden name="companyId" value="@Model.Company.CompanyId" />
+                <input hidden name="url" value="@Model.URL" />
+                <input hidden name="EmployeeId" value="@Model.Reviewee.EmployeeId" />
+                <input hidden name="employeeAnnualAssesssingPerformanceId" value="@Model.EmployeeAnnualAssesssingPerformanceId" />
+
+
+
+                if (Model.Reviewer != null)
+                {
+                    <input hidden name="reviewerId" value="@Model.Reviewer.EmployeeId" />
+                }
+
+                <input hidden name="annualAssessingPerformanceId" value="@Model.AnnualAssesingPerformance.AnnualAssessingPerformanceId" />
+
+
+
+                if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+                {
+                    <div>
+                        <div class="container">
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+                            </div>
+
+                        </div>
+                    </div>
+                }
+
+                if (!ViewData.ModelState.IsValid)
+                {
+                    <div>
+                        <div class="container">
+                            <div class="alert alert-info alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-element-list mg-t-30">
+                        <div class="cmp-tb-hd">
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Appraisee Name</label>
+                                            <input type="text" disabled value="@(Model.Reviewee.LastName + " " + Model.Reviewee.FirstName)" class="form-control" />
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Appraiser Name</label>
+                                            @if (Model.Reviewer != null)
+                                            {
+                                                <input type="text" disabled value="@(Model.Reviewer.LastName + " " + Model.Reviewer.FirstName)" class="form-control" />
+                                            }
+                                            else
+                                            {
+                                                <input type="text" disabled value="N/A" class="form-control" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Job Title</label>
+                                            @if (Model.Reviewee.JobTitle != null)
+                                            {
+                                                <input type="text" disabled value="@Model.Reviewee.JobTitle" class="form-control" />
+                                            }
+                                            else
+                                            {
+                                                <input type="text" disabled value="N/A" class="form-control" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="">
+                                            <label>Ratings</label>
+                                            <div class="">
+                                                @foreach (var d in Model.RatingColletion)
+                                                {
+                                                    <p class="col-md-6">
+                                                        <strong>@count : </strong> @d.AppraisalRatingName
+                                                    </p>
+
+                                                    count++;
+                                                }
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-4 col-sm-4 col-xs-6">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Things I did Well</label>
+                                            <textarea type="text" value="@Model.Thing_I_Did_Well" disabled maxlength="300" name="Thing_I_Did_Well" id="Thing_I_Did_Well" class="form-control">@Model.Thing_I_Did_Well</textarea>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-4 col-sm-4 col-xs-6">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Things I did not do Well</label>
+                                            <textarea type="text" value="@Model.Things_I_Did_Not_Do_Well" disabled maxlength="300" name="Things_I_Did_Not_Do_Well" id="Things_I_Did_Not_Do_Well" class="form-control">@Model.Things_I_Did_Not_Do_Well</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-4 col-sm-4 col-xs-6">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Driven Exceptional Client Service</label>
+                                            <textarea type="text" value="@Model.Driven_Exceptional_Client_Service" disabled maxlength="300" name="Driven_Exceptional_Client_Service" id="Driven_Exceptional_Client_Service" class="form-control">@Model.Driven_Exceptional_Client_Service</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-4 col-sm-4 col-xs-6">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Highest Performing Teams</label>
+                                            <textarea type="text" value="@Model.Highest_Performing_Teams" disabled maxlength="300" name="Highest_Performing_Teams" id="Highest_Performing_Teams" class="form-control">@Model.Highest_Performing_Teams</textarea>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-lg-6 col-md-4 col-sm-4 col-xs-6">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Examples of Living Our Values</label>
+                                            <textarea type="text" value="@Model.Examples_Of_Living_Our_Values" disabled maxlength="300" name="Examples_Of_Living_Our_Values" id="Examples_Of_Living_Our_Values" class="form-control">@Model.Examples_Of_Living_Our_Values</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-6 col-md-4 col-sm-4 col-xs-6">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Enhanced Quality and Effective Risk Management</label>
+                                            <textarea type="text" value="@Model.Enhanced_Quality_And_Effective_Risk_Management" disabled maxlength="300" name="Enhanced_Quality_And_Effective_Risk_Management" id="Enhanced_Quality_And_Effective_Risk_Management" class="form-control">@Model.Enhanced_Quality_And_Effective_Risk_Management</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                            @if ((role.Contains("Supervisor") || role.Contains("CompanyAdmin")))
+                            {
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int float-lb floating-lb">
+                                            <div class="form-ic-cmp">
+                                                <i class="notika-icon notika-"></i>
+                                            </div>
+                                            <div class="">
+                                                <label>Reviewer Comment</label>
+                                                <textarea type="text" @editable value="@Model.ReviewerComment" maxlength="300" name="ReviewerComment" id="ReviewerComment" class="form-control">@Model.ReviewerComment</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+
+                            @if (role.Contains("CompanyAdmin"))
+                            {
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="form-group ic-cmp-int float-lb floating-lb">
+                                            <div class="form-ic-cmp">
+                                                <i class="notika-icon notika-"></i>
+                                            </div>
+                                            <div class="">
+                                                <label>Final Rating Comment</label>
+                                                <textarea type="text" value="@Model.FinalRatingComment" maxlength="300" name="FinalRatingComment" id="FinalRatingComment" class="form-control">@Model.FinalRatingComment</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+
+
+
+                            <div class="row">
+
+                                @if (role.Contains("Employee") || role.Contains("Supervisor") || role.Contains("CompanyAdmin"))
+                                {
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <div class="form-group ic-cmp-int float-lb floating-lb">
+                                            <div class="form-ic-cmp">
+                                                <i class="notika-icon notika-"></i>
+                                            </div>
+                                            <div class="">
+                                                <label>Reviewee Rating</label>
+                                                @Html.DropDownList("revieweeRatingId", Model.RevieweeRatingDropDown, new { @class = "form-control", id = "revieweeRatingId", @disabled = "@editable" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+
+                                @if (role.Contains("Supervisor") || role.Contains("CompanyAdmin"))
+                                {
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <div class="form-group ic-cmp-int float-lb floating-lb">
+                                            <div class="form-ic-cmp">
+                                                <i class="notika-icon notika-"></i>
+                                            </div>
+                                            <div class="">
+                                                <label>Reviewer Rating</label>
+                                                @Html.DropDownList("reviewerRatingId", Model.ReviewerRatingDropDown, new { @class = "form-control", id = "reviewerRatingId", @editable = "" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                @if (role.Contains("CompanyAdmin"))
+                                {
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <div class="form-group ic-cmp-int float-lb floating-lb">
+                                            <div class="form-ic-cmp">
+                                                <i class="notika-icon notika-"></i>
+                                            </div>
+                                            <div class="">
+                                                <label>Final Rating</label>
+                                                @Html.DropDownList("finalRatingId", Model.FinalRatingDropDown, new { @class = "form-control", id = "finalRatingId" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" name="submitButton" class="btn btn-primary">Submit Review</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+

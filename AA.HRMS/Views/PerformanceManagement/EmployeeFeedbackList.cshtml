@@ -1,0 +1,231 @@
+﻿@using AA.HRMS.Interfaces.ValueTypes
+@model AA.HRMS.Interfaces.IEmployeeFeedbackView
+@{
+    ViewBag.Title = "Employee Feedback List";
+    var hasInfo = ((Model != null) && Model.feedbackList.Any());
+    var role = (String[])HttpContext.Current.Session[SessionKey.UserRoles];
+}
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                </div>
+                            </div>
+                        </div>
+                        @if (role.Contains("CompanyAdmin"))
+                        {
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                                <div class="breadcomb-report">
+                                    <a class="btn" href="/PerformanceManagement/Feedbacklist" data-placement="left" title="Back"><i class="notika-icon notika-back"></i></a>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                                <div class="breadcomb-report">
+                                    <a class="btn" href="/PerformanceManagement/MyFeedbacklist" data-placement="left" title="Back"><i class="notika-icon notika-back"></i></a>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@if (!string.IsNullOrEmpty(Model.ProcessingMessages))
+{
+    <div class="container">
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessages
+        </div>
+    </div>
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+
+    <div class="container">
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+        </div>
+    </div>
+}
+@if (hasInfo)
+{
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="table-responsive">
+                            <table id="data-table-basic" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Feedback On </th>
+                                        <th>Employee </th>
+                                        <th>Date Of Feedback</th>
+                                        <th>Year of Feedback</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var d in Model.feedbackList)
+                                    {
+                                    <tr>
+
+                                        <td>
+                                            @d.FeedbackOnEmployee
+                                        </td>
+                                        @if (d.employeeName == null)
+                                        {
+                                            <td>
+                                                Anonymous
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                @d.employeeName
+                                            </td>
+                                        }
+
+                                        <td>@d.DateOfFeedback</td>
+
+                                        <td>
+                                            @d.year
+                                        </td>
+
+                                        <td>
+                                            <a class="btn btn-sm btn-primary" data-toggle="tooltip" onclick="createModal('/PerformanceManagement/ViewEmployeeFeedback?employeeFeedbackId=@d.EmployeeFeedbackId')" data-placement="left" title="View Employee Feedback">View</a>
+                                        </td>
+
+                                    </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Feedback On </th>
+                                        <th>Employee </th>
+                                        <th>Date Of Feedback</th>
+                                        <th>Year of Feedback</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                }
+                                                else
+                                                {
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="alert alert-info alert-mg-b-0" role="alert">
+                                                                    <p>No Employee Feedback Exist</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                }
+
+
+
+<div class="modal fade" id="createModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayCreate">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayEdit">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayDelete">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var URL = "";
+
+    function createModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayCreate").html(data);
+            }
+        });
+
+        $("#createModal").modal();
+    }
+
+    function editModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayEdit").html(data);
+            }
+        });
+
+        $("#editModal").modal();
+
+    }
+
+    function deleteModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayDelete").html(data);
+            }
+        });
+
+        $("#deleteModal").modal();
+
+    }
+
+</script>

@@ -1,0 +1,119 @@
+﻿@model AA.HRMS.Interfaces.IDisciplineView
+
+@{
+    ViewBag.Title = "Edits Discipline";
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+@using (Html.BeginForm("EditDiscipline", "HR", FormMethod.Post, new { id = "editDeptForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+
+        <input id="disciplineId" name="disciplineId" type="hidden" value="@Model.DisciplineId" />
+        <input id="companyId" name="companyId" value="@Model.CompanyId" hidden />
+
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Employee</label>
+                <div class="">
+                    @Html.DropDownList("EmployeeId", Model.EmployeeDropDown, new { @class = "form-control", id = "EmployeeId" })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Query Status</label>
+                <div class="">
+                    @Html.DropDownList("queryStatusId", Model.QueryDropDown, new { @class = "form-control", id = "queryStatusId" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Action Taken</label>
+                <div class="">
+                    @Html.DropDownList("actionTakenId", Model.ActionTakenDropDown, new { @class = "form-control", id = "actionTakenId" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Offence Committed</label>
+                <div class="">
+                    <input id="offence" name="offence" class="form-control" type="text" maxlength="50" value="@Model.Offence" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Query Date</label>
+                <div class="">
+                    <input id="queryDate" name="queryDate" class="form-control" type="date" maxlength="50" value="@Model.QueryDate" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Investigator</label>
+                <div class="">
+                    <input id="investigator" name="investigator" class="form-control" type="text" maxlength="50" value="@Model.Investigator" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Query Initiator</label>
+                <div class="">
+                    <input id="queryInitiator" name="queryInitiator" class="form-control" type="text" maxlength="50" value="@Model.QueryInitiator" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Investigator Report</label>
+                <div class="">
+                    <textarea id="investigatorReport" name="investigatorReport" class="form-control" type="text" maxlength="50" value="@Model.InvestigatorReport">@Model.InvestigatorReport</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Response</label>
+                <div class="">
+                    <textarea id="response" name="response" class="form-control" type="text" maxlength="50" value="@Model.Response">@Model.Response</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Recommeded Sanction</label>
+                <div class="">
+                    <input id="recommendedSanction" name="recommendedSanction" class="form-control" type="text" maxlength="50" value="@Model.RecommendedSanction" />
+                </div>
+            </div>
+        </div>
+</div>
+
+
+        <div class="modal-footer">
+            <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Save changes</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+}

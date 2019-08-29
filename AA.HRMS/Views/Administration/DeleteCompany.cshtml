@@ -1,0 +1,35 @@
+﻿@model AA.HRMS.Interfaces.ICompanyRegistrationView
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+@Html.ValidationSummary()
+@Model.ProcessingMessage
+
+@using (Html.BeginForm("DeleteCompany", "administration", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="companyId" name="companyId" value="@Model.CompanyId" />
+
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Company Name</label>
+                <div class="nk-int-st">
+                    <label id="CompanyName" name="CompanyName" style="width: 250px;" type="text" maxlength="50">@Model.CompanyName</label>
+                </div>
+            </div>
+            </div>
+
+
+
+            <div class="modal-footer">
+                <button type="submit" name="submitButton" value="Submit" class="btn btn-danger">Delete Company</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+     }
+        

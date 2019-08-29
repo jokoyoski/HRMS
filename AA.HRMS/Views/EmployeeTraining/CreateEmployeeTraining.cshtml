@@ -1,0 +1,86 @@
+﻿@model AA.HRMS.Interfaces.IEmployeeTrainingView
+@{
+    ViewBag.Title = "Training Request";
+}
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-form"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@using (Html.BeginForm("CreateEmployeeTraining", "EmployeeTraining", FormMethod.Post, new { id = "CreateEmployeeTraining" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-element-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-element-list mg-t-30">
+                        <div class="cmp-tb-hd">
+                            <h2>Fill Form</h2>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-element-list">
+
+                                <input name="companyId" value="@Model.CompanyId" hidden />
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="nk-int-mk">
+                                        <label>Training</label>
+                                    </div>
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="nk-int-st">
+                                            @Html.DropDownList("trainingId", Model.TrainingDropDownList, new { @class = "form-control", id = "trainingId" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="nk-int-mk">
+                                        <label>Employee</label>
+                                    </div>
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="nk-int-st">
+                                            @Html.DropDownList("employeeId", Model.EmployeeDropDownList, new { @class = "form-control", id = "employeeId" })
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-example-int mg-t-15">
+                                    <button class="btn btn-primary notika-btn-primary" type="submit" name="submitButton">Apply</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+ </div>
+ }
+
+
+
+

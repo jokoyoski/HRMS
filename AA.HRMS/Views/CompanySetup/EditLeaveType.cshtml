@@ -1,0 +1,68 @@
+﻿@model AA.HRMS.Interfaces.ILeaveTypeModelView
+
+@{
+    ViewBag.Title = "Edit Leave Type";
+}
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+@Html.ValidationSummary()
+@Model.ProcessingMessage
+
+@using (Html.BeginForm("EditLeaveType", "CompanySetup", FormMethod.Post))
+{
+
+<div class="modal-body">
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" name="leaveTypeId" id="leaveTypeId" value="@Model.LeaveTypeID" />
+    <input type="hidden" name="companyId" id="companyId" value="@Model.CompanyID" />
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Leave Type Name</label>
+            <div class="">
+                <input id="leaveTypeName" name="leaveTypeName" type="text" class="form-control " , value="@Model.LeaveTypeName" />
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Description</label>
+            <div class="">
+                <textarea id="description" name="description" type="text" class="form-control " ,>@Model.Description</textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Duration (in Days, <span style="color:red;">Annual Leave is set at grade</span>)</label>
+            <div class="">
+                <input required id="duration" name="duration" type="number" class="form-control " , value="@Model.Duration" />
+            </div>
+        </div>
+    </div>
+
+
+</div>
+    
+
+
+
+    <div class="modal-footer">
+        <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Save Changes</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+
+
+}
+

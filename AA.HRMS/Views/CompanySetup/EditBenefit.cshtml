@@ -1,0 +1,117 @@
+﻿@model AA.HRMS.Interfaces.IBenefitModelView
+
+@{
+    ViewBag.Title = "AA HRMS - Benefit Edit";
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+     
+    @using (Html.BeginForm("EditBenefit", "CompanySetup", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" id="benefitId" name="benefitId" value="@Model.BenefitId" />
+
+
+        <div class="modal-body">
+
+            @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+            {
+
+                <div class="alert alert-info alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+                </div>
+            }
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+                </div>
+            }
+
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Company Name</label>
+                    <div class="nk-int-st">
+                        @Html.DropDownList("CompanyId", Model.CompanyDropDownList, new { @class = "form-control input-sm", id = "CompanyId" })
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Benefit Name</label>
+                    <div class="">
+                        <input id="BenefitName" name="BenefitName" type="text" class="form-control " , value="@Model.BenefitName" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Benefit Description</label>
+                    <div class="">
+                        <input id="BenefitDescription" name="BenefitDescription" type="text" class="form-control " , value="@Model.BenefitDescription" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Payment Period</label>
+                    <div class="nk-int-st">
+                        @Html.DropDownList("period", Model.PeriodCollection, new { @class = "form-control input-sm", id = "period" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Is Monitized</label>
+                    <div class="nk-int-st">
+                        @Html.DropDownList("IsMonetized", new List<SelectListItem>
+                                                             {
+                                                                new SelectListItem() {Text = "Yes", Value="True"},
+                                                                new SelectListItem() {Text = "No", Value="False"}
+                                                             }, "[Select If Percentage Salary]", new { @class = "form-control input-sm", id = "IsMonetized" })
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Taxable? :</label>
+                    <div class="nk-int-st">
+                        @Html.DropDownList("IsTaxable", new List<SelectListItem>
+                                                                 {
+                                                                    new SelectListItem() {Text = "Yes", Value="True"},
+                                                                    new SelectListItem() {Text = "No", Value="False"}
+                                                                 }, "[Taxable]", new { @class = "form-control input-sm", id = "IsTaxable" })
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+            <div class="modal-footer">
+                <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Modify</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+    
+
+}
+
+                

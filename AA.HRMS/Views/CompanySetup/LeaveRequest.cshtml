@@ -1,0 +1,86 @@
+﻿@model AA.HRMS.Interfaces.ILeaveRequestViewModel
+@{
+    ViewBag.Title = "Leave Request";
+}
+
+<h2>LeaveRequest</h2>
+
+@using (Html.BeginForm("LeaveRequest", "Benefits", FormMethod.Post, new { id = "editForm", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+        @Html.ValidationSummary()
+        @Model.ProcessingMessage
+
+
+        <div class="modal-body">
+
+                        <input hidden id="EmployeeID" name="EmployeeID" type="text" value="@Model.EmployeeID" />
+                    
+
+
+                <div class="form-example-int">
+                    <div class="form-group">
+                        <label>Select desired Leave Type</label>
+                        <div class="">
+
+                                @Html.DropDownList("LeaveTypeID", Model.LeaveTypeDropDown, new { @class = "form -control", id = "LeaveTypeID" })
+                            
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="form-example-int">
+                        <div class="form-group">
+                            <label>Enter date leave starts</label>
+                            <div class="">
+                                <input class="form-control" id="DateLeaveStart" name="DateLeaveStart" type="text" value="@Model.DateLeaveStart" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-example-int">
+                        <div class="form-group">
+                            <label>Enter date leave ends</label>
+                            <div class="">
+                                <input class="form-control" id="DateLeaveEnds" name="DateLeaveEnds" type="text" value="@Model.DateLeaveEnds" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-example-int">
+                        <div class="form-group">
+                            <label>Enter your comments</label>
+                            <div class="">
+                                <input class="form-control" id="Comment" name="Comment" type="text" value="@Model.Comment" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-example-int">
+                        <div class="form-group">
+                            <label>Leave Status ID</label>
+                            <div class="">
+                                <input class="form-control" id="LeaveStatusID" name="LeaveStatusID" type="text" value="1" />
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="form-example-int">
+                    <div class="form-group">
+                        <label>Enter your comments:</label>
+                        <div class="">
+                            <input id="Comment" type="text" name="Comment" class="form-control" value="@Model.Comment" />
+                        </div>
+                    </div>
+                </div>
+
+    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Save changes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+
+  }
+
+

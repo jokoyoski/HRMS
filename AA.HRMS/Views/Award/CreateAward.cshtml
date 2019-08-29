@@ -1,0 +1,78 @@
+﻿@model AA.HRMS.Interfaces.IAwardView
+@{
+    ViewBag.Title = "AA HRMS - Award";
+}
+
+<div class="jumbotron">
+    <div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; width: 100%;">
+        <div class="validation-summary-errors">
+            @Html.ValidationSummary()
+            @Model.ProcessingMessage
+        </div>
+    </div>
+    @using (Html.BeginForm("CreateAward", "Award", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <input type="hidden" name="AwardId" value="@Model.AwardId" />
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span> User Id:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <input id="UserId" name="UserId" style="width: 250px;" type="number" maxlength="50" value="@Model.UserId" />
+            </div>
+        </div>
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span>Award Name
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <input id="AwardName" name="AwardName" style="width: 250px;" maxlength="50" value="@Model.AwardName" />
+            </div>
+        </div>
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span>Award Year:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <input id="AwardYear" name="AwardYear" style="width: 250px;" type="date" maxlength="50" value="@Model.AwardYear" />
+            </div>
+        </div>
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span>Date Created:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <input id="DateCreated" name="DateCreated" style="width: 250px;" type="date" maxlength="50" value="@Model.DateCreated" />
+            </div>
+        </div>
+
+        <div class="columns" style="width: 100%; padding-top: 15px; padding-bottom: 5px;">
+
+            <div class="modal-footer">
+                <button type="button" name="submitButton" class="btn btn-default" data-dismiss="modal">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>            <div class="column" style="font-size: 9px; font-weight: bold; font-style: italic; padding-left: 5px; padding-top: 2px;">
+                You must enter all information above correctly to enable submission.
+            </div>
+        </div>
+    }
+</div>
+
+
+
+@section JavaScriptsExecution
+{
+
+}
+
+@section Stylesheets{
+    <link href="/Content/themes/base/all.css" rel="stylesheet" type="text/css" />
+}
+

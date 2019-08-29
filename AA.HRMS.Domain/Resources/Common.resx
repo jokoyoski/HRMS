@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="SelectAboutUsSourceText" xml:space="preserve">
+    <value>[Select About Us Source]</value>
+  </data>
+  <data name="SelectCompanyText" xml:space="preserve">
+    <value>[Select Company]</value>
+  </data>
+  <data name="SelectDepartmentText" xml:space="preserve">
+    <value>[Select Department]</value>
+  </data>
+  <data name="SelectExperience" xml:space="preserve">
+    <value>[Select Experience]</value>
+  </data>
+  <data name="SelectGenderText" xml:space="preserve">
+    <value>[Select Gender]</value>
+  </data>
+  <data name="SelectGradeText" xml:space="preserve">
+    <value>[Select Grade]</value>
+  </data>
+  <data name="SelectIndustry" xml:space="preserve">
+    <value>[Select Industry]</value>
+  </data>
+  <data name="SelectJobTitleText" xml:space="preserve">
+    <value>[Select JobTitle]</value>
+  </data>
+  <data name="SelectMaritalStatusText" xml:space="preserve">
+    <value>[Select MaritalStatus]</value>
+  </data>
+  <data name="SelectLeaveTypeText" xml:space="preserve">
+    <value>[Select Leave Type]</value>
+  </data>
+  <data name="SelectParentCompanyText" xml:space="preserve">
+    <value>[Select Parent Company]</value>
+  </data>
+  <data name="SelectReligionText" xml:space="preserve">
+    <value>[Select Religion]</value>
+  </data>
+  <data name="SelectMonth" xml:space="preserve">
+    <value>[Select Month]</value>
+  </data>
+  <data name="SelectYear" xml:space="preserve">
+    <value>[Select Year]</value>
+  </data>
+  <data name="SelectLeaveStatusText" xml:space="preserve">
+    <value>[Select Leave Status Text]</value>
+  </data>
+  <data name="SelectAppRoleText" xml:space="preserve">
+    <value>[Select Role]</value>
+  </data>
+  <data name="SelectAppraisalActionText" xml:space="preserve">
+    <value>[Select Appraisal Action]</value>
+  </data>
+  <data name="SelectAppraisalRatingText" xml:space="preserve">
+    <value>[Select Appraisal Rating]</value>
+  </data>
+  <data name="SelectAppraiserText" xml:space="preserve">
+    <value>[Select Appraiser]</value>
+  </data>
+  <data name="SelectEmployeeText" xml:space="preserve">
+    <value>[Select Employee]</value>
+  </data>
+  <data name="SelectTypeOfExitText" xml:space="preserve">
+    <value>[Select Type Of Exit]</value>
+  </data>
+  <data name="SelectLevelText" xml:space="preserve">
+    <value>[Select Level]</value>
+  </data>
+  <data name="SelectTaxText" xml:space="preserve">
+    <value>[Select Tax]</value>
+  </data>
+  <data name="SelectLoanText" xml:space="preserve">
+    <value>[Select Loan]</value>
+  </data>
+  <data name="SelectTrainingText" xml:space="preserve">
+    <value>[Select Training]</value>
+  </data>
+  <data name="SelectTrainingStatusText" xml:space="preserve">
+    <value>[Select Status]</value>
+  </data>
+  <data name="SelectCurrency" xml:space="preserve">
+    <value>[Select Currency]</value>
+  </data>
+  <data name="SelectFrequencyOfDeliveryText" xml:space="preserve">
+    <value>[Select Frequency of Delivery]</value>
+  </data>
+  <data name="SelectedMethodOfDelivery" xml:space="preserve">
+    <value>[Select Method of Delivery]</value>
+  </data>
+  <data name="selectedTrainingCalendarText" xml:space="preserve">
+    <value>[Select Training Calendar]</value>
+  </data>
+  <data name="SelectTrainingEvaluationText" xml:space="preserve">
+    <value>[Select Training Rating]</value>
+  </data>
+  <data name="SelectedActionTaken" xml:space="preserve">
+    <value>[Select ActionTaken]</value>
+  </data>
+  <data name="SelectedQuery" xml:space="preserve">
+    <value>[Select Query Status]</value>
+  </data>
+  <data name="SelectCountry" xml:space="preserve">
+    <value>[Select Country]</value>
+  </data>
+  <data name="SelectedAppraisalPeriod" xml:space="preserve">
+    <value>[Select Period]</value>
+  </data>
+  <data name="SelectState" xml:space="preserve">
+    <value>[Select State]</value>
+  </data>
+  <data name="SelectAppraisalText" xml:space="preserve">
+    <value>[Select Appraisal]</value>
+  </data>
+  <data name="SelectRewards" xml:space="preserve">
+    <value>[Select Reward]</value>
+  </data>
+  <data name="SelectDeduction" xml:space="preserve">
+    <value>[Select Deduction]</value>
+  </data>
+  <data name="SelectBenefit" xml:space="preserve">
+    <value>[Select Benefit]</value>
+  </data>
+  <data name="SelectEmploymentTypeText" xml:space="preserve">
+    <value>[Select Employment Type]</value>
+  </data>
+  <data name="SelectPayScale" xml:space="preserve">
+    <value>[Select Grade Level]</value>
+  </data>
+</root>

@@ -1,0 +1,133 @@
+﻿@model AA.HRMS.Interfaces.ILoanView
+@{
+    ViewBag.Title = "AA HRMS - Create Loan";
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+    @using (Html.BeginForm("CreateLoan", "CompanySetup", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <input name="companyId" value="@Model.CompanyId" hidden />
+
+        <div class="modal-body">
+            @Html.ValidationSummary()
+            @Model.ProcessingMessage
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Company</label>
+                    <div class="nk-int-st">
+                        @Html.DropDownList("companyId", Model.CompanyDropDown, new { @class = "form-control input-sm", id = "companyId" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Loan Name</label>
+                    <div class="">
+                        <input required id="LoanName" name="LoanName" class="form-control ", type="text" value="@Model.LoanName" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Loan Amount</label>
+                    <div class="">
+                        <input required id="LoanAmount" name="LoanAmount" class="form-control ", type="number" step="0.0001" value="@Model.LoanAmount" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Interest Rate</label>
+                    <div class="">
+                        <input required id="InterestRate" name="InterestRate" class="form-control ", type="number" step="0.0001" value="@Model.InterestRate" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Deduction Rate</label>
+
+                    <div class="">
+                        <input required id="DeductionRate" name="DeductionRate" class="form-control ", type="number" step="0.0001" value="@Model.DeductionRate" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Duration (Year)</label>
+
+                    <div class="">
+                        <input required id="duration" name="duration" class="form-control ", type="number" step="0.0001" value="@Model.Duration" />
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="columns" style="width: 100%; padding-top: 15px; padding-bottom: 5px;">
+                <div class="column" style="margin-left: 195px;">
+                    <input class="blueButton" id="btnSubmit" name="submitButton" disabled style="width: 80px;" type="submit" value="Add" />
+                </div>
+                <div class="column" style="margin-left: 15px;">
+                    <input id="btnCancel" class="blueButton" name="submitButton" style="width: 80px;"
+                           type="submit" value="Cancel" />
+                </div>
+                <div class="column" style="font-size: 9px; font-weight: bold; font-style: italic; padding-left: 5px; padding-top: 2px;">
+                    You must enter all information above correctly to enable submission.
+                </div>
+            </div>*@
+            </div>
+
+        <div class="modal-footer">
+            <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Create</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+    }
+
+
+          <!-- Input Mask JS
+============================================ -->
+<script src="js/jasny-bootstrap.min.js"></script>
+
+<!-- icheck JS
+    ============================================ -->
+<script src="js/icheck/icheck.min.js"></script>
+<script src="js/icheck/icheck-active.js"></script>
+<!-- rangle-slider JS
+============================================ -->
+<script src="js/rangle-slider/jquery-ui-1.10.4.custom.min.js"></script>
+<script src="js/rangle-slider/jquery-ui-touch-punch.min.js"></script>
+<script src="js/rangle-slider/rangle-active.js"></script>
+<!-- datapicker JS
+============================================ -->
+<script src="js/datapicker/bootstrap-datepicker.js"></script>
+<script src="js/datapicker/datepicker-active.js"></script>
+<!-- bootstrap select JS
+============================================ -->
+<script src="js/bootstrap-select/bootstrap-select.js"></script>
+<!--  color-picker JS
+============================================ -->
+<script src="js/color-picker/farbtastic.min.js"></script>
+<script src="js/color-picker/color-picker.js"></script>
+<!--  notification JS
+============================================ -->
+<script src="js/notification/bootstrap-growl.min.js"></script>
+<script src="js/notification/notification-active.js"></script>
+<!--  summernote JS
+============================================ -->
+<script src="js/summernote/summernote-updated.min.js"></script>
+<script src="js/summernote/summernote-active.js"></script>
+<!-- dropzone JS
+============================================ -->
+<script src="js/dropzone/dropzone.js"></script>
+
+

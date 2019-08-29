@@ -1,0 +1,60 @@
+﻿@model AA.HRMS.Interfaces.IEmployeeOnBoardView
+
+@{
+    ViewBag.Title = "Delete Employee";
+}
+
+@section PageTitle{
+    Delete Employee
+}
+
+<div class="jumbotron">
+    <div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; width: 100%;">
+        <div class="validation-summary-errors">
+            @Html.ValidationSummary()
+            @Model.ProcessingMessage
+        </div>
+    </div>
+    @using (Html.BeginForm("DeleteEmployee", "Employee", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" name="employeeId" id="employeeId" value="@Model.EmployeeID" />
+
+        <input type="hidden" name="companyId" id="companyId" value="@Model.CompanyID" />
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                Last Name:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <label id="LastName" name="LastName" style="width: 250px;" type="text" maxlength="50">@Model.LastName</label>
+            </div>
+        </div>
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                First Name:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <label id="FirstName" name="FirstName" style="width: 250px;" type="text" maxlength="50">@Model.FirstName</label>
+            </div>
+        </div>
+        <div class="columns" style="width: 100%; padding-top: 15px; padding-bottom: 5px;">
+
+            <div class="modal-footer">
+                <button type="button" name="submitButton" class="btn btn-default" data-dismiss="modal">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("span.ui-dialog-title").text('Delete Employee ' + $('#lastName').val());
+
+        $('#btnCancel').click(function () {
+            window.location.href = '/Employee/EmployeeList?CompanyId=' + @Model.CompanyID ;
+            return false;
+        });
+    });
+</script>

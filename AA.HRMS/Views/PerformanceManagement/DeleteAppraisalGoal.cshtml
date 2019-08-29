@@ -1,0 +1,75 @@
+﻿@model AA.HRMS.Interfaces.IAppraisalGoalView
+@{
+    ViewBag.Title = "Delete Appraisal Goal";
+}
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+
+@using (Html.BeginForm("DeleteAppraisalGoal", "PerformanceManagement", FormMethod.Post, new { id = "addDeptForm" }))
+{
+    @Html.AntiForgeryToken()
+
+
+<div class="modal-body">
+
+    @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+    {
+
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+        </div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+        </div>
+    }
+
+    <input hidden name="appraisalGoalId" value="@Model.AppraisalGoalId" />
+    <input hidden name="employeeAppraisalId" value="@Model.EmployeeAppraisalId" />
+    <input hidden name="url" value="@Model.URL" />
+
+    <div class="row">
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Appraisal Goal</label>
+                <textarea disabled type="text" value="@Model.Goal" maxlength="300" name="goal" id="goal" class="form-control">@Model.Goal</textarea>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>What Will I Do?</label>
+                <textarea disabled type="text" value="@Model.Measurements" maxlength="300" name="measurements" id="measurements" class="form-control">@Model.Measurements</textarea>
+            </div>
+
+        </div>
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>What Outcome Will It Have?</label>
+                <textarea disabled type="text" value="@Model.Outcome" maxlength="300" name="outcome" id="outcome" class="form-control">@Model.Outcome</textarea>
+            </div>
+        </div>
+    </div>
+
+</div>
+    <div class="modal-footer">
+        <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Delete</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+
+    }
+

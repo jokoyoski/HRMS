@@ -1,0 +1,81 @@
+﻿@model AA.HRMS.Interfaces.IGradeView
+
+@{
+    ViewBag.Title = "AA HRMS - Employees Grade Registration";
+}
+
+@section PageTitle{
+    Add Grade
+}
+
+
+<a href="/Administration/GradeList?companyId=@Model.CompanyId"> All Grades</a>
+
+<div class="jumbotron">
+    <div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; width: 100%;">
+        <div class="validation-summary-errors">
+            @Html.ValidationSummary()
+            @Model.ProcessingMessage
+        </div>
+    </div>
+    @using (Html.BeginForm("AddGrade", "Administration", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <input type="hidden" id="companyId" name="CompanyId" value="@Model.CompanyId"/>
+
+        <div class="columns" style="width: 100%; padding-top: 5px;">
+            <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                <span class="required">*</span>Grade Name:
+            </div>
+            <div class="data column" style="overflow: hidden;">
+                <input id="gradeName" name="gradeName" style="width: 250px;" type="text" maxlength="50" value="@Model.GradeName" />
+            </div>
+            @Html.ValidationMessageFor(model => model.GradeName, "", new { @class = "text-danger" })
+        </div>
+
+
+        <div class="columns" style="width: 100%; padding-top: 15px; padding-bottom: 5px;">
+            <div class="modal-footer">
+                <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Submit</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+            <div class="column" style="font-size: 9px; font-weight: bold; font-style: italic; padding-left: 5px; padding-top: 2px;">
+                You must enter all information above correctly to enable submission.
+            </div>
+        </div>
+    }
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("span.ui-dialog-title").text('Add Grade');
+
+        $('#btnCancel').click(function () {
+            window.location.href = '/Administration/CompanyList';
+            return false;
+        });
+
+        $('#gradeName').change(function () {
+            $('#companyId').trigger("propertychange");
+        });
+
+        $('#companyId').bind('input propertychange', function () {
+            $('#btnSubmit').prop("class", "grayButton");
+            $('#btnSubmit').prop("disabled", true);
+
+            var gradeNameOkay = $('#gradeName').val().length > 0;
+
+            if ((gradeNameOkay)) {
+                $('#btnSubmit').prop("class", "blueButton");
+                $('#btnSubmit').prop("disabled", false);
+            }
+        });
+
+        $('#companyId').trigger("propertychange");
+
+    });
+</script>

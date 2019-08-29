@@ -1,0 +1,414 @@
+﻿@using PagedList.Mvc;
+@model AA.HRMS.Interfaces.IEmployeeOnBoardListView
+
+@{
+    ViewBag.Title = "Report";
+
+    var hasInfo = ((Model != null) && (Model.EmployeeList != null) && Model.EmployeeList.Any());
+
+    var employeeCollection = Model.EmployeeList.ToList();
+}
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                    <p style="color:red;">Filter one Parameter at a time (Except parameters with ranges)</p>
+                                </div>
+                            </div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.URL))
+                        {
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                                <div class="breadcomb-report">
+                                    <a data-toggle="tooltip" data-placement="left" title="Employee List" class="btn" href="/Employee/EmployeeList"><i class="notika-icon notika-back"></i></a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+        {
+
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+            </div>
+        }
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+            </div>
+        }
+    </div>
+</div>
+<!-- Breadcomb area End-->
+
+
+<div class="form-element-area">
+    <div class="container">
+        <div class="row">
+
+            @using (Html.BeginForm("GenerateReport", "Employee"))
+            {
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-element-list mg-t-30">
+                        <div id="report" class="cmp-tb-hd">
+                            <div class="inbox-btn-st-ls btn-toolbar">
+                                <div class="btn-group ib-btn-gp active-hook nk-email-inbox">
+                                    <a href="~/Employee/GenerateReport" class="btn btn-primary notika-btn-primary btn-sm"><i class="notika-icon notika-refresh"></i> Refresh</a>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Last Name</label>
+                                            <input type="text" id="lastName" name="lastName" value="@Model.SelectedLastName" class="form-control" />
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>First Name</label>
+                                            <input type="text" id="firstName" name="firstName" value="@Model.SelectedFirstName" class="form-control" />
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Gender</label>
+                                            @Html.DropDownList("genderId", Model.GenderDropDown, new { @class = "form-control", id = "genderId" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Employee Type</label>
+                                            @Html.DropDownList("employeeTypeId", Model.EmploymentTypeDropDown, new { @class = "form-control", id = "employeeTypeId" })
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Nationality</label>
+                                            @Html.DropDownList("countryId", Model.CountryDropDown, new { @class = "form-control", id = "countryId" })
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>State Original</label>
+                                            @Html.DropDownList("stateOfOriginId", Model.StateDropDown, new { @class = "form-control", id = "stateOfOriginId" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Date Exit From</label>
+                                            <input type="date" id="dateExitedFrom" name="dateExitedFrom" value="@DisplayHelper.DisplayDate(Model.SelectedDateExitFrom)" class="form-control" />
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Date Exit To</label>
+                                            <input type="date" id="dateExitTo" name="dateExitTo" value="@DisplayHelper.DisplayDate(Model.SelectedDateExitTo)" class="form-control" />
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Date Employed From</label>
+                                            <input type="date" id="dateEmployedFrom" name="dateEmployedFrom" value="@DisplayHelper.DisplayDate(Model.SelectedDateEmployedFrom)" class="form-control" />
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Date Employed To</label>
+                                            <input type="date" id="dateEmployedTo" name="dateEmployedTo" value="@DisplayHelper.DisplayDate(Model.SelectedDateEmployedTo)" class="form-control" />
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Date Birthday From</label>
+                                            <input type="date" id="dateOfBirthFrom" name="dateOfBirthFrom" value="@DisplayHelper.DisplayDate(Model.SelectedDateOfBirthFrom)" class="form-control" />
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Date Birthday To</label>
+                                            <input type="date" id="dateOfBirthTo" name="dateOfBirthTo" value="@DisplayHelper.DisplayDate(Model.SelectedDateOfBirthTo)" class="form-control" />
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group ic-cmp-int float-lb floating-lb">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-"></i>
+                                        </div>
+                                        <div class="">
+                                            <label>Age</label>
+                                            <input type="number" id="age" name="age" value="@Model.Age" class="form-control" />
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div>
+                                @if (hasInfo && (!string.IsNullOrEmpty(Model.SelectedLastName) || !string.IsNullOrEmpty(Model.SelectedFirstName) || Model.SelectedGenderId > 0 || Model.SelectedCountryId > 0
+|| Model.SelectedLocationStateId > 0 || Model.SelectedEmploymentTypeId > 0 || Model.SelectedDateOfBirthFrom != null || Model.SelectedDateOfBirthTo != null
+|| Model.SelectedDateExitFrom != null || Model.SelectedDateExitTo != null))
+                                {
+                                         
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="normal-table-list mg-t-30">
+                                                <div class="bsc-tbl-st">
+                                                    <table id="example" class="display nowrap" style="width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Name</th>
+                                                                <th>Department</th>
+                                                                <th>Level</th>
+                                                                <th>Grade</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @{ 
+                                                                //string[] lastname = new string [Model.EmployeeList.Count];
+
+                                                                //string[] firstname = new string [Model.EmployeeList.Count];
+
+                                                                //string[] department = new string [Model.EmployeeList.Count];
+                                                                //string[] levelname = new string [Model.EmployeeList.Count];
+                                                                //string[] gradename = new string [Model.EmployeeList.Count];
+                                                                //int count = 0;
+
+                                                                foreach (var item in Model.EmployeeList)
+                                                                {
+                                                                    //lastname[count] = @item.LastName;
+                                                                    //firstname[count] = @item.FirstName;
+                                                                    //department[count] = @item.Department;
+                                                                    //levelname[count] = @item.LevelName;
+                                                                    //gradename[count] = @item.GradeName;
+                                                                    //count = count + 1;
+                                                        <tr>--
+                                                            <td>@item.LastName @item.FirstName</td>
+                                                            <td>@item.Department</td>
+                                                            <td>@item.LevelName</td>
+                                                            <td>@item.GradeName</td>
+                                                            <td></td>
+                                                        </tr>
+                                                                    }
+                                                                }
+
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th>Name</th>
+                                                                <th>Department</th>
+                                                                <th>Level</th>
+                                                                <th>Grade</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="alert alert-info"><span>No information exists based on your search criteria.</span></div>
+                                }
+                            </div>
+
+
+
+                            <div class="container row">
+                                <div class="form-inline">
+                                    <div class="form-group ml-3">
+                                        <div class="form-example-int mg-t-15">
+                                            <button id="btnSubmit" name="btnSubmit" type="submit" class="btn btn-primary notika-btn-primary pull-right">Generate Report</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+
+            @if (hasInfo && (!string.IsNullOrEmpty(Model.SelectedLastName) || !string.IsNullOrEmpty(Model.SelectedFirstName) || Model.SelectedGenderId > 0 || Model.SelectedCountryId > 0
+|| Model.SelectedLocationStateId > 0 || Model.SelectedEmploymentTypeId > 0 || Model.SelectedDateOfBirthFrom != null || Model.SelectedDateOfBirthTo != null
+|| Model.SelectedDateExitFrom != null || Model.SelectedDateExitTo != null))
+            {
+                using (Html.BeginForm("Excel", "EmployeeExcel"))
+                {
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-element-list mg-t-30">
+                            <div class="cmp-tb-hd">
+
+
+
+                                @{int i = 0; }
+
+                                @foreach (var item in Model.EmployeeList)
+                                {
+
+                                <input name="employeeCollection[@i].LastName" hidden value="@item.LastName" />
+                                <input name="employeeCollection[@i].FirstName" hidden value="@item.FirstName" />
+                                <input name="employeeCollection[@i].Department" hidden value="@item.Department" />
+                                <input name="employeeCollection[@i].LevelName" hidden value="@item.LevelName" />
+                                <input name="employeeCollection[@i].GradeName" hidden value="@item.GradeName" />
+                                <input name="employeeCollection[@i].Email" hidden value="@item.Email" />
+                                <input name="employeeCollection[@i].Gender" hidden value="@item.Gender" />
+
+                                i++;
+
+                                }
+
+                                <button class="btn btn-sm btn-default" type="submit" onclick="">Download as Excel</button>
+                               
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            </div>
+    </div>
+</div>
+
+@section JavaScriptsExecution{
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example').DataTable({
+             
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
+</script>
+
+    }
+

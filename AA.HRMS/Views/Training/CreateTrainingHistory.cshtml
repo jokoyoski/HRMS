@@ -1,0 +1,109 @@
+﻿
+@model AA.HRMS.Interfaces.ITrainingHistoryViewModel
+
+
+@{
+    ViewBag.Title = "AA HRMS - Add New TrainingHistory";
+}
+
+            <div class="modal-header">
+                <h3>@ViewBag.Title</h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+     
+
+            @using (Html.BeginForm("CreateTrainingHistory", "Training", FormMethod.Post, new { id = "AddTrainingHistoryForm" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model =>model.TrainingHistoryId)
+
+                <div class="modal-body">
+                    @Html.ValidationSummary()
+                    @Model.processingmessage
+                    
+                        <div class="form-example-int">
+                            <div class="form-group">
+                                <label>Training Name</label>
+                                <div class="nk-int-st">
+                                    @Html.DropDownList("TrainingId", Model.TrainingDropDownList, new { @class = "form-control input-sm", id = "TrainingId" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-example-int">
+                            <div class="form-group">
+                                <label>Vendor</label>
+                                <div class="nk-int-st">
+                                    @Html.DropDownList("TrainingVendorId", Model.TrainingVendorDropList, new { @class = "form-control input-sm", id = "TrainingVendorId" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="userId" name="userId" value="@Model.UserId" />
+
+
+                        <div class="form-example-int">
+                            <div class="form-group">
+                                <label>Training certificate</label>
+                                <div class="nk-int-st">
+                                    @Html.DropDownList("CertificationId", Model.CertificateDropDownList, new { @class = "form-control input-sm", id = "CertificationId" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-example-int">
+                            <div class="form-group">
+                                <label>Select year</label>
+                                <div class="nk-int-st">
+                                    <input type="date" class="form-control input-sm" name="Year" value="@Model.Year" id="Year" />
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="modal-footer">
+                            <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Save changes</button>
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    
+
+                    }
+
+                    <!-- Input Mask JS
+                        ============================================ -->
+                    <script src="js/jasny-bootstrap.min.js"></script>
+
+                    <!-- icheck JS
+                        ============================================ -->
+                    <script src="js/icheck/icheck.min.js"></script>
+                    <script src="js/icheck/icheck-active.js"></script>
+                    <!-- rangle-slider JS
+                    ============================================ -->
+                    <script src="js/rangle-slider/jquery-ui-1.10.4.custom.min.js"></script>
+                    <script src="js/rangle-slider/jquery-ui-touch-punch.min.js"></script>
+                    <script src="js/rangle-slider/rangle-active.js"></script>
+                    <!-- datapicker JS
+                    ============================================ -->
+                    <script src="js/datapicker/bootstrap-datepicker.js"></script>
+                    <script src="js/datapicker/datepicker-active.js"></script>
+                    <!-- bootstrap select JS
+                    ============================================ -->
+                    <script src="js/bootstrap-select/bootstrap-select.js"></script>
+                    <!--  color-picker JS
+                    ============================================ -->
+                    <script src="js/color-picker/farbtastic.min.js"></script>
+                    <script src="js/color-picker/color-picker.js"></script>
+                    <!--  notification JS
+                    ============================================ -->
+                    <script src="js/notification/bootstrap-growl.min.js"></script>
+                    <script src="js/notification/notification-active.js"></script>
+                    <!--  summernote JS
+                    ============================================ -->
+                    <script src="js/summernote/summernote-updated.min.js"></script>
+                    <script src="js/summernote/summernote-active.js"></script>
+                    <!-- dropzone JS
+                    ============================================ -->
+                    <script src="js/dropzone/dropzone.js"></script>

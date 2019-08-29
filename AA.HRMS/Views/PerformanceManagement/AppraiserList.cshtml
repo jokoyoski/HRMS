@@ -1,0 +1,32 @@
+﻿@model IList<AA.HRMS.Interfaces.IAppraiser>
+@{
+    ViewBag.Title = "Appraiser List";
+}
+
+<h2>Appraiser List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateAppraiser")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            <strong>Appraiser Name</strong>
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppraiserName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditAppraiser", new { id = item.AppraiserId }) |
+                @Html.ActionLink("Delete", "DeleteAppraiser", new { id = item.AppraiserId })
+            </td>
+        </tr>
+    }
+
+</table>

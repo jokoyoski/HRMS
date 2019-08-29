@@ -1,0 +1,122 @@
+﻿@model AA.HRMS.Interfaces.IEmployeeExitListView
+
+@{
+    ViewBag.Title = "Employee Exit List";
+    var hasInfo = ((Model != null) && (Model.employeeExitCollection != null) && Model.employeeExitCollection.Any());
+}
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+{
+    <div>
+        <div class="container">
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+            </div>
+
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("EmployeeExitList", "EmployeeExitModel", FormMethod.Post, new
+{
+    id = "filterForm"
+}))
+{
+    @Html.AntiForgeryToken()
+
+
+}
+@if (hasInfo)
+{
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="table-responsive">
+                            <table id="data-table-basic" class="table table-striped">
+
+                                <thead>
+                                    <tr>
+                                        <th>Company Name</th>
+                                        <th>Employee Name</th>
+                                        <th>Interviewer</th>
+                                        <th>Reason</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var d in Model.employeeExitCollection)
+                                    {
+                                        <tr style="width: 100%;">
+                                            <td>
+                                                @d.CompanyName
+                                            </td>
+                                            <td>
+                                                @d.EmployeeName
+                                            </td>
+                                            <td>
+                                                @d.Interviewer
+                                            </td>
+                                            <td>
+                                                @d.Reason
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Company Name</th>
+                                        <th>Employee Name</th>
+                                        <th>Interviewer</th>
+                                        <th>Reason</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-info alert-mg-b-0" role="alert">
+                    <p>No Employee Exit List</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+

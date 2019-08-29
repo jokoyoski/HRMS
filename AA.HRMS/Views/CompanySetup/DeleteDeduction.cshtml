@@ -1,0 +1,55 @@
+﻿@model AA.HRMS.Interfaces.IDeductionViewModel
+@{
+    ViewBag.Title = "Delete Deduction";
+}
+
+@Html.ValidationSummary()
+@Model.ProcessingMessage
+
+
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+@Html.ValidationSummary()
+@Model.ProcessingMessage
+
+
+@using (Html.BeginForm("DeleteDeduction", "CompanySetup", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" id="deductionId" name="deductionId" value="@Model.DeductionId" />
+    <input type="hidden" id="companyId" name="companyId" value="@Model.CompanyId" />
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Deduction Name</label>
+            <div class="">
+                <input id="deductionName" disabled name="deductionName" type="text" class="form-control ", value="@Model.DeductionName" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Deduction Amount</label>
+            <div class="">
+                <input id="DeductionAmount" disabled name="DeductionAmount" type="number" maxlength="50" class="form-control ", value="@Model.DeductionAmount" />
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal-footer">
+        <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Delete</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+
+
+}

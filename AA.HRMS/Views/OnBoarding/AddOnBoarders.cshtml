@@ -1,0 +1,374 @@
+﻿@model AA.HRMS.Interfaces.IOnBoardingView
+
+@{
+    ViewBag.Title = "AA HRMS - Add OnBoarder";
+}
+@section PageTitle{
+    Create Employee
+}
+    <div>
+        <div class="columns" style="font-size: 12px; margin-left: 15px; margin-top: 15px; width: 100%;">
+            <div class="validation-summary-errors">
+                @Html.ValidationSummary()
+                @Model.ProcessingMessage
+            </div>
+        </div>
+
+        @using (Html.BeginForm("AddOnBoarders", "OnBoarding", FormMethod.Post, new { id = "addOnboarderForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span>First Name:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+                    <input id="firstName" name="firstName" style="width: 250px;" type="text" maxlength="50" value="@Model.FirstName" />
+                </div>
+            </div>
+
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span>Last Name:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+                    <input id="lastName" name="lastName" style="width: 250px;" type="text" maxlength="50" value="@Model.LastName" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span>Middle Name:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="middleName" name="middleName" style="width: 250px;" type="text" maxlength="50" value="@Model.MiddleName" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span>MaidenName:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="maidenName" name="maidenName" style="width: 250px;" type="text" maxlength="50" value="@Model.MaidenName" />
+                </div>
+            </div>
+
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    Gender:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+                    @Html.DropDownList("genderId", Model.GenderDropDownList, new { style = "width:204px;height:20px;", id = "genderId" })
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    Marital Status:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+                    @Html.DropDownList("maritalStatusId", Model.MaritalStatusDropDownList, new { style = "width:204px;height:20px;", id = "maritalStatusId" })
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Nationality :
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="nationality" name="nationality" style="width: 250px;" type="text" maxlength="50" value="@Model.Nationality" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> StaffNumber :
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="staffNumber" name="staffNumber" style="width: 250px;" type="text" maxlength="50" value="@Model.StaffNumber" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Email:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="email" name="email" style="width: 250px;" type="text" maxlength="50" value="@Model.Email" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> MobileNumber:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="mobileNumber" name="mobileNumber" style="width: 250px;" type="text" maxlength="50" value="@Model.MobileNumber" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Permanent Address:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="permanentAddress" name="permanentAddress" style="width: 250px;" type="text" maxlength="50" value="@Model.PermanentAddress" />
+                </div>
+            </div>
+
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Permanent Address City:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="permanentAddressCity" name="permanentAddressCity" style="width: 250px;" type="text" maxlength="50" value="@Model.PermanentAddressCity" />
+                </div>
+            </div>
+
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Permanent Address State:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="permanentAddressState" name="permanentAddressState" style="width: 250px;" type="text" maxlength="50" value="@Model.PermanentAddressState" />
+                </div>
+            </div>
+
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Home Address:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="homeAddress" name="homeAddress" style="width: 250px;" type="text" maxlength="50" value="@Model.HomeAddress" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Home Address City:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="homeAddressCity" name="homeAddressCity" style="width: 250px;" type="text" maxlength="50" value="@Model.HomeAddressCity" />
+                </div>
+            </div>
+
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Home Address State:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="homeAddressState" name="homeAddressState" style="width: 250px;" type="text" maxlength="50" value="@Model.HomeAddressState" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Birthday:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="birthday" name="birthday" style="width: 250px;" type="text" maxlength="50" value="@Model.Birthday" />
+                </div>
+            </div>
+
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span> Date Employed:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+
+                    <input id="dateEmployed" name="dateEmployed" style="width: 250px;" type="text" maxlength="50" value="@Model.DateEmployed" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span>About :
+                </div>
+                <div class="data column" style="overflow: hidden;">
+                    <input id="about" name="about" style="width: 250px;" type="text" maxlength="50" value="@Model.About" />
+                </div>
+            </div>
+
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span>SkillSet:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+                    <input id="skillSet" name="skillSet" style="width: 250px;" type="text" maxlength="50" value="@Model.SkillSet" />
+                </div>
+            </div>
+
+            <div class="columns" style="width: 100%; padding-top: 5px;">
+                <div class="label column" style="width: 175px; text-align: right; padding-right: 5px;">
+                    <span class="required">*</span>Seating Location:
+                </div>
+                <div class="data column" style="overflow: hidden;">
+                    <input id="seatingLocation " name="seatingLocation" style="width: 250px;" type="text" maxlength="50" value="@Model.SeatingLocation" />
+                </div>
+            </div>
+
+
+
+            <div class="columns" style="width: 100%; padding-top: 15px; padding-bottom: 5px;">
+
+                <div class="modal-footer">
+                    <button type="button" name="submitButton" class="btn btn-default" data-dismiss="modal">Submit</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+                <div class="column" style="font-size: 9px; font-weight: bold; font-style: italic; padding-left: 5px; padding-top: 2px;">
+                    You must enter all information above correctly to enable submission.
+                </div>
+            </div>
+        }
+    </div>
+<script type="text/javascript">
+    @*<script src="~/Scripts/jquery.validate.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js" type="text/javascript"></script>*@
+
+    $(document).ready(function () {
+
+        //$("span.ui-dialog-title").text('Add OnBoarder');
+
+        //$('#btnCancel').click(function () {
+        //    window.location.href = '/OnBoarding/OnBoardingList';
+        //    return false;
+        //});
+
+        //$('#lastName').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+        //$('#firstName').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+        //$('#middleName').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+        //$('#maidenName').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+        //$('#nationality').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+        //$('#staffNumber').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+        //$('#email').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+        //$('#mobileNumber').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+
+        //$('#permanentAddress').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+        //$('#permanentAddressCity').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+        //$('#permanentAddressState').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+        //$('#homeAddress').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+        //$('#homeAddressCity').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+        //$('#homeAddressState').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+        //$('#birthday').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+        //$('#dateEmployed').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+        //$('#about').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+        //$('#skillSet').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+        //$('#seatingLocation').change(function () {
+        //    $('#genderId').trigger("propertychange");
+        //});
+
+        //$('#genderId').bind('input propertychange', function () {
+        //    $('#btnSubmit').prop("class", "grayButton");
+        //    $('#btnSubmit').prop("disabled", true);
+
+        //    var lastNameOkay = $('#lastName').val().length > 0;
+        //    var firstNameOkay = $('#firstName').val().length > 0; 
+        //    //var middleNameOkay = $('#middleName').val().length > 0; 
+        //    //var maidenNameOkay = $('#maidenName').val().length > 0; 
+        //    //var nationalityOkay = $('#nationality').val().length > 0;
+        //    //var staffNumberOkay = $('#staffNumber').val().length > 0;
+        //    //var emailOkay = $('#email').val().length > 0;
+        //    //var mobileNumberOkay = $('#mobileNumber').val().length > 0;
+        //    //var permanentAddressOkay = $('#permanentAddress').val().length > 0;
+        //    //var permanentAddressCityOkay = $('#permanentAddressCity').val().length > 0;
+        //    //var permanentAddressStateOkay = $('#permanentAddressState').val().length > 0;
+        //    //var homeAddressOkay = $('#homeAddress').val().length > 0;
+        //    //var homeAddressCityOkay = $('#homeAddressCity').val().length > 0;
+        //    //var homeAddressStateOkay = $('#homeAddressState').val().length > 0;
+        //    //var birthdayOkay = $('#birthday').val().length > 0;
+        //    //var dateEmployedOkay = $('#dateEmployed').val().length > 0;
+        //    //var aboutOkay = $('#about').val().length > 0;
+        //    //var skillSetOkay = $('#skillSet').val().length > 0; 
+        //    //var seatingLocationOkay = $('#seatingLocation').val().length > 0; 
+        //    //var genderIdOkay = $('#genderId').val() > 0;
+
+        //    if ((lastNameOkay) && (firstNameOkay) && (genderIdOkay)) {
+        //        $('#btnSubmit').prop("class", "blueButton");
+        //        $('#btnSubmit').prop("disabled", false);
+        //    }
+        //});
+
+        ////$('#addDeptForm').submit(function () {
+        ////    //window.open('', 'formpopup', 'width=400,height=400,resizeable,scrollbars');
+        ////    this.target = '$popupDialog';
+        ////});
+
+    });
+</script>
+

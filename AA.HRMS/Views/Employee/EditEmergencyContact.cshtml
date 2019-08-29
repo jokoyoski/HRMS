@@ -1,0 +1,91 @@
+﻿@model AA.HRMS.Interfaces.IEmergencyContactView
+
+
+@{
+    ViewBag.Title = "Add Employee Emergency Details";
+}
+
+
+
+@Html.ValidationSummary()
+
+@Model.ProcessingMessage
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+@using (Html.BeginForm("EditEmergencyContact", "Employee", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+<div class="modal-body">
+
+
+    <input name="EmployeeId" id="EmployeeId" value="@Model.EmployeeId" hidden />
+    <input name="EmergencyId" id="EmergencyId" value="@Model.EmergencyId" hidden />
+    <input name="url" id="url" value="@Model.URL" hidden />
+
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Emergency Contact's Name</label>
+            <div class="">
+                <input id="emergencyName" required name="emergencyName" type="text" class="form-control" value="@Model.EmergencyName" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Emergency Contact's Date Of Birth</label>
+            <div class="">
+                <input id="dateOfBirth" required name="dateOfBirth" type="date" class="form-control" value="@DisplayHelper.DisplayDate(Model.DateOfBirth)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Emergency Contact's Email</label>
+            <div class="">
+                <input id="Email" required name="Email" type="text" class="form-control" value="@Model.Email" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Emergency Contact's Mobile Contact</label>
+            <div class="">
+                <input id="Mobile" required name="Mobile" type="text" class="form-control" value="@Model.Mobile" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Emergency Contact's Address</label>
+            <div class="">
+                <textarea id="Address" required name="Address" wrap="soft" cols="3" type="text" class="form-control" value="@Model.Address">@Model.Address</textarea>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    <div class="modal-footer">
+        <button type="submit" name="submitButton" class="btn btn-default">Modify</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+    </div>
+}
+
+
+
+
+
+

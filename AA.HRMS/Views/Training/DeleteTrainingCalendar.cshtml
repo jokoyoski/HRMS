@@ -1,0 +1,110 @@
+﻿
+@model AA.HRMS.Interfaces.ITraininingCalendarView
+
+@{
+    ViewBag.Title = "Delete Training from Calendar";
+}
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+@using (Html.BeginForm("DeleteTrainingCalendar", "Training", FormMethod.Post, new { id = "TrainingCalender", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+
+{
+    @Html.AntiForgeryToken()
+
+<div class="modal-body">
+
+
+
+    <input type="hidden" name="companyId" id="companyId" value="@Model.CompanyId" />
+    <input type="hidden" name="trainingCalendar" id="trainingCalendar" value="@Model.TrainingCalenderId" />
+
+    @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+    {
+
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+        </div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+        </div>
+    }
+
+    <div class="form-example-int">
+        <div class="form-group">
+            <label>Training</label>
+            <div class="">
+                @Html.DropDownList("trainingCalenderId", Model.TrainingDropDown, new { @class = "form-control", id = "trainingCalenderId", @disabled = "disabled" })
+            </div>
+        </div>
+
+
+
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Training Status</label>
+                <div class="">
+                    @Html.DropDownList("trainingStatusId", Model.TrainingStatusDropDown, new { @class = "form-control", id = "trainingStatusId", @disabled = "disabled" })
+                </div>
+            </div>
+
+
+
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Location</label>
+                    <div class="">
+                        <textarea name="location" class="form-control" id="location" disabled type="text" maxlength="500" value="@Model.Location">@Model.Location</textarea>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Training Starts</label>
+                    <div class="">
+                        <textarea name="Training Starts" class="form-control" id="deliveryStartDate" disabled type="text" maxlength="500" value="@Model.DeliveryStartDate">@Model.DeliveryStartDate</textarea>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="form-example-int">
+                <div class="form-group">
+                    <label>Training Ends</label>
+                    <div class="">
+                        <textarea name="Training Ends" class="form-control" id="deliveryEndDate" disabled type="text" maxlength="500" value="@Model.DeliveryEndDate">@Model.DeliveryEndDate</textarea>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+            <div class="modal-footer">
+                <button type="submit" name="submitButton" class="btn btn-default">Delete</button>
+                <button type="button" name="submitBtn" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+           
+
+ }
+
+

@@ -1,0 +1,124 @@
+﻿@model AA.HRMS.Interfaces.IPayScaleBenefitListView
+
+
+@{
+    ViewBag.Title = "Pay Scale Benefits";
+
+    var hasInfo = ((Model != null) && (Model.PaySCaleBenefitCollection != null) && Model.PaySCaleBenefitCollection.Any());
+}
+
+
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                            <div class="breadcomb-report">
+                                <a class="btn" data-toggle="tooltip" href="~/companysetup/payscalelist" data-placement="right" title="Back"><i class="notika-icon notika-back"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+@if (hasInfo)
+{
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="table-responsive">
+                            <table id="data-table-basic" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Benefit Name</th>
+                                        <th>Is Monetized</th>
+                                        <th>Is Taxable</th>
+                                        <th>Percentage Of Base/Cash Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var d in Model.PaySCaleBenefitCollection)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                @d.BenefitName
+                                            </td>
+                                            <td>
+                                                @d.IsMonetized
+                                            </td>
+                                            <td>
+                                                @d.IsTaxable
+                                            </td>
+
+                                            @if (d.PercentageofBase != 0)
+                                            {
+                                                <td>
+                                                    @d.PercentageofBase %
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    @d.CashValue (NGN)
+                                                </td>
+                                            }
+
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Benefit Name</th>
+                                        <th>Is Monetized</th>
+                                        <th>Is Taxable</th>
+                                        <th>Percentage Of Base/Cash Value</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-info alert-mg-b-0" role="alert">
+                    <p>No Benefit</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

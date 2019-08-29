@@ -1,0 +1,239 @@
+﻿@using AA.HRMS.Interfaces.ValueTypes
+@model AA.HRMS.Interfaces.IAnnualAssessingPerformanceListView
+
+@{
+    ViewBag.Title = "Annual Performance Assessment List";
+    var hasInfo = (Model != null) && (Model.AnnualAssesingPerformanceCollection.Any());
+    var role = (String[])HttpContext.Current.Session[SessionKey.UserRoles];
+}
+
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                </div>
+                            </div>
+                        </div>
+                        @if (role.Contains("CompanyAdmin"))
+                        {
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
+                                <div class="breadcomb-report">
+                                    <button class="btn" data-toggle="tooltip" onclick="createModal('/performancemanagement/createannualaccessingperformance')" data-placement="left" title="Create Annual Performance Assessment"><i class="notika-icon notika-plus-symbol"></i></button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+{
+    <div>
+        <div class="container">
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+            </div>
+
+        </div>
+    </div>
+}
+
+
+
+
+@if (hasInfo)
+{
+
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="table-responsive">
+                            <table id="data-table-basic" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th> Company Name</th>
+                                        <th> Year</th>
+                                        @if (role.Contains("CompanyAdmin"))
+                                        {
+                                            <th>Action</th>
+                                        }
+                                        @if (role.Contains("Employee"))
+                                        {
+                                            <th>Action</th>
+                                        }
+                                        @if (role.Contains("CompanyAdmin") && role.Contains("Supervisor"))
+                                        {
+                                            <th>Action</th>
+                                        }
+                                    </tr>
+                                <tbody>
+                                    @foreach (var d in Model.AnnualAssesingPerformanceCollection)
+                                    {
+                                    <tr>
+                                        <td>
+                                            @d.CompanyName
+                                        </td>
+                                        <td>
+                                            @d.Year
+                                        </td>
+                                        @if (role.Contains("CompanyAdmin"))
+                                        {
+
+                                            <td>
+                                                <a class="btn btn-sm btn-primary" href="/PerformanceManagement/EmployeeAnnualAssessmentList?annualAssessingPerformanceId=@d.AnnualAssessingPerformanceId" data-placement="left" title="Fill Annual Assessment Form">View List</a>
+                                            </td>
+                                        }
+                                        @if (role.Contains("Employee"))
+                                        {
+
+                                            <td>
+                                                <a class="btn btn-sm btn-primary" href="/PerformanceManagement/EmployeeAnnualAssessmentForm?annualAssessingPerformanceId=@d.AnnualAssessingPerformanceId" data-placement="left" title="Fill Annual Assessment Form">Fill Form</a>
+                                            </td>
+                                        }
+                                        @if (role.Contains("CompanyAdmin") && role.Contains("Supervisor"))
+                                        {
+
+                                            <td>
+                                                <a class="btn btn-sm btn-primary" href="/PerformanceManagement/ReviewerEmployeeAnnualAssessmentForm?annualAssessingPerformanceId=@d.AnnualAssessingPerformanceId" data-placement="left" title="Fill Annual Assessment Form">Review Form</a>
+                                            </td>
+                                        }
+                                    </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th> Company Name</th>
+                                        <th> Year</th>
+                                        @if (role.Contains("CompanyAdmin"))
+                                        {
+                                            <th>Action</th>
+                                        }
+                                        @if (role.Contains("Employee"))
+                                        {
+                                            <th>Action</th>
+                                        }
+                                        @if (role.Contains("CompanyAdmin") && role.Contains("Supervisor"))
+                                        {
+                                            <th>Action</th>
+                                        }
+                                        </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-info alert-mg-b-0" role="alert">
+                    <p>No Annual Performance Assessment Available</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+
+<div class="modal fade" id="createModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayCreate">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayEdit">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayDelete">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var URL = "";
+
+    function createModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayCreate").html(data);
+            }
+        });
+
+
+        $("#createModal").modal();
+    }
+
+    function editModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayEdit").html(data);
+            }
+        });
+
+        $("#editModal").modal();
+
+    }
+
+    function deleteModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayDelete").html(data);
+            }
+        });
+
+        $("#deleteModal").modal();
+
+    }
+
+</script>
+

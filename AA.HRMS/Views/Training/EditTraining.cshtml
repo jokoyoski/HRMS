@@ -1,0 +1,60 @@
+﻿@model AA.HRMS.Interfaces.ITrainingView
+
+@{
+    ViewBag.Title = "Edit Training";
+}
+
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+
+@Html.ValidationSummary()
+@Model.ProcessingMessage
+
+
+@using (Html.BeginForm("EditTraining", "Training", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+
+
+    <input type="hidden" id="TrainingId" name="TrainingId" value="@Model.TrainingID" />
+    
+
+    <div class="modal-body">
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>TrainingName</label>
+                <div class="">
+                    <input required id="TrainingName" type="text" name="TrainingName" class="form-control" value="@Model.TrainingName" />
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>TrainingDescription</label>
+                <div class="">
+                    <textarea required id="TrainingDescription" type="text" name="TrainingDescription" class="form-control" value="@Model.TrainingDescription">@Model.TrainingDescription</textarea>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" name="submitButton" class="btn btn-default">Modify</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+
+
+}
+

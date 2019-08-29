@@ -1,0 +1,248 @@
+﻿@model AA.HRMS.Interfaces.ILeaveRequestListView
+
+
+@{
+    ViewBag.Title = "Employee Leave Request List";
+    var hasInfo = ((Model != null) && (Model.LeaveRequestCollection != null) && Model.LeaveRequestCollection.Any());
+}
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@using (Html.BeginForm("ListOfLeaveRequestsForEmployee", "Leave", new
+{
+    @class = "form-element-area",
+    id = "filterForm"
+}))
+{
+    <div class="container">
+        <div class="row">
+            @Html.AntiForgeryToken()
+
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div class="form-group ic-cmp-int float-lb floating-lb">
+                    <div class="form-ic-cmp">
+                        <i class="notika-icon notika-"></i>
+                    </div>
+                    @*<div class="">
+                            <small>Filter Leave Request List by:</small>
+                            @Html.DropDownList("leaveStatusId", Model.LeaveStatusDropDown, new { @class = "form-control", id = "leaveStatusId" })
+
+                                    <button type="submit" class="btn search-ib">Filter</button>
+                                    <a href="/Leave/ListOfLeaveRequestsForEmployee" class="btn btn-default btn-sm"><i class="notika-icon notika-refresh"></i>Reset</a>
+
+                        </div>*@
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+}
+
+@if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+{
+
+    <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+    </div>
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+    </div>
+}
+
+@if (hasInfo)
+{
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="table-responsive">
+
+                            <table id="data-table-basic" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Leave Type</th>
+                                        <th>Date Requested</th>
+                                        <th>Date Leave Starts</th>
+                                        <th>Date Leave Ends</th>
+                                        <th>Leave Status</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    @foreach (var d in Model.LeaveRequestCollection)
+                                    {
+
+                                        <tr>
+
+                                            <td>@d.EmployeeName</td>
+                                            <td>@d.LeaveTypeName</td>
+                                            <td>@d.DateRequested</td>
+                                            <td>@d.DateLeaveStart</td>
+                                            <td>@d.DateLeaveEnds</td>
+                                            <td>
+
+                                                @{
+                                                    if (d.LeaveStatusName.Contains("Approve"))
+                                                    {
+                                                        <p>Approved</p>
+                                                    }
+                                                    else if (d.LeaveStatusName.Contains("Decline"))
+                                                    {
+                                                        <p>Declined</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>@d.LeaveStatusName</p>
+                                                    }
+
+                                                }
+                                            </td>
+
+                                            <td>
+                                                <a class="btn btn-sm btn-primary" onclick="viewModal('/Leave/ViewLeaveRequestEmployee?leaveRequestId=@d.LeaveId')">View </a>
+                                            </td>
+
+                                           @if (d.LeaveStatusName.Contains("Approved"))
+                                            {
+                                                <td>Approved</td>
+                                            }
+                                            else if (d.LeaveStatusName.Contains("Disapproved"))
+                                            {
+                                                <td>Declined</td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    <a class="btn btn-sm btn-primary" onclick="editModal('/Leave/ChangeLeaveRequestApprovalStatusHR?leaveRequestId=@d.LeaveId&url=@Model.URL')">Approve/Decline </a>
+                                                </td> 
+                                           }
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Leave Type</th>
+                                        <th>Date Requested</th>
+                                        <th>Date Leave Starts</th>
+                                        <th>Date Leave Ends</th>
+                                        <th>Leave Status</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-info alert-mg-b-0" role="alert">
+                    <p>No Leave</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+<div class="modal fade" id="viewModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayView">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayEdit">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section JavaScriptsExecution
+{
+    <script>
+        var URL = "";
+
+        function viewModal(URL) {
+
+            $.ajax({
+                type: "GET",
+                url: URL,
+                success: function (data) {
+                    $("#displayView").html(data);
+
+                }
+            });
+
+
+            $("#viewModal").modal();
+        }
+
+        function editModal(URL) {
+
+            $.ajax({
+                type: "GET",
+                url: URL,
+                success: function (data) {
+                    $("#displayEdit").html(data);
+                    $("#displayEdit").trigger('loaded'); 
+                }
+            });
+
+            $("#editModal").modal();
+
+        }
+
+    </script>
+}

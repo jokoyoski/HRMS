@@ -1,0 +1,158 @@
+﻿@model AA.HRMS.Interfaces.IPromotionListView
+
+@{
+    ViewBag.Title = "Promotion History";
+    var hasInfo = (Model.PromotionCollection != null) && (Model.PromotionCollection.Any());
+}
+
+
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcomb-list">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-windows"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2>@ViewBag.Title</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3 col-6">
+                            @*<div class="breadcomb-report">
+                                <a class="btn" data-toggle="tooltip" href="~/PerformanceManagement/Index" data-placement="right" title="Back"><i class="notika-icon notika-back"></i></a>
+
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (!string.IsNullOrEmpty(Model.ProcessMessage))
+        {
+
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessMessage
+            </div>
+        }
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+
+@if (hasInfo)
+{
+    <div class="data-table-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-table-list">
+                        <div class="table-responsive">
+                            <table id="data-table-basic" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th> Employee Name</th>
+                                        <th> Grade Name</th>
+                                        <th> Level Name</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var d in Model.PromotionCollection)
+                                    {
+
+                                        <tr style="width: 100%;">
+
+
+                                            <td>
+                                                @d.EmployeeName
+                                            </td>
+
+                                            <td>
+                                                @d.GradeName
+                                            </td>
+                                            <td>
+                                                @d.LevelName
+                                            </td>
+
+                                            <td>
+                                                <a class="btn btn-sm btn-primary" href="/employee/EmployeePromotion?employeeId=@d.EmployeeId" data-placement="left" title="Edit Reward">View @d.EmployeeName History</a>
+                                            </td>
+                                        </tr>
+
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th> Employee Name</th>
+                                        <th> Grade Name</th>
+                                        <th> Level Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-info alert-mg-b-0" role="alert">
+                    <p>No Promotion History</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div id="displayDelete">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function deleteModal(URL) {
+
+        $.ajax({
+            type: "GET",
+            url: URL,
+            success: function (data) {
+                $("#displayDelete").html(data);
+            }
+        });
+
+        $("#deleteModal").modal();
+
+    }
+
+</script>

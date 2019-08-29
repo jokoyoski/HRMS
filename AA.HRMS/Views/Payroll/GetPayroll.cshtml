@@ -1,0 +1,122 @@
+﻿@model AA.HRMS.Interfaces.IPayrollListView
+
+@{
+    ViewBag.Title = "Generate Payroll";
+    var hasInfo = (Model != null) && (Model.EmployeeList.Any());
+    string compulsoryFields = "";
+
+}
+
+<div class="modal-header">
+    <h3>@ViewBag.Title</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+
+@using (Html.BeginForm("GeneratePayroll", "Payroll", FormMethod.Post, new
+{
+    id = "filterForm"
+}))
+{
+    @Html.AntiForgeryToken()
+
+    
+
+<div class="modal-body">
+    @if (!string.IsNullOrEmpty(Model.ProcessingMessage))
+    {
+
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Model.ProcessingMessage
+        </div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> @Html.ValidationSummary()
+        </div>
+    }
+
+
+    <input name="companyId" value="@Model.CompanyId" hidden />
+
+    <div id="request">
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Month</label>
+                <div class="">
+                    @Html.DropDownList("month", Model.MonthDropDown, new { @class = "form-control", id = "month" })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-example-int">
+            <div class="form-group">
+                <label>Year</label>
+                <div class="">
+                    @Html.DropDownList("year", Model.YearDropDown, new { @class = "form-control", id = "year" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="uploadContent" style="display:none">
+
+        <div class="form-example-int row">
+            <div class="form-group col-md-6 col-lg-6">
+                <label>Day</label>
+                <div class="">
+                    @Html.DropDownList("month", Model.MonthDropDown, new { @class = "form-control", id = "month" })
+                </div>
+            </div>
+            <div class="form-group col-md-6 col-md-6">
+                <label>Week</label>
+                <div class="">
+                    @Html.DropDownList("year", Model.YearDropDown, new { @class = "form-control", id = "year" })
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+
+<div class="modal-footer">
+
+    
+    <div class="pull-left">
+        <label><input class="checkbox" type="checkbox" id="myCheck" onclick="myFunction()" name="rad" /> I want to automatically schedule Payroll</label>
+    </div>
+
+    <button type="submit" name="submitButton" value="Submit" class="btn btn-default">Generate</button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+</div>
+}
+
+<script>
+    function myFunction() {
+        // Get the checkbox
+        var checkBox = document.getElementById("myCheck");
+        // Get the output textbox
+        var uploadContent = document.getElementById("uploadContent");
+        var request = document.getElementById("request");
+
+        // If the checkbox is checked, display the output textbox
+        if (checkBox.checked == true) {
+            uploadContent.style.display = "block";
+            request.style.display = "none"
+            @(compulsoryFields = "")
+
+        } else {
+            uploadContent.style.display = "none";
+            request.style.display = "block"
+            @(compulsoryFields = "required")
+        }
+     }
+</script>
